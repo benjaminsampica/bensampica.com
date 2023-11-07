@@ -101,7 +101,7 @@ social:
     link: https://github.com/BenjaminSampica
   - icon: linkedin
     icon_pack: fab
-    link: https://www.linkedin.com/benthon
+    link: https://www.linkedin.com/in/benthon
   - icon: cv
     icon_pack: ai
     link: uploads/ben-sampica-resume.pdf
