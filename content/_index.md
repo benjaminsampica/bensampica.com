@@ -88,12 +88,12 @@ sections:
           date_end: '2019-03-16'
     design:
       columns: '2'
-  # - block: markdown
-  #   content:
-  #     title: Computers
-  #     subtitle: 'I love hardware. Here are some of the computers I've built over the years.'
-  #     text: |-
-  #       {{< gallery album="computers" >}}
-  #   design:
-  #     columns: '1'
+  - block: markdown
+    content:
+      title: Computers
+      subtitle: 'I love hardware. Here are some of the computers I have built over the years.'
+      text: |-
+        {{< gallery album="computers" >}}
+    design:
+      columns: '1'
 ---
