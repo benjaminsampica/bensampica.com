@@ -99,7 +99,7 @@ sections:
       title: Computers
       subtitle: 'I love hardware. Here are some of the computers I've built over the years.'
       text: |-
-        {{< gallery album="demo" >}}
+        {{< gallery album="computers" >}}
     design:
       columns: '1'
 ---
