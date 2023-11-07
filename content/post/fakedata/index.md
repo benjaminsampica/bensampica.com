@@ -43,7 +43,7 @@ I've provided some code samples [here](https://github.com/benjaminsampica/techta
 
 Traditionally, a test will construct whatever objects it needs for the test within itself, such as initializing a new user. This works just fine for unit tests and plain POCOs or simple objects.
 
-```
+```csharp
 public class UserEmailValidator
 {
     public static bool IsValidEmail(User user)
@@ -78,7 +78,7 @@ Enter Bogus.
 
 Instead of constructing objects manually, we can use Bogus to make a fake factory class that we can import into our tests and then only setup what we need inside the test. You can generate stub data and then explicitly set mock data for your system under test. If we want, we can use our handy-dandy `using static` import statements introduced in C# 6 to make this even better. 
 
-```
+```csharp
 public static class FakeFactory
 {
     public static User CreateFakeUser()
@@ -115,8 +115,7 @@ Now you never have to deal with that tedium again!
 
 A more complete example:
 
-```
-
+```csharp
 public static User CreateFakeUser()
 {
     // Bogus
@@ -150,7 +149,7 @@ In my personal experience, I've been able to seed a list of users in transient n
 
 Here's an example of a seed service with Bogus and AutoBogus.
 
-```
+```csharp
 public class SeedDataService
 {
     public async Task<IEnumerable<User>> SeedAsync()

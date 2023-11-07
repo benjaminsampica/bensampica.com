@@ -43,7 +43,7 @@ Traditionally, MVC models have been validated in one of three ways.
 
 ### The First Way
 For the simplest of them, data annotations would have your back.
-```
+```csharp
 public class AddEditPaymentModel
 {
     [Required]
@@ -58,7 +58,7 @@ If this gets even slightly more complicated, such that you have properties that 
 ### The Second Way
 Throw the logic into the controller action and reassert the model state validity
 
-```
+```csharp
 public IActionResult AddPayment(AddEditPaymentModel viewModel)
 {
     if(_paymentValidateService.DoesAmountExceedBalance(viewModel.Amount) ModelState.AddModelError("Amount", "Amount cannot be greater than balance due.");
@@ -71,7 +71,7 @@ public IActionResult AddPayment(AddEditPaymentModel viewModel)
 ### The Third Way
 Inherit `IValidatableObject` on your model.
 
-```
+```csharp
 public class AddEditPaymentModel : IValidatableObject
 {
     [Required]
@@ -111,7 +111,7 @@ We run into problems with all three of these approaches.
 
 By default, when FluentValidation is integrated into an library it sits side-by-side with existing validation implementations such as data annotations for a true backwards-compatible approach. Like other frameworks, it offers an assembly scanning approach or single registration approach to add its members. Below is the assembly scanning approach, which is recommended.
 
-```
+```csharp
 // Startup.cs
 
 using FluentValidation.AspNetCore;
@@ -130,7 +130,7 @@ public class Startup
 
 To use the example model class above, with FluentValidation it would now look like.
 
-```
+```csharp
 public class AddEditPaymentModel
 {
     public decimal Amount { get; set; }
@@ -161,7 +161,7 @@ public class AddEditPaymentModelValidator : AbstractValidator<AddEditPaymentMode
 
 Testing model validation through a UI is tedious, boring, time-consuming, and is only valid immediately after you do it. Further changes require you to manually run through it again (or not 😉🤠). Unit testing these model validation rules is easy through a unit test and, more importantly, it tests everything with a click of a button. Simply create a new instance of your validator inside your test and include the `FluentValidation.TestHelper` namespace. This gives you a suite of testing extension methods to chain your validation.
 
-```
+```csharp
 using FluentValidation.TestHelper;
 using FluentValidation.Web.Models;
 using FluentValidation.Web.Services;
@@ -209,7 +209,7 @@ One of the more powerful aspects of FluentValidation is in it's ability to share
 
 You can create validators of a type (for example, `Address` and `PersonName`) and then compose those together onto a super class when needed.
 
-```
+```csharp
 public class PersonModel
 {
     public PersonNameModel PersonName { get; set; }
@@ -267,7 +267,7 @@ public class PersonNameModelValidator : AbstractValidator<PersonNameModel>
 
 You can write your own custom rule extensions to easily chain and share rules on properties across models. Some good examples are phone numbers, specific email addresses, and file extensions.
 
-```
+```csharp
 public static class FluentValidationExtensions
 {
     public static IRuleBuilderInitial<T, IFormFile> MatchesFileExtensions<T>(this IRuleBuilder<T, IFormFile> rule, params string[] allowedExtensions) where T : class
@@ -286,7 +286,7 @@ public static class FluentValidationExtensions
 ```
 
 When applied, it looks exactly like the baked-in properties FluentValidation already provides.
-```
+```csharp
 public class AddResumeModel
 {
     public IFormFile Resume { get; set; }

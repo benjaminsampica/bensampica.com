@@ -1,5 +1,5 @@
 ---
-title: Clean Code - Part II: The Four Principles (of Art)
+title: 'Clean Code - Part II: The Four Principles (of Art)'
 subtitle: What does art and code have in common?
 summary: Drawing parallels from the four basic principles of art to bring order to the code we write.
 authors:

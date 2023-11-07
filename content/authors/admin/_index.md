@@ -19,11 +19,6 @@ superuser: true
 # Role/position/tagline
 role: Professional Learner & Mob Programmer
 
-# Organizations/Affiliations to show in About widget
-organizations:
-  - name: Stanford University
-    url: https://www.stanford.edu/
-
 # Short bio (displayed in user profile at end of posts)
 bio: I'm a web developer who focuses mostly in the .NET stack. When not playing hard I enjoy reading, building computers, D&D, and the family.
 
@@ -92,9 +87,6 @@ education:
 #   For an email link, use "fas" icon pack, "envelope" icon, and a link in the
 #   form "mailto:your-email@example.com" or "/#contact" for contact widget.
 social:
-  - icon: envelope
-    icon_pack: fas
-    link: '/#contact'
   - icon: twitter
     icon_pack: fab
     link: https://twitter.com/BenjaminSampica
@@ -109,10 +101,10 @@ social:
     link: https://github.com/BenjaminSampica
   - icon: linkedin
     icon_pack: fab
-    link: https://www.linkedin.com/benthon123
+    link: https://www.linkedin.com/benthon
   - icon: cv
     icon_pack: ai
-    link: files/ben-sampica-resume.pdf
+    link: uploads/ben-sampica-resume.pdf
 
 # Highlight the author in author lists? (true/false)
 highlight_name: true

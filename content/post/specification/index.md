@@ -27,7 +27,7 @@ By keeping it separate, we can chain business rules together and reuse them so a
 
 You can take this pattern and do some very powerful things with it. I've found myself writing methods extracting data from a repository but ultimately there was little difference between methods. I've also found myself doing the same but having _god_ methods. Consider the following:
 
-```
+```csharp
 // Without specification pattern
 public class PlayerService
 {
@@ -56,7 +56,7 @@ Let's get dirty and apply the specification pattern to this.
 ## The Practical
 We can start by creating an abstract `Specification<T>` class and creating two methods `ToExpression()` and `IsSatisfiedBy(T entity)`
 
-```
+```csharp
 public abstract class Specification<T>
 {
     public abstract Expression<Func<T, bool>> ToExpression();
@@ -75,7 +75,7 @@ public abstract class Specification<T>
 
 Here's my `Player` entity from the Yahoo Fantasy Sports API which we will apply a specification for.
 
-```
+```csharp
 public class Player
 {
     public int PlayerId { get; set; }
@@ -89,7 +89,7 @@ public class Player
 
 And for the specification we want to compare if the player has a contract for the 2020 year.
 
-```
+```csharp
 public class Has2020YearContractSpecification : Specification<Player>
 {
     public override Expression<Func<Player, bool>> ToExpression()
@@ -104,7 +104,7 @@ Our `ToExpression()` method is evaluating whether the ContractLength is greater 
 
 But what if you want to pass in the year? Easy - use the constructor!
 
-```
+```csharp
 public class HasGivenYearContractSpecification : Specification<Player>
 {
     private readonly int _year;
@@ -121,7 +121,7 @@ public class HasGivenYearContractSpecification : Specification<Player>
 Let's jump back to our original `GetAll()` method that is inside the `PlayerService` and apply the specification.
 We will replace our original one-note parameters with a collection of filters of our `Specification<Player>` type.
 
-```
+```csharp
 public class PlayerService
 {
     private readonly IDbContext _dbContext;
@@ -146,7 +146,7 @@ public class PlayerService
     }
 }
 ```
-```
+```csharp
 // Some other method calling this...
 var filters = new List<Specification<Player>>()
 {
@@ -158,7 +158,7 @@ _playerService.GetAll(filters)
 The huge benefit is that `GetAll()` will remain unchanged going forward, as _n_-number of specifications are added. New domain needs are just passed as different filters and the method will iterate each one, evaluate it, and return the filtered collection.
 This can be reduced in number of lines (if you prefer) by doing the following:
 
-```
+```csharp
 if (filters != null)
 {
     players = filters.Aggregate(players, (player, filter) => player.Where(filter.ToExpression()));
@@ -169,7 +169,7 @@ I generally find this harder to read but use it if you feel so inclined.
 
 Let's say you want to make this even more DRY by sharing the bit of code that iterates and actually applies the expression to the entity. We can make a static class with a static extension for such a thing.
 
-```
+```csharp
 public static class DbContextExtensions
 {
     public static IQueryable<T> ApplyFilters<T>(this IQueryable<T> entityCollection, IEnumerable<Specification<T>> filters = null)
@@ -189,7 +189,7 @@ public static class DbContextExtensions
 
 Now going back to our `GetAll()` method
 
-```
+```csharp
 public IEnumerable<Player> GetAll(IEnumerable<Specification<Player>> filters)
     => _dbContext.Players.ApplyFilters(filters)
 ```
@@ -198,13 +198,13 @@ How concise is that? For double the points, `.ApplyFilters()` can be used on any
 
 Jumping back to our other method on our abstract `Specification` class, suppose you already have an entity and you want to see if it conforms to a specification. You can use the `IsSatisfiedBy()` method simply by doing the following.
 
-```
+```csharp
 var player = _playerService.GetAnyPlayer();
 var has2020Contract = new HasGivenYearContractSpecification(2020).IsSatisfiedBy(player);
 ```
 You can also use this with navigational/relational properties.
 
-```
+```csharp
 var team = _teamService_.GetAnyTeam();
 team.Players.Where(p => new HasGivenYearContractSpecification(2020).IsSatisfiedBy(p))
 // Or
@@ -213,7 +213,7 @@ team.Players.Where(p => new HasGivenYearContractSpecification(2020).IsSatisfiedB
 ```
 
 or if you have multiple specifications you can compare each individually or add another extension method
-```
+```csharp
 public static bool SatisfiesFilters<T>(this T entity, IEnumerable<Specification<T>> filters = null)
 {
     if (filters != null)
@@ -232,7 +232,7 @@ public static bool SatisfiesFilters<T>(this T entity, IEnumerable<Specification<
 }
 ```
 Which looks like
-```
+```csharp
 var player = _playerService.GetAnyPlayer();
 var filters = new List<Specification<Player>>()
 {

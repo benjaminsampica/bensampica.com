@@ -1,5 +1,5 @@
 ---
-title: Clean Code - Part I: What’s In A Name?
+title: 'Clean Code - Part I: What’s In A Name?'
 subtitle: Naming is hard, but why?
 summary: Offering some tips on how to name things so other people, including yourself at a later date, can understand it.
 authors:

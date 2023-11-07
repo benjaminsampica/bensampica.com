@@ -53,7 +53,7 @@ Start to finish with a fresh `dotnet new mvc` application, this is how you can d
     - This should reference the MVC _Layout file and be blank other than the App component
     - The page route should be a unique route (just like a SPA calling to an API would be)
 
-      ```
+      ```csharp
       // _Host.cshtml
       @page "/blazor" 
       @namespace BlazorTechTalk.MvcWithBlazorUI.Pages
@@ -73,7 +73,7 @@ Start to finish with a fresh `dotnet new mvc` application, this is how you can d
        @Body
        ```
 8. Phew, you're done, you can now add `BlazorPage.razor` pages *and components* inside your MVC project!
-```
+```csharp
 @page "/blazorpage"
 
 <h3>BlazorPage</h3>

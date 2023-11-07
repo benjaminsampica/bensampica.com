@@ -1,5 +1,5 @@
 ---
-title: A Tale of Legacy Code: I
+title: 'A Tale of Legacy Code: I'
 subtitle: A fresh warning for not cutting corners.
 summary: A blast to the past with MVC5 and poorly maintained code
 authors:
@@ -7,7 +7,7 @@ authors:
 categories:
 - DotNet Framework
 - CSharp
-date: "2020-04-24T00:00:00Z"
+date: '2020-04-24T00:00:00Z'
 featured: false
 draft: false
 toc: true
@@ -44,7 +44,7 @@ I do some digging and find out the following facts:
 
 During my digging I found a folder named `Optimization` and find a `LessTransform.cs`. It's piggy backing off a library named `dotless` to do the heavy lifting via `.Parse()`.
 
-```
+```csharp
 public class LessTransform : IBundleTransform
 {
     public void Process(BundleContext context, BundleResponse response)
@@ -60,7 +60,7 @@ public class LessTransform : IBundleTransform
 
 This simply isn't working at all as the browser is picking up a `.less` file when inspecting the downloaded browser files. When I went digging, I went and looked at a few sites that I had worked on that I _knew_ worked. I found this same method but the implementation was different. Both were pulled off of StackOverflow by someone at our organization and put to use. There's no shame in that - but understanding what it's doing (and it's pitfalls) is part of the process of shared code.
 
-```
+```csharp
 public void Process(BundleContext context, BundleResponse bundle)
 {
     var pathResolver = new ImportedFilePathResolver(context.HttpContext.Server);
@@ -114,7 +114,7 @@ Oof. Just by seeing this I know what it means. I have to mess with the `web.conf
 
 I had to add
 
-```
+```xml
 <handlers>
   <add name="dotless" path="*.less" verb="GET" type="dotless.Core.LessCssHttpHandler,dotless.Core" resourceType="File" preCondition="" />
 </handlers>

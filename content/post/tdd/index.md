@@ -1,5 +1,5 @@
 ---
-title: Test-Driven Development: The Video Game
+title: 'Test-Driven Development: The Video Game'
 subtitle: NOW ON STEAM!
 summary: Explaining Test-Driven Development through the lens of a video game.
 authors:

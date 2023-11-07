@@ -1,5 +1,5 @@
 ---
-title: Clean Code - Part III: Comments
+title: 'Clean Code - Part III: Comments'
 subtitle: To comment or not to comment, that is the question.
 summary: Identifying some examples of common patterns and anti-patterns with comments.
 authors:

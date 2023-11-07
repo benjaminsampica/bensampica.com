@@ -1,17 +1,12 @@
 ---
-title: Posts
+title: Library
 cms_exclude: true
 
 # View.
 #   1 = List
 #   2 = Compact
 #   3 = Card
-view: 1
-
-# Optional header image (relative to `static/media/` folder).
-header:
-  caption: 'Hello Library'
-  image: '/library.jpg'
+view: 3
 ---
 
 There's something about owning a physical copy of a book that I've always adored and have never gotten into the digital book thing.

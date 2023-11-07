@@ -25,7 +25,7 @@ Coming from a largely traditional MVC and API background, the biggest change has
 ## The Theoretical
 The main documentation for ASP.NET Core and Entity Framework Core has you register your database context to your service container with something like the following
 
-```
+```csharp
 services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(Configuration.GetConnectionString("Application")));
 ```
@@ -43,7 +43,7 @@ However, with Blazor, we are working with components whose requisite parts make 
 
 Still, we're fine. Except when we have two of these components at the same time, grabbing some data. A simple example below
 
-```
+```csharp
 // TodosList.razor
 @using Microsoft.EntityFrameworkCore
 
@@ -65,7 +65,7 @@ Still, we're fine. Except when we have two of these components at the same time,
 ```
 which is then called on our page, _twice._
 
-```
+```html
 // Todos.razor
 @page "/Todos"
 

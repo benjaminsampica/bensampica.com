@@ -32,11 +32,6 @@ sections:
       # Choose a layout view
       view: compact
       columns: '2'
-  - block: tag_cloud
-    content:
-      title: I Talk About...
-    design:
-      columns: '2'
   - block: about.biography
     id: about
     content:
@@ -64,7 +59,6 @@ sections:
         - title: Software Engineer III
           company: Comoto Holdings, Inc.
           company_url: 'https://ridecomoto.com/'
-          company_logo: org-x
           location: Philadelphia, PA
           date_start: '2021-06-28'
           date_end: '2021-11-28'
@@ -94,12 +88,12 @@ sections:
           date_end: '2019-03-16'
     design:
       columns: '2'
-  - block: markdown
-    content:
-      title: Computers
-      subtitle: 'I love hardware. Here are some of the computers I've built over the years.'
-      text: |-
-        {{< gallery album="computers" >}}
-    design:
-      columns: '1'
+  # - block: markdown
+  #   content:
+  #     title: Computers
+  #     subtitle: 'I love hardware. Here are some of the computers I've built over the years.'
+  #     text: |-
+  #       {{< gallery album="computers" >}}
+  #   design:
+  #     columns: '1'
 ---
