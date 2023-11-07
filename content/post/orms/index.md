@@ -8,6 +8,7 @@ categories:
 - CSharp
 - Entity Framework
 date: '2020-06-16T00:00:00Z'
+lastmod: '2020-06-16T00:00:00Z'
 featured: false
 draft: false
 toc: true

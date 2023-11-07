@@ -8,6 +8,7 @@ categories:
 - Software Craftsmanship
 - Agile
 date: '2022-02-05T00:00:00Z'
+lastmod: '2022-02-05T00:00:00Z'
 featured: false
 draft: true
 toc: true

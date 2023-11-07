@@ -10,6 +10,7 @@ categories:
 - CSharp
 - Blazor
 date: '2020-12-05T00:00:00'
+lastmod: '2020-12-05T00:00:00'
 featured: false
 draft: false
 toc: true

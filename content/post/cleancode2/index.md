@@ -7,6 +7,7 @@ authors:
 categories:
 - Software Craftsmanship
 date: '2021-01-31T00:00:00Z'
+lastmod: '2021-01-31T00:00:00Z'
 featured: false
 draft: false
 toc: true

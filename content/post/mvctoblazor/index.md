@@ -9,6 +9,7 @@ categories:
 - CSharp
 - Blazor
 date: '2021-05-16T00:00:00Z'
+lastmod: '2021-05-16T00:00:00Z'
 featured: false
 draft: false
 toc: true
