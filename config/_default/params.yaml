@@ -18,8 +18,8 @@ marketing:
     site_type: Person
     local_business_type: ''
     org_name: ''
-    description: 'A highly-customizable Hugo academic resume theme powered by Wowchemy website builder.'
-    twitter: 'wowchemy'
+    description: 'Professional learner | Daily Mob Programmer '
+    twitter: 'BenjaminSampica'
   analytics:
     google_analytics: ''
     baidu_tongji: ''
@@ -70,7 +70,7 @@ features:
   privacy_pack:
     enable: false
   repository:
-    url: 'https://github.com/<username>/<repository>'
+    url: 'https://github.com/benjaminsampica/bensampica.com'
     content_dir: content
     branch: main
   avatar:
