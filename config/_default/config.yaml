@@ -3,7 +3,7 @@
 # Hugo Documentation: https://gohugo.io/getting-started/configuration/#all-configuration-settings
 # This file is formatted using YAML syntax - learn more at https://learnxinyminutes.com/docs/yaml/
 
-title: Ben Sampica - Mob Programmer | Professional Learner # Website name
+title: Ben Sampica # Website name
 baseURL: '/' # Website URL
 
 ############################
