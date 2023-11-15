@@ -102,7 +102,7 @@ builder.Services.AddKeyedScoped<INerdValidator, LikesDAndDValidator>("D&D");
 Now, you're ready to dynamically pull out the services you need in your application code.
 
 ```csharp
-// This comes from the front-end. Users can choose what criteria might make them a nerd.
+// This comes from the front end. Users can choose what criteria might make them a nerd.
 public class AreYouANerdRequest
 {
     public static readonly string[] NerdTypes = [ "D&D", "Likes Programming" ];
