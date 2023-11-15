@@ -16,7 +16,7 @@ toc: false
 
 With the release of [.NET 8](https://devblogs.microsoft.com/dotnet/announcing-dotnet-8/), you can now add _Keyed Services_ to the service provider via `builder.Services.AddKeyedSingleton<T>()`. Also available are `.AddKeyedScoped<T>` and `.AddKeyedTransient<T>` which have the same lifetimes you're familiar with already from `.AddSingleton<T>()`, etc.. There are other use cases for keyed services in .NET 8, but in particular this can reduce the amount of code you need to write when using the factory pattern.
 
-How can does this smooth over the factory pattern? Consider patterns where you need to resolve multiple services at runtime that are all conforming to an interface. The example below showcases what code you might have wrote in .NET 7.
+How does this smooth over the factory pattern? Consider patterns where you need to resolve multiple services at runtime that are all conforming to an interface. The example below showcases what code you might have wrote in .NET 7.
 
 ```csharp
 
@@ -94,6 +94,7 @@ With .NET 8, you can now utilize keyed services to really simplify this and pick
 ```csharp
 // .NET 8
 // Program.cs
+
 builder.Services.AddKeyedScoped<INerdValidator, LikesProgrammingNerdValidator>("Likes Programming");
 builder.Services.AddKeyedScoped<INerdValidator, LikesDAndDValidator>("D&D");
 ```
