@@ -87,7 +87,7 @@ builder.Services.AddScoped<INerdValidator, LikesDAndDValidator>();
 
 ```
 
-The problem is, injecting these into something that can use _both_ is hard without either juggling concrete types _or_ creating your own factory to resolve these.
+The problem is, injecting these into something that can use _both_ is hard without either juggling concrete types and/or creating your own factory to resolve these.
 
 With .NET 8, you can now utilize keyed services to really simplify this and pick these out at runtime. First, register them.
 
