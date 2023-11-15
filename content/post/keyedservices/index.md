@@ -92,6 +92,8 @@ The problem is, injecting these into something that can use _both_ is hard witho
 With .NET 8, you can now utilize keyed services to really simplify this and pick these out at runtime. First, register them.
 
 ```csharp
+// .NET 8
+// Program.cs
 builder.Services.AddKeyedScoped<INerdValidator, LikesProgrammingNerdValidator>("Likes Programming");
 builder.Services.AddKeyedScoped<INerdValidator, LikesDAndDValidator>("D&D");
 ```
