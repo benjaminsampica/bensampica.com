@@ -98,6 +98,8 @@ builder.Services.AddKeyedScoped<INerdValidator, LikesProgrammingNerdValidator>("
 builder.Services.AddKeyedScoped<INerdValidator, LikesDAndDValidator>("D&D");
 ```
 
+Now, you're ready to dynamically pull out the services you need in your application code.
+
 ```csharp
 // This comes from the front-end. Users can choose what criteria might make them a nerd.
 public class AreYouANerdRequest
@@ -127,9 +129,30 @@ public class AreYouANerdHandler
         {
             isANerd = isANerd && validator.IsANerd();
         }
+
+        // do other stuff.
     }
 }
 
+```
+
+As an aside, if you already know _exactly_ which services you need already, you can just inject them directly via `[FromKeyedServices("key")]`.
+
+```csharp
+public class AreYouANerdHandler
+{
+    readonly INerdValidator _nerdValidator; 
+
+    public AreYouANerdHandler([FromKeyedServices("D&D")] INerdValidator nerdValidator)
+    {
+        _nerdValidator = nerdValidator;
+    }
+
+    public void Handle(AreYouANerdRequest request)
+    {
+        var isANerd = _nerdValidator.IsANerd();
+    }
+}
 ```
 
 Happy coding!
