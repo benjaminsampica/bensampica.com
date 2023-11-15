@@ -1,0 +1,131 @@
+---
+title: Keyed Services in .NET 8 And The Factory Pattern
+subtitle: Simplify application code
+summary: How keyed services can smooth over the factory pattern in dependency injection scenarios.
+authors:
+- ben-sampica
+categories:
+- DotNet
+- CSharp
+date: '2023-11-15T00:00:00Z'
+lastmod: '2023-11-15T00:00:00Z'
+featured: false
+draft: false
+toc: false
+---
+
+With the release of [.NET 8](https://devblogs.microsoft.com/dotnet/announcing-dotnet-8/), you can now add _Keyed Services_ to the service provider via `builder.Services.AddKeyedSingleton<T>()`. Also available are `.AddKeyedScoped<T>` and `.AddKeyedTransient<T>` which have the same lifetimes you're familiar with already from `.AddSingleton<T>()`, etc.. There are other use cases for keyed services in .NET 8, but in particular this can reduce the amount of code you need to write when using the factory pattern.
+
+How can does this smooth over the factory pattern? Consider patterns where you need to resolve multiple services at runtime that are all conforming to an interface. The example below showcases what code you might have wrote in .NET 7.
+
+```csharp
+
+// Database Model
+public class User
+{
+    public int Id {get; set;}
+    public bool LikesDAndD {get; set;}
+    public bool LikesProgramming {get; set;}
+    public bool LikesVideoGames {get; set;}
+}
+
+// Interface implemented by multiple things that need dependency injection.
+public interface INerdValidator
+{
+    public bool IsNerd();
+}
+
+// First validator
+public class LikesDAndDNerdValidator : INerdValidator
+{
+    readonly NerdDbContext _dbContext;
+    readonly ICurrentUserService _cus;
+
+    public LikesDAndDNerdValidator(NerdDbContext dbContext, ICurrentUserService cus)
+    {
+        _dbContext = dbContext;
+        _cus = cus;
+    }
+
+    public bool IsNerd()
+    {
+        var user = _dbContext.Users.First(u => u.Id == _cus.Id);
+
+        return user.LikesDAndD;
+    }
+}
+
+// Second Validator
+public class LikesProgrammingNerdValidator : INerdValidator
+{
+    readonly NerdDbContext _dbContext;
+    readonly ICurrentUserService _cus;
+
+    public LikesProgrammingNerdValidator(NerdDbContext dbContext, ICurrentUserService cus)
+    {
+        _dbContext = dbContext;
+        _cus = cus;
+    }
+
+    public bool IsNerd()
+    {
+        var user = _dbContext.Users.First(u => u.Id == _cus.Id);
+
+        return user.LikesProgramming;
+    }
+}
+```
+
+In order to obtain easy access to these validators dependencies, you might reach to register them to the dependency injection container via a lifetime registration like `.AddScoped<T>()`;
+
+```csharp
+// .NET 7
+// Program.cs
+
+builder.Services.AddScoped<INerdValidator, LikesProgrammingNerdValidator>();
+builder.Services.AddScoped<INerdValidator, LikesDAndDValidator>();
+
+```
+
+The problem is, injecting these into something that can use _both_ is hard without either juggling concrete types _or_ creating your own factory to resolve these.
+
+With .NET 8, you can now utilize keyed services to really simplify this and pick these out at runtime. First, register them.
+
+```csharp
+builder.Services.AddKeyedScoped<INerdValidator, LikesProgrammingNerdValidator>("Likes Programming");
+builder.Services.AddKeyedScoped<INerdValidator, LikesDAndDValidator>("D&D");
+```
+
+```csharp
+// This comes from the front-end. Users can choose what criteria might make them a nerd.
+public class AreYouANerdRequest
+{
+    public static readonly string[] NerdTypes = [ "D&D", "Likes Programming" ];
+
+    public string[] SelectedNerdTypes {get; set;}
+}
+
+public class AreYouANerdHandler
+{
+    readonly IServiceProvider _serviceProvider; 
+
+    public AreYouANerdHandler(IServiceProvider serviceProvider)
+    {
+        _serviceProvider = serviceProvider;
+    }
+
+    public void Handle(AreYouANerdRequest request)
+    {
+        var validators = request.SelectedNerdTypes.Select(snt => _serviceProvider.GetKeyedService<INerdValidator>(snt));
+
+        bool isANerd;
+        foreach(var validator in validators)
+        {
+            isANerd = isANerd && validator.IsANerd();
+        }
+    }
+}
+
+```
+
+Happy coding!
