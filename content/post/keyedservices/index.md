@@ -118,7 +118,9 @@ public class AreYouANerdHandler
 
     public void Handle(AreYouANerdRequest request)
     {
-        var validators = request.SelectedNerdTypes.Select(snt => _serviceProvider.GetKeyedService<INerdValidator>(snt));
+        var validators = request.SelectedNerdTypes.Select(
+            snt => _serviceProvider.GetKeyedService<INerdValidator>(snt) // This is new in .NET 8!
+        );
 
         bool isANerd;
         foreach(var validator in validators)
