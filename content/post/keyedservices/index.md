@@ -16,7 +16,7 @@ toc: false
 
 With the release of [.NET 8](https://devblogs.microsoft.com/dotnet/announcing-dotnet-8/), you can now add _Keyed Services_ to the service provider via `builder.Services.AddKeyedSingleton<T>()`. Also available are `.AddKeyedScoped<T>` and `.AddKeyedTransient<T>` which have the same lifetimes you're familiar with already from `.AddSingleton<T>()`, etc.. There are other use cases for keyed services in .NET 8, but in particular this can reduce the amount of code you need to write when using the factory pattern.
 
-How does this smooth over the factory pattern? Consider patterns where you need to resolve multiple services at runtime that are all conforming to an interface. The example below showcases what code you might have wrote in .NET 7.
+How does this smooth over the factory pattern? Consider patterns where you need to resolve multiple services at runtime that are all conforming to an interface, but do not want to resolve _all_ implementations, just dynamically chosen ones at runtime. The example below showcases what code you might have wrote in .NET 7.
 
 ```csharp
 
@@ -76,7 +76,7 @@ public class LikesProgrammingNerdValidator : INerdValidator
 }
 ```
 
-In order to obtain easy access to these validators dependencies, you might reach to register them to the dependency injection container via a lifetime registration like `.AddScoped<T>()`;
+In order to obtain easy access to these validator's dependencies, you might reach to register them to the dependency injection container via a lifetime registration like `.AddScoped<T>()`;
 
 ```csharp
 // .NET 7
@@ -87,7 +87,7 @@ builder.Services.AddScoped<INerdValidator, LikesDAndDValidator>();
 
 ```
 
-The problem is, injecting these into something that can use _both_ is hard without either juggling concrete types and/or creating your own factory to resolve these.
+The problem is, injecting these into something that can use multiple (but not all) is hard without either juggling concrete types and/or creating your own factory to resolve these.
 
 With .NET 8, you can now utilize keyed services to really simplify this and pick these out at runtime. First, register them.
 
@@ -155,5 +155,6 @@ public class AreYouANerdHandler
     }
 }
 ```
+On the other side of all of thus, if you just want all implementations every time, you can simply constructor inject a collection type (like 'IEnumerable<>') and forgo keyed services entirely.
 
 Happy coding!
