@@ -155,6 +155,6 @@ public class AreYouANerdHandler
     }
 }
 ```
-On the other side of all of thus, if you just want all implementations every time, you can simply constructor inject a collection type (like 'IEnumerable<>') and forgo keyed services entirely.
+On the other side of all of this, if you just want all implementations every time, you can simply constructor inject a collection type (like `IEnumerable<>`) and forgo keyed services entirely.
 
 Happy coding!
