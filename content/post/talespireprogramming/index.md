@@ -37,3 +37,5 @@ TaleSpire allows you to sync state between every other player with the symbiote 
 
 ## Wrap Up
 I wasn't really that familiar with JavaScript or Node, as I'm primarily a .NET developer. It was nice to hone these skills, learn javascript language features, and bring along some good practices (like automated testing) and see how they work in JavaScript land.
+
+My favorite part of making things is being able to share it with others. Both of these mods are available for any Game Master to download and use inside of TaleSpire itself by simply clicking a button.
