@@ -26,14 +26,14 @@ For example, the spell `Bless` helps the caster and his allies to avoid hits fro
 
 So, I created a mod ([link to mod](https://mod.io/g/talespire/m/5e-combat-tracker) | [link to code](https://github.com/benjaminsampica/talespire-symbiotes/tree/main/combat-tracker)) that allows me to track the flow of combat with ease. It automatically tracks the initiative list with real-time adds/deletes and turn completion so you can easily track the round count and manage conditions / effects of all creatures on the initiative list.
 
-{{< figure src="images/combat-tracker.PNG" title="Bad" lightbox="true" >}}
+{{< figure src="images/combat-tracker.PNG" title="The Combat Tracker TaleSpire Mod" lightbox="true" >}}
 
 ## The Problem Of Sharing Images
 Problem #2: This one is a lot easier to explain. There's no easy way to share images with other players in TaleSpire itself. I want to share images of all kinds with my players - what items look like, the world map, etc.. 
 
 TaleSpire allows you to sync state between every other player with the symbiote installed so this was as easy as creating a mod ([link to mod](https://mod.io/g/talespire/m/broadcast-image) | [link to code](https://github.com/benjaminsampica/talespire-symbiotes/tree/main/broadcast-image)) letting anyone broadcast an image all others.
 
-{{< figure src="images/broadcast-image.PNG" title="Bad" lightbox="true" >}}
+{{< figure src="images/broadcast-image.PNG" title="The Broadcast Image TaleSpire Mod" lightbox="true" >}}
 
 ## Wrap Up
 I wasn't really that familiar with JavaScript or Node, as I'm primarily a .NET developer. It was nice to hone these skills, learn javascript language features, and bring along some good practices (like automated testing) and see how they work in JavaScript land.
