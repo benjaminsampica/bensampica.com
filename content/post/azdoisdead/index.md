@@ -154,7 +154,7 @@ If you pay for GitHub Enterprise, they have a security feature called [GitHub Ad
 
 {{< figure src="https://github.blog/wp-content/uploads/2020/12/102552843-b4e29980-4076-11eb-94a3-1738fa3c552e.png" title="A dependency review example." lightbox="true" >}} 
 
-### Documentation
+### Creating Documentation
 
 Azure DevOps supports readme files in their repositories as well as markdown. They even claim to support [mermaid graphs](https://learn.microsoft.com/en-us/azure/devops/project/wiki/markdown-guidance?view=azure-devops#add-mermaid-diagrams-to-a-wiki-page), which are "officially" supported but broken where it matters... actually viewing them.
 
@@ -171,10 +171,9 @@ Mention the amount of V0's on AzDo.
 
 ### Creating & Managing Build Validation
 
-### Creating & Managing Pipelines / Workflows
+### Creating & Managing Pipelines / Workflows   
 
-### Passwordless Connections to the Cloud
-Azure DevOps supports _Service Connections_, which abstract away the actual connection to the cloud to a third party. This can be setup with client secrets (which expire) or via managed identity. Similarly, GitHub supports OIDC and grabs a very short-lived token from the cloud provider which can be permissioned via RBAC. At a high level, there's really no difference in capability here.   
+For example, Azure DevOps has the concept of _secure files_ in order to be able to download and read files (like certificates) during pipeline runs. There is a feature under secure files called _Properties_ which is [completely undocumented](https://stackoverflow.com/questions/53537035/access-azure-devops-secure-file-properties). Another example of how [the services investment in itself is low].
 
 ### Secret / Variable Management
 Like the [Documentation](#documentation) section, pipeline secrets and variables in Azure DevOps are managed outside the repository in the `Library` section, with their own permission structure. Secrets are "_optionally_" secret and must be manually locked in order to actually hide them and must be replaced. If they aren't locked, they're a variable and viewable.
