@@ -17,7 +17,7 @@ toc: true
 
 ## Introduction
 
-You will have to excuse the hyperbolic title but I think there's no fewer words I can use to accurately sum up this comparison of Azure DevOps to GitHub. Also, let me start this off by saying I, in no way, am paid by Microsoft to shill GitHub. In fact, both of these products are Microsoft products. But one (hint: it's Azure DevOps) has been silently gasping for air for years. In the following article, I do not claim that GitHub reigns supreme among developer productivity or is the best toolchain. But there is no doubt in my mind that Azure DevOps has taken a fatal blow and lays on the battlefield, bleeding out.
+You will have to excuse the hyperbolic title but I think there's no fewer words I can use to accurately sum up this comparison of Azure DevOps to GitHub. Also, let me start this off by saying I, in no way, am paid by Microsoft to shill GitHub. In fact, both of these products are Microsoft products. But one (hint: it's Azure DevOps) has been silently gasping for air for years. In the following article, I do not claim that GitHub reigns supreme among developer productivity or is the best toolchain. But there is no doubt in my mind that Azure DevOps has been put on life support.
 
 Am I biased towards GitHub? You might say yes already and, at times, it might seem that way as you read on. But I promise all I am biased in favor of is boring technology, turn-key solutions for myself and my team, and constantly evolving tools to handle ever-increasing complex, demanding problems. [My mind is simple and the enemy of all developers is complexity](https://grugbrain.dev/); I want to do more with less because I like to **build stuff people love**.
 
