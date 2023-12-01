@@ -166,7 +166,7 @@ However, readme files cannot be comprehensive (it is a single file, after all) a
 
 In GitHub, each repository has its own Wiki so this documentation can sit much closer to the code ([the principle of proximity](https://www.bensampica.com/post/cleancode2/#the-principle-of-proximity) playing a role here) but doesn't inherit the same _git_ protections as the repository itself. However, only those with write permissions to the repository can contribute. As a bonus, the diagrams actually work, too.
 
-{{< figure src="wiki.png" title="Wiki's sit at the repository level." lightbox="true" >}} 
+{{< figure src="images/wiki.png" title="Wiki's sit at the repository level." lightbox="true" >}} 
 
 ### The Pipeline / Workflow
 The Azure DevOps marketplace contains very few up-to-date tasks that simplify common tasks. As of November 2023, there are only 2241 extensions available on the marketplace - this includes _both_ extensions to Azure DevOps itself and also pipeline tasks.
@@ -176,7 +176,24 @@ The built-in tasks for Azure DevOps are sorely lacking both in breadth and maint
 On the other hand, GitHub Marketplace has over 20,000 pipeline tasks alone, like the ability to [login to cloud providers](https://github.com/Azure/login), deploy [function applications](Azure/functions-action@v1.5.0), [web applications](https://github.com/Azure/webapps-deploy), and [infrastructure as code](https://github.com/Azure/arm-deploy).
 
 ### Creating & Managing Build Validation
-One of my biggest pet peeves with Azure DevOps is that [build validation is managed outside the repository](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#configure-branch-policies) YAML file in Azure DevOps, which brings in the necessity for additional security permissions and controls to be in place. In GitHub, its properly placed in the workflow file and can be managed by change management the same way as the other parts of the pipeline like the example below.
+One of my biggest pet peeves with Azure DevOps is that [build validation is managed outside the repository](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#configure-branch-policies) YAML file in Azure DevOps, which brings in the necessity for additional security permissions and controls to be in place. 
+
+```yaml
+# Azure DevOps YAML File
+trigger:
+  batch: true
+  branches:
+    include:
+    - main
+  tags:
+    include:
+    - v*
+  # Can't add pull request validation, see image below.
+```
+
+{{< figure src="images/buildvalidation.png" title="Require builds to succeed in order to merge code in Azure DevOps." lightbox="true" >}} 
+
+In GitHub, its properly placed in the workflow file and can be managed by change management the same way as the other parts of the pipeline like the example below.
 
 ```yaml
 # GitHub Workflow YAML file.
@@ -194,10 +211,12 @@ There are some features in Azure DevOps that remain unimplemented or half-baked 
 
 Additionally, pipelines themselves must be associated manually with yaml files located in repositories which is just another place where they need their own permission structure (like [secrets](#secret--variable-management), [build validation](#creating--managing-build-validation), and [documentation](#maintaining-documentation)).
 
+In GitHub, workflows YAML files are discovered automatically when committed to the repository.
+
 I'm not going to dive into all the ways that GitHub Actions allow much more expressive YAML pipelines which simplify some jankiness and verbosity of Azure DevOps but you can look at the examples [here](https://pipelinestoactions.azurewebsites.net/home/CIExample) or even plug in your own YAML files and watch them shrink.
 
 ### Secret / Variable Management
-Like the [Documentation](#documentation) section, pipeline secrets and variables in Azure DevOps are managed outside the repository in the `Library` section, with their own permission structure. Secrets are "_optionally_" secret and must be manually locked in order to actually hide them and must be replaced. If they aren't locked, they're a variable and viewable.
+Like the [Documentation](#maintaining-documentation) section, pipeline secrets and variables in Azure DevOps are managed outside the repository in the `Library` section, with their own permission structure. Secrets are "_optionally_" secret and must be manually locked in order to actually hide them and must be replaced. If they aren't locked, they're a variable and viewable.
 
 However, in GitHub, secrets and variables are two separate things and referenced in two separate ways in workflows. Secrets, once set, are always secret and only can be replaced. Advanced GitHub features pair really well here to make sure secrets always stay secret and that people aren't accidentally setting secrets as variables (see [the Bots section](#bots)).
 
