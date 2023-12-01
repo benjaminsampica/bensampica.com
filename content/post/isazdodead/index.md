@@ -153,7 +153,7 @@ If you pay for GitHub Enterprise, they have a security feature called [GitHub Ad
 
 And finally, a comprehensive list of all these settings in GitHub with GitHub Enterprise.
 
-{{< figure src="bot-capabilities.png" title="Code and security analysis options." lightbox="true" >}} 
+{{< figure src="images/bot-capabilities.png" title="Code and security analysis options." lightbox="true" >}} 
 
 A few weeks ago (October 2023), Azure DevOps just implemented some of GitHub's Advanced Security features outlined above with an additional $49/user/month subscription cost.
 
