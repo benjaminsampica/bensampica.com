@@ -51,7 +51,7 @@ The below sections can be read out-of-band but will often refer to other section
 
 ### The CODEOWNERS File
 
-This feature ,missing from Azure DevOps that is present in GitHub, is the [CODEOWNERS](https://docs.github.com/en/github-ae@latest/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners) file. Placing this file inside a repository automatically establishes ownership over the configured files and folders, with a lot of levers to pull for fine-grained control.  What does this mean?
+This feature, missing from Azure DevOps that but present on GitHub, is the [CODEOWNERS](https://docs.github.com/en/github-ae@latest/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners) file. Placing this file inside a repository automatically establishes ownership over the configured files and folders, with a lot of levers to pull for fine-grained control.  What does this mean?
 
 1. Pull Requests that include changes to that code can automatically include the owners on the pull request as _required approvers_. 
 2. Ownership can be viewed in the UI directly (without even really knowing about the CODEOWNERS file existing).
@@ -63,7 +63,7 @@ This is perfect for repositories with cross-team responsibilities and happens to
 
 Here's an example of a CODEOWNERS file:
 
-```
+```yaml
 # This is a comment.
 # Each line is a file pattern followed by one or more owners.
 
