@@ -156,6 +156,8 @@ And finally, a comprehensive list of all these settings in GitHub with GitHub En
 
 A few weeks ago (October 2023), Azure DevOps just implemented some of GitHub's Advanced Security features outlined above with an additional $49/user/month subscription cost.
 
+That being said, the level of botting capability in GitHub is high. It is common in GitHub to have bots help with pull requests, code reviews, and branch management - typically things left entirely to the developer team.
+
 ### Maintaining Documentation
 
 Azure DevOps supports readme files being composed with markdown in their repositories. They even claim to support [graphs](https://learn.microsoft.com/en-us/azure/devops/project/wiki/markdown-guidance?view=azure-devops#add-mermaid-diagrams-to-a-wiki-page), which are "officially" supported but broken where it matters... actually viewing them.
@@ -169,11 +171,11 @@ In GitHub, each repository has its own Wiki so this documentation can sit much c
 {{< figure src="images/wiki.png" title="Wiki's sit at the repository level." lightbox="true" >}} 
 
 ### The Pipeline / Workflow
-The Azure DevOps marketplace contains very few up-to-date tasks that simplify common tasks. As of November 2023, there are only 2241 extensions available on the marketplace - this includes _both_ extensions to Azure DevOps itself and also pipeline tasks.
+The Azure DevOps marketplace contains very few up-to-date tasks that simplify common tasks. As of November 2023, there are only 2241 extensions available on the marketplace - this includes _both_ extensions to Azure DevOps itself and also pipeline tasks. The majority of these have not been updated in the last two years.
 
 The built-in tasks for Azure DevOps are sorely lacking both in breadth and maintenance. There are a wide array of core tasks that have never made it past alpha, such as [AzureAppServiceManage@0](https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/azure-app-service-manage-v0?view=azure-pipelines), [IISWebAppDeploymentOnMachineGroup@0](https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/iisweb-app-deployment-on-machine-group-v0?view=azure-pipelines), and [SqlDacpacDeploymentOnMachineGroup@0](https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/sql-dacpac-deployment-on-machine-group-v0?view=azure-pipelines). You can view all their tasks [here](https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/?view=azure-pipelines).
 
-On the other hand, GitHub Marketplace has over 20,000 pipeline tasks alone, like the ability to [login to cloud providers](https://github.com/Azure/login), deploy [function applications](Azure/functions-action@v1.5.0), [web applications](https://github.com/Azure/webapps-deploy), and [infrastructure as code](https://github.com/Azure/arm-deploy).
+On the other hand, GitHub Marketplace has over 20,000 pipeline tasks alone, like the ability to [login to cloud providers](https://github.com/Azure/login), deploy [function applications](Azure/functions-action@v1.5.0),  .
 
 ### Creating & Managing Build Validation
 One of my biggest pet peeves with Azure DevOps is that [build validation is managed outside the repository](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#configure-branch-policies) YAML file in Azure DevOps, which brings in the necessity for additional security permissions and controls to be in place. 
