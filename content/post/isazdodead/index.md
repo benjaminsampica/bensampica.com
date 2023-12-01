@@ -17,7 +17,7 @@ toc: true
 
 ## Introduction
 
-You will have to excuse the hyperbolic title but I think there's no fewer words I can use to accurately sum up this in-depth comparison of Azure DevOps to GitHub. Also, let me start this off by saying I, in no way, am paid by Microsoft to shill GitHub. In fact, both of these products are Microsoft products. But one (hint: it's Azure DevOps) has been silently gasping for air for years. In the following article, I do not claim that GitHub reigns supreme among developer productivity & as a comprehensive toolchain. That being said, GitHub might not have _won_ the SaaS wars against some of the competing tools, but there is no doubt in my mind that Azure DevOps has taken a fatal blow and lays on the battlefield, bleeding out.
+You will have to excuse the hyperbolic title but I think there's no fewer words I can use to accurately sum up this in-depth comparison of Azure DevOps to GitHub. Also, let me start this off by saying I, in no way, am paid by Microsoft to shill GitHub. In fact, both of these products are Microsoft products. But one (hint: it's Azure DevOps) has been silently gasping for air for years. In the following article, I do not claim that GitHub reigns supreme among developer productivity or is the best toolchain. But there is no doubt in my mind that Azure DevOps has taken a fatal blow and lays on the battlefield, bleeding out.
 
 Am I biased towards GitHub? Is this article? You might say yes already and, at times, it might seem that way as you read on. But I promise all I am biased in favor of is boring technology, turn-key solutions for myself and my team, and constantly evolving tools to handle ever-increasing complex, demanding problems. [My mind is simple and the enemy of all developers is complexity](https://grugbrain.dev/); I want to do more with less because I like to **build stuff people love**.
 
@@ -133,15 +133,13 @@ apps/ @octocat
 ```
 
 ### Bots
-Any capabilities Azure DevOps has with bots, especially with security, is non-existent and must be manually imagined, invested in, and developed by you. Ironically, [Azure DevOps tokens checked into public GitHub repositories](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows#q-what-happens-if-i-accidentally-check-my-pat-into-a-public-repository-on-github) are picked up by GitHub.
-
-GitHub's **Dependabot** is an automated dependency management tool integrated into GitHub. It regularly scans your project's dependencies for outdated packages and automatically creates pull requests to update them. This helps ensure that your project uses the latest and most secure versions of its dependencies. [Here is an example](https://github.com/benjaminsampica/benjaminsampica/pull/241) of one of my own personal repositories of this in action.
+GitHub's **Dependabot** is an automated dependency management tool integrated into GitHub and has been around for a number of years. It regularly scans your project's dependencies for outdated packages and automatically creates pull requests to update them. This helps ensure that your project uses the latest and most secure versions of its dependencies. [Here is an example](https://github.com/benjaminsampica/benjaminsampica/pull/241) of one of my own personal repositories of this in action.
 
 {{< figure src="images/dependabot-1.png" title="Dependabot automatically opening a pull request for a security alert." lightbox="true" >}}
 
 If you pay for GitHub Enterprise, they have a security feature called [GitHub Advanced Security](https://docs.github.com/en/get-started/learning-about-github/about-github-advanced-security) which provides the following capabilities:
 
-1. [Code scanning](https://docs.github.com/en/code-security/code-scanning/introduction-to-code-scanning/about-code-scanning) - similar to Dependabot but also can find errors in code.
+1. [Code scanning](https://docs.github.com/en/code-security/code-scanning/introduction-to-code-scanning/about-code-scanning) - supercharges Dependabot to also find errors in code.
 
 {{< figure src="https://github.blog/wp-content/uploads/2020/09/token-scanning-2.png" title="A code scanning example." lightbox="true" >}} 
 
@@ -157,6 +155,8 @@ And finally, a comprehensive list of all these settings in GitHub with GitHub En
 
 {{< figure src="bot-capabilities.png" title="Code and security analysis options." lightbox="true" >}} 
 
+A few weeks ago (October 2023), Azure DevOps just implemented some of GitHub's Advanced Security features outlined above with an additional $49/user/month subscription cost.
+
 ### Maintaining Documentation
 
 Azure DevOps supports readme files being composed with markdown in their repositories. They even claim to support [graphs](https://learn.microsoft.com/en-us/azure/devops/project/wiki/markdown-guidance?view=azure-devops#add-mermaid-diagrams-to-a-wiki-page), which are "officially" supported but broken where it matters... actually viewing them.
@@ -169,17 +169,33 @@ In GitHub, each repository has its own Wiki so this documentation can sit much c
 
 {{< figure src="wiki.png" title="Wiki's sit at the repository level." lightbox="true" >}} 
 
-### The Pipeline / Workflow Task Marketplace
-The Azure DevOps marketplace 
+### The Pipeline / Workflow
+The Azure DevOps marketplace contains very few up-to-date tasks that simplify common tasks. As of November 2023, there are only 2241 extensions available on the marketplace - this includes _both_ extensions to Azure DevOps itself and also pipeline tasks.
 
-### The Pipeline / Workflow Built-in Tasks 
-Mention the amount of V0's on AzDo.
+The built-in tasks for Azure DevOps are sorely lacking both in breadth and maintenance. There are a wide array of core tasks that have never made it past alpha, such as [AzureAppServiceManage@0](https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/azure-app-service-manage-v0?view=azure-pipelines), [IISWebAppDeploymentOnMachineGroup@0](https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/iisweb-app-deployment-on-machine-group-v0?view=azure-pipelines), and [SqlDacpacDeploymentOnMachineGroup@0](https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/sql-dacpac-deployment-on-machine-group-v0?view=azure-pipelines). You can view all their tasks [here](https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/?view=azure-pipelines).
+
+On the other hand, GitHub Marketplace has over 20,000 pipeline tasks alone, like the ability to [login to cloud providers](https://github.com/Azure/login), deploy [function applications](Azure/functions-action@v1.5.0), [web applications](https://github.com/Azure/webapps-deploy), and [infrastructure as code](https://github.com/Azure/arm-deploy).
 
 ### Creating & Managing Build Validation
+One of my biggest pet peeves with Azure DevOps is that [build validation is managed outside the repository](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#configure-branch-policies) YAML file in Azure DevOps, which brings in the necessity for additional security permissions and controls to be in place. In GitHub, its properly placed in the workflow file and can be managed by change management the same way as the other parts of the pipeline like the example below.
+
+```yaml
+# GitHub Workflow YAML file.
+on:
+  push:
+    branches: [ main ]
+    tags:
+      - 'v*'
+  pull_request: # This is not possible in Azure DevOps
+    branches: [ main ]
+```
 
 ### Creating & Managing Pipelines / Workflows   
+There are some features in Azure DevOps that remain unimplemented or half-baked when it comes to `Pipelines`. For example, Azure DevOps has the concept of _secure files_ in order to be able to download and read files (like certificates) during pipeline runs. There is a feature underneath secure files called _Properties_ which is [completely undocumented](https://stackoverflow.com/questions/53537035/access-azure-devops-secure-file-properties) and appears to be unusable. It would be great to store certificate passwords alongside their secrets, but at the moment this is impossible (and has been for at least four years).
 
-For example, Azure DevOps has the concept of _secure files_ in order to be able to download and read files (like certificates) during pipeline runs. There is a feature under secure files called _Properties_ which is [completely undocumented](https://stackoverflow.com/questions/53537035/access-azure-devops-secure-file-properties). This is another example of how [the investment in itself is low](#the-services-investment-in-itself).
+Additionally, pipelines themselves must be associated manually with yaml files located in repositories which is just another place where they need their own permission structure (like [secrets](#secret--variable-management), [build validation](#creating--managing-build-validation), and [documentation](#maintaining-documentation)).
+
+I'm not going to dive into all the ways that GitHub Actions allow much more expressive YAML pipelines which simplify some jankiness and verbosity of Azure DevOps but you can look at the examples [here](https://pipelinestoactions.azurewebsites.net/home/CIExample) or even plug in your own YAML files and watch them shrink.
 
 ### Secret / Variable Management
 Like the [Documentation](#documentation) section, pipeline secrets and variables in Azure DevOps are managed outside the repository in the `Library` section, with their own permission structure. Secrets are "_optionally_" secret and must be manually locked in order to actually hide them and must be replaced. If they aren't locked, they're a variable and viewable.
@@ -188,12 +204,6 @@ However, in GitHub, secrets and variables are two separate things and referenced
 
 GitHub also has the capability of adding _organization secrets & variables_, notably missing from Azure DevOps. These secrets & variables can be brought into any pipeline across the entire organization, but managed by a core team (like an Identity Access team).
 
-### Deployments
-Environment differences
-
-### Release Management
-
-
 ### Artifact Registry
 Azure DevOps and GitHub both provide common package hosting for shared libraries like _NuGet_ and _npm_ packages. However, GitHub also provides container hosting as part of their offering which is called [GitHub Packages](https://docs.github.com/en/packages/learn-github-packages/introduction-to-github-packages).
 
@@ -201,9 +211,6 @@ Azure DevOps and GitHub both provide common package hosting for shared libraries
 Have you tried to use Azure DevOps's API to do things? At best, you'll find documentation that is only _slightly_ out of date with [their actual API](https://learn.microsoft.com/en-us/rest/api/azure/devops/?view=azure-devops-rest-7.2). At worst, you'll find some random thread off of Google where an answer recommends using a "hidden" API with only a HTTP verb and a URL as your north star. I'm particularly salty about this one as I tried to programmatically migrate repositories from one Azure DevOps project to another over a year ago and found it hilariously frustrating to pull off (if I didn't laugh about it, I'd cry). GitHub's API has some faults, but the documentation has been solid every time I have used it.
 
 Security wise, GitHub allows much more fine-grained control over personal access tokens that are used to authorize with the GitHub API compared to Azure DevOps, enabling a least-permissive approach. Additionally, check out [the Bots section](#bots) to see the automatic protections in place for secret leakage.
-
-### The Service's Investment In Itself
-Mention the changes AzDo is pushing out vs. Github.
 
 ### Adoption
 I'm not going to pull out all the different adoption metrics GitHub has as it's absurd (100million public repositories, for example) so I'll stick with a personal anecdote. I just finished attending [.NET Conference 2023](https://www.dotnetconf.net/agenda), run by Microsoft itself, a few weeks ago. These folks are the prime candidates for using Azure DevOps - Microsoft employees, .NET Developers, overwhelmingly use Visual Studio, and Azure. All throughout the conference, every speaker that gave a presentation besides a _single one_ was using GitHub to share, host, and deploy their code.
@@ -217,9 +224,6 @@ GitHub allows you to create template repositories that can be used as a starting
 
 {{< figure src="images/template.png" title="bensampica.com's template." lightbox="true" >}} 
 
-### Work Boards (Product Mgmt.)
-Talk about automation in this space (w/ workflows), projections based on cards, etc.
-
 ### Auditing
 Azure DevOps' Auditing has a narrower set of events it tracks for users but is probably adequate for most organizations. However, they only store audit logs for [90 days](https://learn.microsoft.com/en-us/azure/devops/organizations/audit/azure-devops-auditing?view=azure-devops&tabs=preview-page#filter-audit-log-by-date-and-time) and only let you filter by a date range.
 
@@ -228,4 +232,6 @@ In contrast, GitHub Audit Logs have a wider set of events that are tracked but t
 ## Summary
 This was a lot of information but the difference of approaches can really be summed up as this: Azure DevOps views its "Projects" as the center of the universe, with the management of `Wikis`, the variables/secrets in its `Library`, as well as builder & releaser of `Pipelines` and `Repos` as all each being different people and little overlap. GitHub views the repository itself as the center of the universe and is structured as such - most of the information that is a dozen or so clicks away is readily available on a _single page_ at the root GitHub repository, with most other information one click away.
 
-{{< figure src="images/summary.png" title="GitHub's repository root page." lightbox="true" >}} 
+{{< figure src="images/summary.png" title="GitHub's repository root page." lightbox="true" >}}
+
+That is not to say that GitHub Organizations and projects don't wrap repositories up into configurable units with global policies, but that GitHub has strongly modeled itself with the premise that the creation, management, and deployment of code at the repository level has shifted-left to a single team in the majority of cases instead of Azure DevOps' "programming team", "release team", and "support team" user interface layout.
