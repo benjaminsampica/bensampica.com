@@ -33,7 +33,7 @@ Let's start from the beginning.
 
 ## A Brief History
 
-I'm not going to bore you with the details, but the short of it is this - GitHub was an independent product that was not owned by Microsoft long ago (in technology years). Skipping over the on-premise wars before SaaS products started really taking off, Microsoft developed Azure DevOps (once known as Team Foundation Server or _TFS_) as a competing cloud product, not just GitHub but also similar developer toolchain products like BitBucket, GitLab, etc.. Continuous, automated building and deployment was exploding in popularity and the market demanded tools to accommodate the growing complexity and interconnectivity of systems. 
+I'm not going to bore you with the details, but the short of it is this - GitHub was an independent product that was not owned by Microsoft long ago (in technology years). Skipping over the on-premise wars before SaaS products started really taking off, Microsoft developed Azure DevOps (once known as Team Foundation Server or _TFS_) as a competing cloud product, not just GitHub but also similar developer toolchain products like BitBucket, GitLab, among others. Continuous, automated building and deployment was exploding in popularity and the market demanded tools to accommodate the growing complexity and interconnectivity of systems. 
 
 As Microsoft was (IMO) pretty late to the game with their cloud offering, a lot of developers were already using GitHub to share their software. The open source software movement was exponentially growing and tools like GitHub were making it easier than ever to share & collaborate on common problems with code as solutions.
 
@@ -41,7 +41,7 @@ The timeline looks something like this:
 
 - 2007 - Microsoft releases Team Foundation Services (TFS), an on-premise versioning system.
 - 2008 - GitHub launches their service with a focus on open-source w/ a free model.
-- 2012 - Microsoft becomes a significant user of GitHub for their repositories (.NET, MSBuild, Powershell, Visual Studio Code, etc.). Other companies like Facebook and Google have overwhelming use as well.
+- 2012 - Microsoft becomes a significant user of GitHub for their repositories (.NET, MSBuild, Powershell, Visual Studio Code, and more). Other companies like Facebook and Google have overwhelming use as well.
 - 2013 - Microsoft launches Visual Studio Online, a quasi-rebrand of TFS and a nascent Azure DevOps with a subscription model closely tied to Visual Studio. This gets re-branded _again_ to Visual Studio Team Services (VSTS) along the way.
 - June 2018 - Microsoft acquires GitHub.
 - September 2018 - The service is finally called Azure DevOps and receives a free-tier that anyone can use.
@@ -145,7 +145,7 @@ If you pay for GitHub Enterprise, they have a security feature called [GitHub Ad
 
 {{< figure src="https://github.blog/wp-content/uploads/2020/09/token-scanning-2.png" title="A code scanning example." lightbox="true" >}} 
 
-2. [Secret scanning](https://docs.github.com/en/code-security/secret-scanning/about-secret-scanning) - searches all repository branches, PR comments, and descriptions for private keys, tokens, etc.
+2. [Secret scanning](https://docs.github.com/en/code-security/secret-scanning/about-secret-scanning) - searches all repository branches, PR comments, and descriptions for private keys, tokens, and more.
 
 {{< figure src="https://github.blog/wp-content/uploads/2020/05/81083539-8e863a00-8ea9-11ea-8ae9-d4c83ed74998.png" title="A secret scanning example." lightbox="true" >}} 
 
@@ -167,6 +167,8 @@ However, readme files cannot be comprehensive (it is a single file, after all) a
 
 In GitHub, each repository has its own Wiki so this documentation can sit much closer to the code ([the principle of proximity](https://www.bensampica.com/post/cleancode2/#the-principle-of-proximity) playing a role here) but doesn't inherit the same _git_ protections as the repository itself. However, only those with write permissions to the repository can contribute. As a bonus, the diagrams actually work, too.
 
+{{< figure src="wiki.png" title="Wiki's sit at the repository level." lightbox="true" >}} 
+
 ### The Pipeline / Workflow Task Marketplace
 The Azure DevOps marketplace 
 
@@ -177,7 +179,7 @@ Mention the amount of V0's on AzDo.
 
 ### Creating & Managing Pipelines / Workflows   
 
-For example, Azure DevOps has the concept of _secure files_ in order to be able to download and read files (like certificates) during pipeline runs. There is a feature under secure files called _Properties_ which is [completely undocumented](https://stackoverflow.com/questions/53537035/access-azure-devops-secure-file-properties). Another example of how [the services investment in itself is low](#the-services-investment-in-itself).
+For example, Azure DevOps has the concept of _secure files_ in order to be able to download and read files (like certificates) during pipeline runs. There is a feature under secure files called _Properties_ which is [completely undocumented](https://stackoverflow.com/questions/53537035/access-azure-devops-secure-file-properties). This is another example of how [the investment in itself is low](#the-services-investment-in-itself).
 
 ### Secret / Variable Management
 Like the [Documentation](#documentation) section, pipeline secrets and variables in Azure DevOps are managed outside the repository in the `Library` section, with their own permission structure. Secrets are "_optionally_" secret and must be manually locked in order to actually hide them and must be replaced. If they aren't locked, they're a variable and viewable.
@@ -196,24 +198,32 @@ Environment differences
 Azure DevOps and GitHub both provide common package hosting for shared libraries like _NuGet_ and _npm_ packages. However, GitHub also provides container hosting as part of their offering which is called [GitHub Packages](https://docs.github.com/en/packages/learn-github-packages/introduction-to-github-packages).
 
 ### The Service's API
-Have you tried to use Azure DevOps's API to do things? At best, you'll find documentation that is only _slightly_ out of date with [their actual API](https://learn.microsoft.com/en-us/rest/api/azure/devops/?view=azure-devops-rest-7.2). At worst, you'll find some random thread off of Google where an answer recommends using a "hidden" API with only a HTTP verb and a URL as your north star. I'm particularly salty about this one as I tried to programmatically migrate repositories from one Azure DevOps project to another over a year ago and found it hilariously frustrating to pull off (if I didn't laugh about it, I'd cry). GitHub's API is no darling, but the documentation has been solid every time I have used it.
+Have you tried to use Azure DevOps's API to do things? At best, you'll find documentation that is only _slightly_ out of date with [their actual API](https://learn.microsoft.com/en-us/rest/api/azure/devops/?view=azure-devops-rest-7.2). At worst, you'll find some random thread off of Google where an answer recommends using a "hidden" API with only a HTTP verb and a URL as your north star. I'm particularly salty about this one as I tried to programmatically migrate repositories from one Azure DevOps project to another over a year ago and found it hilariously frustrating to pull off (if I didn't laugh about it, I'd cry). GitHub's API has some faults, but the documentation has been solid every time I have used it.
 
-Security wise, GitHub allows much more fine-grained control over personal access tokens. Additionally, check out [the Bots section](#bots) to see the automatic protections in place for secret leakage.
+Security wise, GitHub allows much more fine-grained control over personal access tokens that are used to authorize with the GitHub API compared to Azure DevOps, enabling a least-permissive approach. Additionally, check out [the Bots section](#bots) to see the automatic protections in place for secret leakage.
 
 ### The Service's Investment In Itself
-Mention the changes AzDo is pushing out vs. Github. 
+Mention the changes AzDo is pushing out vs. Github.
+
 ### Adoption
-I'm not going to pull out the different adoption numbers GitHub has as it's absurd so I'll stick with a personal anecdote. I just finished attending [.NET Conference 2023](https://www.dotnetconf.net/agenda), run by Microsoft itself, a few weeks ago. These folks are the prime candidates for using Azure DevOps - Microsoft employees, .NET Developers, overwhelmingly use Visual Studio, and Azure. All throughout the conference, every speaker that gave a presentation besides a _single one_ was using GitHub to share, host, and deploy their code.
+I'm not going to pull out all the different adoption metrics GitHub has as it's absurd (100million public repositories, for example) so I'll stick with a personal anecdote. I just finished attending [.NET Conference 2023](https://www.dotnetconf.net/agenda), run by Microsoft itself, a few weeks ago. These folks are the prime candidates for using Azure DevOps - Microsoft employees, .NET Developers, overwhelmingly use Visual Studio, and Azure. All throughout the conference, every speaker that gave a presentation besides a _single one_ was using GitHub to share, host, and deploy their code.
 
 As an aside, of those that were visible, there were more MacBooks than Surface's too 🤔.
 
 ### Templating Repositories
-GitHub allows you to create template repositories that can be used as a starting point for new projects. These templates can include files, directories, and even default issues or pull requests. This helps maintain consistency across projects and saves time on initial project setup.
+Azure DevOps has no templating capabilities besides old-fashioned cloning.
+
+GitHub allows you to create template repositories that can be used as a starting point for new projects. These templates can include files, directories, and even default issues or pull requests. This helps maintain consistency across projects and saves time on initial project setup; it is something I have used at every step of my career. As a bit of trivia - this website itself was [generated from a GitHub template](https://github.com/benjaminsampica/bensampica.com).
+
+{{< figure src="images/template.png" title="bensampica.com's template." lightbox="true" >}} 
 
 ### Work Boards (Product Mgmt.)
 Talk about automation in this space (w/ workflows), projections based on cards, etc.
 
-### 
+### Auditing
+Azure DevOps' Auditing has a narrower set of events it tracks for users but is probably adequate for most organizations. However, they only store audit logs for [90 days](https://learn.microsoft.com/en-us/azure/devops/organizations/audit/azure-devops-auditing?view=azure-devops&tabs=preview-page#filter-audit-log-by-date-and-time) and only let you filter by a date range.
+
+In contrast, GitHub Audit Logs have a wider set of events that are tracked but the power really comes in how you can query them. All [event categories can be filtered on](https://docs.github.com/en/organizations/keeping-your-organization-secure/managing-security-settings-for-your-organization/reviewing-the-audit-log-for-your-organization#searching-the-audit-log), including searching by user, correlation id, repository, and much more. As an added bonus, GitHub also stores audit logs for 6 months which could narrow down the window that you need to ship them somewhere else (but no worries [the API is good](#the-services-api)).
 
 ## Summary
 This was a lot of information but the difference of approaches can really be summed up as this: Azure DevOps views its "Projects" as the center of the universe, with the management of `Wikis`, the variables/secrets in its `Library`, as well as builder & releaser of `Pipelines` and `Repos` as all each being different people and little overlap. GitHub views the repository itself as the center of the universe and is structured as such - most of the information that is a dozen or so clicks away is readily available on a _single page_ at the root GitHub repository, with most other information one click away.
