@@ -49,7 +49,7 @@ The timeline looks something like this:
 
 The below sections can be read out-of-band but will often refer to other sections - it's called a tool _chain_, after all. They are in no particular order except what came to mind first.
 
-### The CODEOWNERS File
+#### The CODEOWNERS File
 
 This feature, missing from Azure DevOps that but present on GitHub, is the [CODEOWNERS](https://docs.github.com/en/github-ae@latest/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners) file. Placing this file inside a repository automatically establishes ownership over the configured files and folders, with a lot of levers to pull for fine-grained control.  What does this mean?
 
