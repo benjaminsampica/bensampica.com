@@ -1,7 +1,7 @@
 ---
 title: 'Is Azure DevOps "Dead"?'
 subtitle: 'And why GitHub is a more robust alternative.'
-summary: 'A comparison of the two software solutions with a breakdown of features that are present in GitHub and have been missing in AzDo for years.'
+summary: 'A comprehensive comparison with a breakdown of features that are present in GitHub and have been missing in AzDo for years.'
 authors:
 - ben-sampica
 categories:
