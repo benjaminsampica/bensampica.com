@@ -152,7 +152,7 @@ If you pay for GitHub Enterprise, they have a security feature called [GitHub Ad
 
 And finally, a comprehensive list of all these settings in GitHub with GitHub Enterprise.
 
-{{< figure src="images/bot-capabilities.png" title="Code and security analysis options." lightbox="true" >}} 
+{{< figure src="images/bot-capabilities.png" title="Code and security analysis options." lightbox="true" >}}
 
 A few weeks ago (October 2023), Azure DevOps just implemented some of GitHub's Advanced Security features outlined above with an additional $49/user/month subscription cost.
 
@@ -215,7 +215,26 @@ Additionally, pipelines themselves must be associated manually with yaml files l
 
 In GitHub, workflows YAML files are discovered automatically when committed to the repository.
 
-I'm not going to dive into all the ways that GitHub Actions allow much more expressive YAML pipelines which simplify some jankiness and verbosity of Azure DevOps but you can look at the examples [here](https://pipelinestoactions.azurewebsites.net/home/CIExample) or even plug in your own YAML files and watch them shrink.
+I'm not going to dive into all the ways that GitHub Actions allow much more expressive YAML pipelines which simplify some jankiness and verbosity of Azure DevOps but you can look at the examples [here](https://pipelinestoactions.azurewebsites.net/home/CIExample) or even plug in your own YAML files and watch them shrink. However, one feature I do want to call out that is present in Github Actions (and not Azure DevOps) is the multitude of triggers that are supported. For example, you can trigger workflows based on pull request reviews being submitted, declined, labels added, and so much more. For example:
+
+```yaml
+on: 
+  pull_request: # Will trigger on any of the below labels being added to the PR
+    types:
+      - labeled
+      - ready_for_review
+      - review_request_removed
+      - review_requested
+      - synchronize
+      - unlabeled
+  pull_request_review: # Will trigger on a PR review being submitted or dismissed.
+    types:
+      - dismissed
+      - submitted
+
+```
+
+These types of triggers play right into [bots](#bots), of which there is a lot of capabilities available to automate a lot of mundane repository or code tasks.
 
 ### Secret / Variable Management
 Like the [Documentation](#maintaining-documentation) section, pipeline secrets and variables in Azure DevOps are managed outside the repository in the `Library` section, with their own permission structure. Secrets are "_optionally_" secret and must be manually locked in order to actually hide them and must be replaced. If they aren't locked, they're a variable and viewable.
