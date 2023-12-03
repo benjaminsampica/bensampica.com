@@ -6,8 +6,8 @@ authors:
 - ben-sampica
 categories:
 - DevOps
-date: '2023-12-2T00:00:00Z'
-lastmod: '2023-12-2T00:00:00Z'
+date: '2023-12-02T00:00:00Z'
+lastmod: '2023-12-02T00:00:00Z'
 featured: false
 draft: false
 toc: true
