@@ -170,7 +170,7 @@ In GitHub, each repository has its own Wiki so this documentation can sit much c
 
 {{< figure src="images/wiki.png" title="Wiki's sit at the repository level." lightbox="true" >}} 
 
-### The Pipeline / Workflow
+### Extension / Task Marketplace
 The Azure DevOps marketplace contains very few up-to-date tasks that simplify common tasks. As of November 2023, there are only 2241 extensions available on the marketplace - this includes _both_ extensions to Azure DevOps itself and also pipeline tasks. The majority of these have not been updated in the last two years.
 
 The built-in tasks for Azure DevOps are sorely lacking both in breadth and maintenance. There are a wide array of core tasks that have never made it past alpha, such as [AzureAppServiceManage@0](https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/azure-app-service-manage-v0?view=azure-pipelines), [IISWebAppDeploymentOnMachineGroup@0](https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/iisweb-app-deployment-on-machine-group-v0?view=azure-pipelines), and [SqlDacpacDeploymentOnMachineGroup@0](https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/sql-dacpac-deployment-on-machine-group-v0?view=azure-pipelines). You can view all their tasks [here](https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/?view=azure-pipelines).
