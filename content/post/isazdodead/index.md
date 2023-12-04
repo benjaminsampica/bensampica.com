@@ -1,13 +1,13 @@
 ---
 title: 'Is Azure DevOps "Dead"?'
 subtitle: 'And why GitHub is a more robust alternative.'
-summary: 'A comprehensive compare and contrast between the two software solutions with a breakdown of features that are present in GitHub and have been missing in AzDo for years.'
+summary: 'A comprehensive comparison with a breakdown of features that are present in GitHub and have been missing in AzDo for years.'
 authors:
 - ben-sampica
 categories:
 - DevOps
-date: '2023-11-30T00:00:00Z'
-lastmod: '20232-11-30T00:00:00Z'
+date: '2023-12-02T00:00:00Z'
+lastmod: '2023-12-02T00:00:00Z'
 featured: false
 draft: false
 toc: true
@@ -17,7 +17,7 @@ toc: true
 
 ## Introduction
 
-You will have to excuse the hyperbolic title but I think there's no fewer words I can use to accurately sum up this comparison of Azure DevOps (AzDo) to GitHub. Also, let me start this off by saying I, in no way, am paid by Microsoft to shill GitHub. In fact, both of these products are Microsoft products. But one (hint: it's Azure DevOps) has been silently gasping for air for years. In the following article, I do not claim that GitHub reigns supreme among developer productivity or is the best toolchain. But there is no doubt in my mind that Azure DevOps has been put on life support.
+You will have to excuse the hyperbolic title but I think there's no fewer words I can use to accurately sum up the features of Azure DevOps (AzDo) compared to GitHub. Also, let me start this off by saying I, in no way, am paid by Microsoft to shill GitHub. In fact, both of these products are Microsoft products. But one (hint: it's Azure DevOps) has been silently gasping for air for years. In the following article, I do not claim that GitHub reigns supreme among developer productivity or is the best toolchain. But there is no doubt in my mind that Azure DevOps has been put on life support.
 
 Am I biased towards GitHub? I would argue no. I promise all I am biased in favor of is boring technology, turn-key solutions for myself and my team, and constantly evolving tools to handle ever-increasing complex, demanding problems. [My mind is simple and the enemy of all developers is complexity](https://grugbrain.dev/); I want to do more with less because I like to **build stuff people love**.
 
@@ -152,11 +152,11 @@ If you pay for GitHub Enterprise, they have a security feature called [GitHub Ad
 
 And finally, a comprehensive list of all these settings in GitHub with GitHub Enterprise.
 
-{{< figure src="images/bot-capabilities.png" title="Code and security analysis options." lightbox="true" >}} 
+{{< figure src="images/bot-capabilities.png" title="Code and security analysis options." lightbox="true" >}}
 
 A few weeks ago (October 2023), Azure DevOps just implemented some of GitHub's Advanced Security features outlined above with an additional $49/user/month subscription cost.
 
-That being said, the level of botting capability in GitHub is high. It is common in GitHub to have bots help with pull requests, code reviews, and branch management - typically things left entirely to the developer team.
+That being said, the level of botting capability in GitHub is high. It is common in GitHub to have bots help with pull requests, code reviews, and branch management - typically things left entirely to the developer team. For example, the [pr merge bot](https://github.com/marketplace/actions/pr-merge-bot) can block merging of a pull request based on a label `do-not-merge`. Additionally, the [reginald pr bot](https://github.com/marketplace/actions/reginald-a-pull-request-review-bot) can block merging of a pull request if the pr doesn't contain a title like `[JIRA-2100]`. Finally, the [action git diff suggestions](https://github.com/marketplace/actions/action-git-diff-suggestions) can run a linter automatically on the pull request and then will _automatically_ push a commit to the PR with the linted code.
 
 ### Maintaining Documentation
 
@@ -215,7 +215,26 @@ Additionally, pipelines themselves must be associated manually with yaml files l
 
 In GitHub, workflows YAML files are discovered automatically when committed to the repository.
 
-I'm not going to dive into all the ways that GitHub Actions allow much more expressive YAML pipelines which simplify some jankiness and verbosity of Azure DevOps but you can look at the examples [here](https://pipelinestoactions.azurewebsites.net/home/CIExample) or even plug in your own YAML files and watch them shrink.
+I'm not going to dive into all the ways that GitHub Actions allow much more expressive YAML pipelines which simplify some jankiness and verbosity of Azure DevOps but you can look at the examples [here](https://pipelinestoactions.azurewebsites.net/home/CIExample) or even plug in your own YAML files and watch them shrink. However, one feature I do want to call out that is present in Github Actions (and not Azure DevOps) is the multitude of triggers that are supported. For example, you can trigger workflows based on pull request reviews being submitted, declined, labels added, and so much more. For example:
+
+```yaml
+on: 
+  pull_request: # Will trigger on any of the below labels being added to the PR
+    types:
+      - labeled
+      - ready_for_review
+      - review_request_removed
+      - review_requested
+      - synchronize
+      - unlabeled
+  pull_request_review: # Will trigger on a PR review being submitted or dismissed.
+    types:
+      - dismissed
+      - submitted
+
+```
+
+These types of triggers play right into [bots](#bots), of which there is a lot of capabilities available to automate a lot of mundane repository or code tasks.
 
 ### Secret / Variable Management
 Like the [Documentation](#maintaining-documentation) section, pipeline secrets and variables in Azure DevOps are managed outside the repository in the `Library` section, with their own permission structure. Secrets are "_optionally_" secret and must be manually locked in order to actually hide them and must be replaced. If they aren't locked, they're a variable and viewable.
@@ -247,10 +266,12 @@ GitHub allows you to create [template repositories](https://docs.github.com/en/r
 ### Auditing
 Azure DevOps' Auditing has a narrower set of events it tracks for users but is probably adequate for most organizations. However, they only store audit logs for [90 days](https://learn.microsoft.com/en-us/azure/devops/organizations/audit/azure-devops-auditing?view=azure-devops&tabs=preview-page#filter-audit-log-by-date-and-time) and only let you filter by a date range.
 
-In contrast, GitHub Audit Logs have a wider set of events that are tracked but the power really comes in how you can query them. All [event categories can be filtered on](https://docs.github.com/en/organizations/keeping-your-organization-secure/managing-security-settings-for-your-organization/reviewing-the-audit-log-for-your-organization#searching-the-audit-log), including searching by user, correlation id, repository, and much more. As an added bonus, GitHub also stores audit logs for 6 months which could narrow down the window that you need to ship them somewhere else (but no worries [the API is good](#the-services-api)).
+In contrast, GitHub Audit Logs have a wider set of events that are tracked but the power really comes in how you can query them. All [event categories can be filtered on](https://docs.github.com/en/organizations/keeping-your-organization-secure/managing-security-settings-for-your-organization/reviewing-the-audit-log-for-your-organization#searching-the-audit-log), including searching by user, correlation id, repository, and much more. Additionally, Additionally, you can use arithmetic operators like `>` and `<` to search ranges (like dates), `=` to search for specific keywords, or `-` to exclude things. As an added bonus, GitHub also stores audit logs for 6 months which could narrow down the window that you need to ship them somewhere else (but no worries [the API is good](#the-services-api)).
 
 ## Summary
-This was a lot of information but the difference of approaches can really be summed up as this: Azure DevOps views its "Projects" as the center of the universe, with the management of `Wikis`, the variables/secrets in its `Library`, as well as builder & releaser of `Pipelines` and `Repos` as all each being different people and little overlap. GitHub views the repository itself as the center of the universe and is structured as such - most of the information that is a dozen or so clicks away is readily available on a _single page_ at the root GitHub repository, with most other information one click away.
+So is Azure DevOps "dead"? No, of course not. But I hope you at least understand where I'm coming from. A vast amount of features are missing from Azure DevOps and, looking at their [lean list of things](https://learn.microsoft.com/en-us/azure/devops/release-notes/features-timeline) shipped in the last few years, likely never coming. Since using the above features in my daily work, I consider them to be vital tools to do more with less and reduce toil whilst operationally increasing security.
+
+Underneath a lot of these missing features is fundamentally a difference of approaches, which can really be summed up as this: Azure DevOps views its "Projects" as the center of the universe, with the management of `Wikis`, the variables/secrets in its `Library`, as well as builder & releaser of `Pipelines` and `Repos` as all each being different people and little overlap. GitHub views the repository itself as the center of the universe and is structured as such - most of the information that is a dozen or so clicks away is readily available on a _single page_ at the root GitHub repository, with most other information one click away.
 
 {{< figure src="images/summary.png" title="GitHub's repository root page." lightbox="true" >}}
 
