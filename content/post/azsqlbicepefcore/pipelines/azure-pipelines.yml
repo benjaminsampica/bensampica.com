@@ -1,0 +1,42 @@
+trigger:
+  branches:
+    include:
+    - main
+
+stages:
+- stage: Build
+  jobs:
+  - job:
+    pool:
+      vmImage: ubuntu-latest
+    displayName: 'Test, & Publish'
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet publish'
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: '-o $(Build.ArtifactStagingDirectory) --configuration Release'
+        modifyOutputPath: false
+    - script: dotnet tool install --global dotnet-ef 
+      displayName: dotnet tool install dotnet-ef
+    - task: DotNetCoreCLI@2
+      displayName: 'Create migration'
+      inputs:
+        command: custom
+        custom: ef
+        arguments: 'migrations script --idempotent --project src/AzureSql.Shared --output $(Build.ArtifactStagingDirectory)/Migrations/migration.sql --startup-project src/AzureSql.Web'
+    - publish: $(Build.ArtifactStagingDirectory)
+      displayName: 'Publish to Azure Devops'
+      artifact: drop
+- stage: Deploy_NonProd
+  dependsOn: Build
+  condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
+  jobs:
+  - job: deploy
+    pool:
+      vmImage: windows-latest
+    steps:
+      - template: deploy.yml
+        parameters:
+          deployEnvironment: dev
