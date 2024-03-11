@@ -67,7 +67,11 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
       appSettings: [
         {
           name: 'ConnectionStrings__AzureSqlDatabase'
-          value: 'Server=tcp:${sqlServerName},1433;Initial Catalog=${sqlServer::sqlServerDatabase.name};Authentication=Active Directory Managed Identity;Encrypt=True;MultipleActiveResultSets=True;'
+          value: 'Server=tcp:${sqlServerName},1433;Initial Catalog=${sqlServer::sqlServerDatabase.name};Authentication=Active Directory Default;Encrypt=True;MultipleActiveResultSets=True;'
+        }
+        {
+          name: 'AZURE_CLIENT_ID'
+          value: applicationIdentity.properties.clientId
         }
       ]
     }
