@@ -21,9 +21,8 @@ resource applicationIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2
 output userIdentityName string = applicationIdentity.name
 
 // Must have ability to read Entra. Directory.Read role.
-resource dbIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-preview' = {
+resource dbIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-preview' existing = {
   name: '${deployEnvironment}-${appName}-dbumi-01'
-  location: location
 }
 
 resource sqlServer 'Microsoft.Sql/servers@2023-05-01-preview' = {
