@@ -80,7 +80,7 @@ builder.Services.AddDbContext<AzureSqlDbContext>(options => options.UseSqlServer
 ### Making a Migration
 Navigate to your `.csproj` and run the following migration command, where `InitialCreate` is the name of your migration, and run the following command
 
-```
+```powershell
 dotnet ef migrations add InitialCreate -o ./Migrations
 ```
 
@@ -124,7 +124,7 @@ GO
 ```
 
 ## The Azure Pipeline
-In your Azure Pipeline, you'll want to have a task to generate the EF Core Migration script that will be applied to the database. The following is an example:
+In your Azure Pipeline, you'll want to have a task to generate the EF Core Migration script that will be applied to the database. The following is an example
 
 ```yaml
     # install the dotnet-ef tool which is used to generate migrations.
@@ -178,7 +178,7 @@ For the next stage, we need to actually do the deploy. We need to:
 - Deploy the initial scripts that will permission the product team as well as the application to be able to communicate with the database.
 - Deploy the migration scripts we generated earlier in the build phase.
 
-This stage might look like the following
+This stage might look like the following which is embedded with comments explaining portions of it
 
 ```yaml
 - stage: Deploy_NonProd
@@ -194,7 +194,7 @@ This stage might look like the following
         inputs:
           # Replace `applicationDatabaseAdminsGroupName`, `applicationDatabaseAdminsObjectId`, and `azuresql` subscription name.
           # applicationDatabaseAdminsGroupName is the Entra group that contains the service principal doing the deploy as well as any additional users who would administrate the database. Example: APP_SqlDbAdmins
-          # applicationDatabaseAdminsObjectId is the ObjectId of the group
+          # applicationDatabaseAdminsObjectId is the ObjectId of the group 
           azureSubscription: azuresql-${{ parameters.deployEnvironment }}
           scriptType: ps
           scriptLocation: inlineScript
@@ -218,7 +218,6 @@ This stage might look like the following
       - download: current # download the current repository so we can get the initialcreate.sql file.
         artifact: drop
       - task: SqlAzureDacpacDeployment@1
-        # replace productTeamIdentity
         displayName: 'Setup initial permissions'
         condition: 
         inputs:
@@ -227,8 +226,11 @@ This stage might look like the following
           deployType: 'sqlTask'
           serverName: $(sqlServerName)
           databaseName: $(sqlServerDatabaseName)
+          # target the sql folder and find any sql files in there (will find initialcreate.sql)
           sqlFile: '$(Pipeline.Workspace)\**\sql\*.sql'
-          SqlAdditionalArguments: -Variable "productTeamIdentity='DevelopmentTeam'", "applicationIdentity='$(userIdentityName)'", "env=${{ parameters.deployEnvironment }}"
+          # Pass arguments to the sql file. The -Variable argument will replace $() varialbes inside the sql file.
+          # replace productTeamIdentity with the Entra group.
+          SqlAdditionalArguments: -Variable "productTeamIdentity='Product Team'", "applicationIdentity='$(userIdentityName)'", "env=${{ parameters.deployEnvironment }}"
       - task: SqlAzureDacpacDeployment@1
         displayName: 'Deploy EF Migration'
         inputs:

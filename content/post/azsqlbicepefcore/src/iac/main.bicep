@@ -37,8 +37,8 @@ resource sqlServer 'Microsoft.Sql/servers@2023-05-01-preview' = {
   properties: {
     administrators: {
       azureADOnlyAuthentication: true
-      sid: applicationDatabaseAdminsGroupName
-      login: '${deployEnvironment}-${applicationDatabaseAdminsObjectId}'
+      sid: applicationDatabaseAdminsObjectId
+      login: '${deployEnvironment}-${applicationDatabaseAdminsGroupName}'
     }
     primaryUserAssignedIdentityId: dbIdentity.id
   }
