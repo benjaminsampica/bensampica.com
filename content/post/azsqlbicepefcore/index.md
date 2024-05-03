@@ -97,7 +97,7 @@ dotnet ef migrations add InitialCreate -o ./Migrations
 
 ## The Infrastructure (as code)
 
-The bicep isn't too bad once you know which properties of `Microsoft.Sql/servers` need to be included or not (which is an arcane mess). 
+The bicep isn't too bad once you know which properties of `Microsoft.Sql/servers` need to be included or not (which is an arcane mess). Below is the bicep file with comments added explaining each resource.
 
 ```bicep
 // main.bicep
@@ -203,7 +203,7 @@ After the database exists, we need to run an initial script that will permission
 ```sql
 -- initialcreate.sql
 
--- $(productTeamIdentity) and $(applicationIdentity) are replaced in the pipeline.
+-- $(productTeamIdentity), $(env) and $(applicationIdentity) are replaced in the pipeline.
 -- Example: $(productTeamIdentity) is replaced with an Entra Group called `Products Team`, which contains a group of users responsible for the application.
 -- Example: $(applicationIdentity) would be replaced with the name of the user-managed identity resource created in the infrastructure as code (dev-azuresql-umi-01) which the application is running as.
 
@@ -257,7 +257,9 @@ Lets break down the arguments of the migration script.
 
 - The `--project` argument specifies the path where the migration project is located. 
 - The `--output` argument specifies where to output the file. 
-- The `--idempotent` argument specifies to create a script that will apply only the migrations that have not yet been applied. For more information on these parameters or all available parameters, [click here](https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/?tabs=dotnet-core-cli).
+- The `--idempotent` argument specifies to create a script that will apply only the migrations that have not yet been applied. 
+
+For more information on these parameters or all available parameters, [click here](https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/?tabs=dotnet-core-cli).
 
 A simple example of the "complete" build stage might look like the following
 
@@ -377,7 +379,7 @@ This stage might look like the following which is embedded with comments explain
 
 ## Auditing (Optional)
 
-I don't think auditing is optional (duh), but I left this part out of the rest of the Bicep because everyone has vastly different needs and use cases for auditing.  However, the following should be able to get you started
+I don't really think auditing is optional but I left this part out of the rest of the Bicep because everyone has vastly different needs and use cases for auditing.  However, the following should be able to get you started
 
 ```bicep
 
