@@ -1,7 +1,7 @@
 ---
-title: 'How to setup automatic & passwordless Azure SQL Server'
-subtitle: 'Deploying Azure SQL Server securely'
-summary: 'How to create an Azure SQL Server automatically that uses Microsoft Entra authentication, deploys out initial permissions, and migrates using Entity Framework Core.'
+title: 'How to automatically deploy a passwordless Azure SQL Server'
+subtitle: 'A step by step guide'
+summary: 'How to create an Azure SQL Server automatically that uses Microsoft Entra authentication, migrates the database using Entity Framework Core, and deploys out the infrastructure automatically with Bicep.'
 authors:
 - ben-sampica
 categories:
