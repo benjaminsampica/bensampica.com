@@ -197,36 +197,36 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
 After the database exists, we need to run an initial script that will permission both the application that needs to perform CRUD operations on the database, as well as the product team itself that owns it so they can support it. In the following script, the development (`dev`) environment will grant the product team `dbo`, whereas any other environment will be `db_datareader`.
 
 ```sql
-  -- initialcreate.sql
+-- initialcreate.sql
 
-  -- $(productTeamIdentity) and $(applicationIdentity) are replaced in the pipeline.
-  -- Example: $(productTeamIdentity) is replaced with an Entra Group called `Products Team`, which contains a group of users responsible for the application.
-  -- Example: $(applicationIdentity) would be replaced with the name of the user-managed identity resource created in the infrastructure as code (dev-azuresql-umi-01) which the application is running as.
+-- $(productTeamIdentity) and $(applicationIdentity) are replaced in the pipeline.
+-- Example: $(productTeamIdentity) is replaced with an Entra Group called `Products Team`, which contains a group of users responsible for the application.
+-- Example: $(applicationIdentity) would be replaced with the name of the user-managed identity resource created in the infrastructure as code (dev-azuresql-umi-01) which the application is running as.
 
-  IF NOT EXISTS(SELECT * FROM sys.database_principals WHERE [name] = $(productTeamIdentityName))
-  BEGIN
-      EXECUTE('CREATE USER [' + $(productTeamIdentityName) + '] FROM EXTERNAL PROVIDER');
-  END;
+IF NOT EXISTS(SELECT * FROM sys.database_principals WHERE [name] = $(productTeamIdentityName))
+BEGIN
+    EXECUTE('CREATE USER [' + $(productTeamIdentityName) + '] FROM EXTERNAL PROVIDER');
+END;
 
-  IF NOT EXISTS(SELECT * FROM sys.database_principals WHERE [name] = $(applicationIdentity))
-  BEGIN
-      EXECUTE('CREATE USER [' + $(applicationIdentityName) + '] FROM EXTERNAL PROVIDER');
-  END;
-  GO
+IF NOT EXISTS(SELECT * FROM sys.database_principals WHERE [name] = $(applicationIdentity))
+BEGIN
+    EXECUTE('CREATE USER [' + $(applicationIdentityName) + '] FROM EXTERNAL PROVIDER');
+END;
+GO
 
-  IF ($(env) = 'dev')  
-      BEGIN
-          ALTER AUTHORIZATION ON SCHEMA::[dbo] TO $(productTeamIdentityName)
-      END
-  ELSE    
-      BEGIN 
-          ALTER AUTHORIZATION ON SCHEMA::[db_datareader] TO $(productTeamIdentityName)
-      END
+IF ($(env) = 'dev')  
+    BEGIN
+        ALTER AUTHORIZATION ON SCHEMA::[dbo] TO $(productTeamIdentityName)
+    END
+ELSE    
+    BEGIN 
+        ALTER AUTHORIZATION ON SCHEMA::[db_datareader] TO $(productTeamIdentityName)
+    END
 
-  ALTER AUTHORIZATION ON SCHEMA::[db_datareader] TO $(applicationIdentityName)
-  ALTER AUTHORIZATION ON SCHEMA::[db_datawriter] TO $(applicationIdentityName)
+ALTER AUTHORIZATION ON SCHEMA::[db_datareader] TO $(applicationIdentityName)
+ALTER AUTHORIZATION ON SCHEMA::[db_datawriter] TO $(applicationIdentityName)
 
-  GO
+GO
 ```
 
 ## The Azure Pipeline
@@ -237,16 +237,16 @@ In your Azure Pipeline, you'll want to have a task to generate the EF Core Migra
 ```yaml
 # azure-pipelines.yaml
 
-  # install the dotnet-ef tool which is used to generate migrations.
-  - script: dotnet tool install --global dotnet-ef 
-    displayName: Install .NET EF Core tools
-  # Run a custom dotnet command, which we're choosing to run migrations.
-  - task: DotNetCoreCLI@2
-    displayName: 'Create migration'
-    inputs:
-      command: custom
-      custom: ef
-      arguments: 'migrations script --idempotent --project src/WebApplication --output $(Build.ArtifactStagingDirectory)/Migrations/migration.sql'
+# install the dotnet-ef tool which is used to generate migrations.
+- script: dotnet tool install --global dotnet-ef 
+  displayName: Install .NET EF Core tools
+# Run a custom dotnet command, which we're choosing to run migrations.
+- task: DotNetCoreCLI@2
+  displayName: 'Create migration'
+  inputs:
+    command: custom
+    custom: ef
+    arguments: 'migrations script --idempotent --project src/WebApplication --output $(Build.ArtifactStagingDirectory)/Migrations/migration.sql'
 ```
 
 Lets break down the arguments of the migration script.
@@ -259,31 +259,31 @@ A simple example of the "complete" build stage might look like the following
 
 ```yaml
 # azure-pipelines.yaml
-  - stage: Build
-    jobs:
-    - job:
-      pool:
-        vmImage: ubuntu-latest
-      displayName: Publish
-      steps:
-      - task: DotNetCoreCLI@2
-        displayName: dotnet publish
-        inputs:
-          command: 'publish'
-          publishWebProjects: true
-          arguments: '-o $(Build.ArtifactStagingDirectory)'
-          modifyOutputPath: false
-      - script: dotnet tool install --global dotnet-ef 
-        displayName: dotnet tool install dotnet-ef
-      - task: DotNetCoreCLI@2
-        displayName: Create migration
-        inputs:
-          command: custom
-          custom: ef
-          arguments: 'migrations script --idempotent --project src/WebApplication --output $(Build.ArtifactStagingDirectory)/Migrations/migration.sql'
-      - publish: $(Build.ArtifactStagingDirectory)
-        displayName: Publish to Azure DevOps
-        artifact: drop
+- stage: Build
+  jobs:
+  - job:
+    pool:
+      vmImage: ubuntu-latest
+    displayName: Publish
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: dotnet publish
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: '-o $(Build.ArtifactStagingDirectory)'
+        modifyOutputPath: false
+    - script: dotnet tool install --global dotnet-ef 
+      displayName: dotnet tool install dotnet-ef
+    - task: DotNetCoreCLI@2
+      displayName: Create migration
+      inputs:
+        command: custom
+        custom: ef
+        arguments: 'migrations script --idempotent --project src/WebApplication --output $(Build.ArtifactStagingDirectory)/Migrations/migration.sql'
+    - publish: $(Build.ArtifactStagingDirectory)
+      displayName: Publish to Azure DevOps
+      artifact: drop
 ```
 
 ### Deploying All The Things
@@ -300,74 +300,74 @@ This stage might look like the following which is embedded with comments explain
 ```yaml
 # azure-pipelines.yaml
 
-  - stage: Deploy_NonProd
-    dependsOn: Build
-    jobs:
-    - job: deploy
-      pool:
-        vmImage: windows-latest
-      steps:
-        # First, deploy the infrastructure setup in the bicep file. Our bicep file outputs some variables, which we capture in $jsonResult and set them as pipeline variables.
-        - task: AzureCLI@2
-          displayName: 'Deploy Infrastructure'
-          inputs:
-            # Replace `applicationDatabaseAdminsGroupName`, `applicationDatabaseAdminsObjectId`, and `azuresql` subscription name.
-            # applicationDatabaseAdminsGroupName is the Entra group that contains the service principal doing the deploy as well as any additional users who would administrate the database. Example: APP_SqlDbAdmins
-            # applicationDatabaseAdminsObjectId is the ObjectId of the group 
-            azureSubscription: azuresql-${{ parameters.deployEnvironment }}
-            # I chose powershell because bash jsonifying is not as easy.
-            scriptType: ps
-            scriptLocation: inlineScript
-            # Run the bicep file and write the output variables to Azure DevOps
-            inlineScript: |
-              $jsonResult = az deployment group create `
-                --resource-group ${{ parameters.deployEnvironment }}-ncus-azuresql-rg-01 `
-                --template-file $(Build.SourcesDirectory)/iac/main.bicep `
-                --parameters `
-                    applicationDatabaseAdminsGroupName=App_SqlDbAdmins `
-                    applicationDatabaseAdminsObjectId=37f7f235-527c-4136-accd-4a02d197296e ` 
-                    deployEnvironment=${{ parameters.deployEnvironment }} `
-                --mode Complete `
-                | ConvertFrom-Json
-        
-              $sqlServerName = $jsonResult.properties.outputs.sqlServerName.value
-              $sqlServerDatabaseName = $jsonResult.properties.outputs.sqlServerDatabaseName.value
-              $applicationIdentityName = $jsonResult.properties.outputs.applicationIdentityName.value
-              Write-Host "##vso[task.setvariable variable=sqlServerName;]$sqlServerName"
-              Write-Host "##vso[task.setvariable variable=sqlServerDatabaseName;]$sqlServerDatabaseName"
-              Write-Host "##vso[task.setvariable variable=applicationIdentityName;]$applicationIdentityName"
-        - download: current # download the current repository so we can get the initialcreate.sql file.
-          artifact: drop
-        - task: SqlAzureDacpacDeployment@1
-          displayName: 'Setup initial permissions'
-          condition: 
-          inputs:
-            azureSubscription: azuresql-${{ parameters.deployEnvironment }}
-            authenticationType: 'servicePrincipal'
-            deployType: 'sqlTask'
-            serverName: $(sqlServerName)
-            databaseName: $(sqlServerDatabaseName)
-            # target the sql folder and find any sql files in there (will find initialcreate.sql)
-            sqlFile: '$(Pipeline.Workspace)\**\sql\*.sql'
-            # Pass arguments to the sql file. The -Variable argument will replace $() variables inside the sql file.
-            # replace productTeamIdentityName with your Entra group containing your team.
-            SqlAdditionalArguments: -Variable "productTeamIdentityName='Product Team'", "applicationIdentityName='$(applicationIdentityName)'", "env=${{ parameters.deployEnvironment }}"
-        - task: SqlAzureDacpacDeployment@1
-          displayName: 'Deploy EF Migration'
-          inputs:
-            azureSubscription: azuresql-${{ parameters.deployEnvironment }}
-            authenticationType: 'servicePrincipal'
-            deployType: 'sqlTask'
-            serverName: $(sqlServerName)
-            databaseName: $(sqlServerDatabaseName)
-            sqlFile: '$(Pipeline.Workspace)\**\Migrations\migration.sql'
-        - task: AzureWebApp@1
-          displayName: Deploy Web Application
-          inputs:
-            appType: webApp
-            azureSubscription: azuresql-${{ parameters.deployEnvironment }}
-            appName: ${{ parameters.deployEnvironment }}-ncus-azuresql-app-01
-            package: $(Agent.BuildDirectory)/drop/WebApplication1/*.zip
+- stage: Deploy_NonProd
+  dependsOn: Build
+  jobs:
+  - job: deploy
+    pool:
+      vmImage: windows-latest
+    steps:
+      # First, deploy the infrastructure setup in the bicep file. Our bicep file outputs some variables, which we capture in $jsonResult and set them as pipeline variables.
+      - task: AzureCLI@2
+        displayName: 'Deploy Infrastructure'
+        inputs:
+          # Replace `applicationDatabaseAdminsGroupName`, `applicationDatabaseAdminsObjectId`, and `azuresql` subscription name.
+          # applicationDatabaseAdminsGroupName is the Entra group that contains the service principal doing the deploy as well as any additional users who would administrate the database. Example: APP_SqlDbAdmins
+          # applicationDatabaseAdminsObjectId is the ObjectId of the group 
+          azureSubscription: azuresql-${{ parameters.deployEnvironment }}
+          # I chose powershell because bash jsonifying is not as easy.
+          scriptType: ps
+          scriptLocation: inlineScript
+          # Run the bicep file and write the output variables to Azure DevOps
+          inlineScript: |
+            $jsonResult = az deployment group create `
+              --resource-group ${{ parameters.deployEnvironment }}-ncus-azuresql-rg-01 `
+              --template-file $(Build.SourcesDirectory)/iac/main.bicep `
+              --parameters `
+                  applicationDatabaseAdminsGroupName=App_SqlDbAdmins `
+                  applicationDatabaseAdminsObjectId=37f7f235-527c-4136-accd-4a02d197296e ` 
+                  deployEnvironment=${{ parameters.deployEnvironment }} `
+              --mode Complete `
+              | ConvertFrom-Json
+      
+            $sqlServerName = $jsonResult.properties.outputs.sqlServerName.value
+            $sqlServerDatabaseName = $jsonResult.properties.outputs.sqlServerDatabaseName.value
+            $applicationIdentityName = $jsonResult.properties.outputs.applicationIdentityName.value
+            Write-Host "##vso[task.setvariable variable=sqlServerName;]$sqlServerName"
+            Write-Host "##vso[task.setvariable variable=sqlServerDatabaseName;]$sqlServerDatabaseName"
+            Write-Host "##vso[task.setvariable variable=applicationIdentityName;]$applicationIdentityName"
+      - download: current # download the current repository so we can get the initialcreate.sql file.
+        artifact: drop
+      - task: SqlAzureDacpacDeployment@1
+        displayName: 'Setup initial permissions'
+        condition: 
+        inputs:
+          azureSubscription: azuresql-${{ parameters.deployEnvironment }}
+          authenticationType: 'servicePrincipal'
+          deployType: 'sqlTask'
+          serverName: $(sqlServerName)
+          databaseName: $(sqlServerDatabaseName)
+          # target the sql folder and find any sql files in there (will find initialcreate.sql)
+          sqlFile: '$(Pipeline.Workspace)\**\sql\*.sql'
+          # Pass arguments to the sql file. The -Variable argument will replace $() variables inside the sql file.
+          # replace productTeamIdentityName with your Entra group containing your team.
+          SqlAdditionalArguments: -Variable "productTeamIdentityName='Product Team'", "applicationIdentityName='$(applicationIdentityName)'", "env=${{ parameters.deployEnvironment }}"
+      - task: SqlAzureDacpacDeployment@1
+        displayName: 'Deploy EF Migration'
+        inputs:
+          azureSubscription: azuresql-${{ parameters.deployEnvironment }}
+          authenticationType: 'servicePrincipal'
+          deployType: 'sqlTask'
+          serverName: $(sqlServerName)
+          databaseName: $(sqlServerDatabaseName)
+          sqlFile: '$(Pipeline.Workspace)\**\Migrations\migration.sql'
+      - task: AzureWebApp@1
+        displayName: Deploy Web Application
+        inputs:
+          appType: webApp
+          azureSubscription: azuresql-${{ parameters.deployEnvironment }}
+          appName: ${{ parameters.deployEnvironment }}-ncus-azuresql-app-01
+          package: $(Agent.BuildDirectory)/drop/WebApplication1/*.zip
 ```
 
 ## Auditing (Optional)
