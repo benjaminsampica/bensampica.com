@@ -319,19 +319,19 @@ This stage might look like the following which is embedded with comments explain
           # Replace `applicationDatabaseAdminsGroupName`, `applicationDatabaseAdminsObjectId`, and `azuresql` subscription name.
           # applicationDatabaseAdminsGroupName is the Entra group that contains the service principal doing the deploy as well as any additional users who would administrate the database. Example: APP_SqlDbAdmins
           # applicationDatabaseAdminsObjectId is the ObjectId of the group 
-          azureSubscription: azuresql-${{ parameters.deployEnvironment }}
+          azureSubscription: azuresql-dev
           # I chose powershell because bash jsonifying is not as easy.
           scriptType: ps
           scriptLocation: inlineScript
           # Run the bicep file and write the output variables to Azure DevOps
           inlineScript: |
             $jsonResult = az deployment group create `
-              --resource-group ${{ parameters.deployEnvironment }}-ncus-azuresql-rg-01 `
+              --resource-group dev-ncus-azuresql-rg-01 `
               --template-file $(Build.SourcesDirectory)/iac/main.bicep `
               --parameters `
                   applicationDatabaseAdminsGroupName=App_SqlDbAdmins `
                   applicationDatabaseAdminsObjectId=37f7f235-527c-4136-accd-4a02d197296e ` 
-                  deployEnvironment=${{ parameters.deployEnvironment }} `
+                  deployEnvironment=dev `
               --mode Complete `
               | ConvertFrom-Json
       
@@ -347,7 +347,7 @@ This stage might look like the following which is embedded with comments explain
         displayName: 'Setup initial permissions'
         condition: 
         inputs:
-          azureSubscription: azuresql-${{ parameters.deployEnvironment }}
+          azureSubscription: azuresql-dev
           authenticationType: 'servicePrincipal'
           deployType: 'sqlTask'
           serverName: $(sqlServerName)
@@ -356,11 +356,11 @@ This stage might look like the following which is embedded with comments explain
           sqlFile: '$(Pipeline.Workspace)\**\sql\*.sql'
           # Pass arguments to the sql file. The -Variable argument will replace $() variables inside the sql file.
           # replace productTeamIdentityName with your Entra group containing your team.
-          SqlAdditionalArguments: -Variable "productTeamIdentityName='Product Team'", "applicationIdentityName='$(applicationIdentityName)'", "env=${{ parameters.deployEnvironment }}"
+          SqlAdditionalArguments: -Variable "productTeamIdentityName='Product Team'", "applicationIdentityName='$(applicationIdentityName)'", "env=dev"
       - task: SqlAzureDacpacDeployment@1
         displayName: 'Deploy EF Migration'
         inputs:
-          azureSubscription: azuresql-${{ parameters.deployEnvironment }}
+          azureSubscription: azuresql-dev
           authenticationType: 'servicePrincipal'
           deployType: 'sqlTask'
           serverName: $(sqlServerName)
@@ -370,8 +370,8 @@ This stage might look like the following which is embedded with comments explain
         displayName: Deploy Web Application
         inputs:
           appType: webApp
-          azureSubscription: azuresql-${{ parameters.deployEnvironment }}
-          appName: ${{ parameters.deployEnvironment }}-ncus-azuresql-app-01
+          azureSubscription: azuresql-dev
+          appName: dev-ncus-azuresql-app-01
           package: $(Agent.BuildDirectory)/drop/WebApplication1/*.zip
 ```
 
