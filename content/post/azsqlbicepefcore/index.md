@@ -45,7 +45,7 @@ I've made a few assumptions in order to keep this post focused specifically on A
 
 1. You already have a resource group in Azure.
 2. There is an existing service connection in Azure that ties back to Azure DevOps so you can deploy your infrastructure-as-code to the resource group.
-3. You have an existing user-managed identity with `User.Read.All`, `GroupMember.Read.All`, and `Application.Read.All` permissions that you are able to use as the primary user managed identity for the database. Unsure what this is? [Click here](https://learn.microsoft.com/en-us/azure/azure-sql/database/authentication-azure-ad-user-assigned-managed-identity?view=azuresql).
+3. You have an existing user-managed identity with `User.Read.All`, `GroupMember.Read.All`, and `Application.Read.All` permissions that you are able to use as the primary user managed identity for the database. This is necessary (and shown in use later) to be able to create users in the database from Entra. Unsure what this is? [Click here](https://learn.microsoft.com/en-us/azure/azure-sql/database/authentication-azure-ad-user-assigned-managed-identity?view=azuresql).
 
 ## The C# Code
 
