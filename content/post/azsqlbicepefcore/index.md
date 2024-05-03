@@ -100,6 +100,8 @@ dotnet ef migrations add InitialCreate -o ./Migrations
 The bicep isn't too bad once you know which properties of `Microsoft.Sql/servers` need to be included or not (which is an arcane mess). 
 
 ```bicep
+// main.bicep
+
 param applicationDatabaseAdminsGroupName string
 param applicationDatabaseAdminsObjectId string
 param deployEnvironment string
@@ -261,6 +263,7 @@ A simple example of the "complete" build stage might look like the following
 
 ```yaml
 # azure-pipelines.yaml
+
 - stage: Build
   jobs:
   - job:
