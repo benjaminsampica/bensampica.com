@@ -182,7 +182,7 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
         }
         {
           name: 'AZURE_CLIENT_ID'
-          value: applicationIdentity.properties.clientId
+          value: applicationIdentity.properties.clientId // See https://github.com/MicrosoftDocs/azure-docs/issues/105359
         }
       ]
     }
