@@ -29,8 +29,9 @@ stages:
     - publish: $(Build.ArtifactStagingDirectory)
       displayName: 'Publish to Azure Devops'
       artifact: drop
-- stage: Deploy_NonProd
+- stage: Deploy
   dependsOn: Build
+  condition: succeeded()
   jobs:
   - job: deploy
     pool:
@@ -56,14 +57,14 @@ stages:
       
             $sqlServerName = $jsonResult.properties.outputs.sqlServerName.value
             $sqlServerDatabaseName = $jsonResult.properties.outputs.sqlServerDatabaseName.value
-            $userIdentityName = $jsonResult.properties.outputs.userIdentityName.value
+            $applicationIdentityName = $jsonResult.properties.outputs.applicationIdentityName.value
             Write-Host "##vso[task.setvariable variable=sqlServerName;]$sqlServerName"
             Write-Host "##vso[task.setvariable variable=sqlServerDatabaseName;]$sqlServerDatabaseName"
-            Write-Host "##vso[task.setvariable variable=userIdentityName;]$userIdentityName"
+            Write-Host "##vso[task.setvariable variable=applicationIdentityName;]$applicationIdentityName"
       - download: current
         artifact: drop
       - task: SqlAzureDacpacDeployment@1
-        # replace productTeamIdentity
+        # replace productTeamIdentityName
         displayName: 'Setup initial permissions'
         condition: 
         inputs:
@@ -73,7 +74,7 @@ stages:
           serverName: $(sqlServerName)
           databaseName: $(sqlServerDatabaseName)
           sqlFile: '$(Pipeline.Workspace)\**\sql\*.sql'
-          SqlAdditionalArguments: -Variable "productTeamIdentity='DevelopmentTeam'", "applicationIdentity='$(userIdentityName)'", "env=${{ parameters.deployEnvironment }}"
+          SqlAdditionalArguments: -Variable "productTeamIdentityName='Product Team'", "applicationIdentityName='$(applicationIdentityName)'", "env=${{ parameters.deployEnvironment }}"
       - task: SqlAzureDacpacDeployment@1
         displayName: 'Deploy EF Migration'
         inputs:
@@ -83,3 +84,10 @@ stages:
           serverName: $(sqlServerName)
           databaseName: $(sqlServerDatabaseName)
           sqlFile: '$(Pipeline.Workspace)\**\Migrations\migration.sql'
+      - task: AzureWebApp@1
+        displayName: Deploy Web Application
+        inputs:
+          appType: webApp
+          azureSubscription: azuresql-${{ parameters.deployEnvironment }}
+          appName: ${{ parameters.deployEnvironment }}-ncus-azuresql-app-01
+          package: $(Agent.BuildDirectory)/drop/WebApplication1/*.zip

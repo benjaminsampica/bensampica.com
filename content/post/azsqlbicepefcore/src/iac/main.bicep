@@ -6,21 +6,7 @@ var appName = 'azuresql'
 #disable-next-line no-hardcoded-location
 var location = 'North Central US'
 
-resource appServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
-  name: '${deployEnvironment}-${appName}'
-  location: location
-  sku: {
-    name: 'B1'
-  }
-}
-
-resource applicationIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-preview' = {
-  name: '${deployEnvironment}-${appName}-appumi-01'
-  location: location
-}
-output userIdentityName string = applicationIdentity.name
-
-// Must have ability to read Entra. Directory.Read role.
+// Already created & must have ability to read Entra. `User.Read.All`, `GroupMember.Read.All`, and `Application.Read.All` permissions.
 resource dbIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-preview' existing = {
   name: '${deployEnvironment}-${appName}-dbumi-01'
 }
@@ -55,6 +41,21 @@ resource sqlServer 'Microsoft.Sql/servers@2023-05-01-preview' = {
 var sqlServerName = '${sqlServer.name}${environment().suffixes.sqlServerHostname}'
 output sqlServerName string = sqlServerName
 output sqlServerDatabaseName string = sqlServer::sqlServerDatabase.name
+
+resource appServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
+  name: '${deployEnvironment}-${appName}'
+  location: location
+  sku: {
+    name: 'B1'
+  }
+}
+
+// This application identity is permissioned into the database. You could use a system-assigned identity from the web app as long as you don't have additional things this identity needs.
+resource applicationIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-preview' = {
+  name: '${deployEnvironment}-${appName}-appumi-01'
+  location: location
+}
+output applicationIdentityName string = applicationIdentity.name
 
 resource webApp 'Microsoft.Web/sites@2022-03-01' = {
   name: '${deployEnvironment}-ncus-${appName}-app-01'

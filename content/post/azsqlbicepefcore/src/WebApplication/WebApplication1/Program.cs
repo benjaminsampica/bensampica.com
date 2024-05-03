@@ -4,7 +4,7 @@ using WebApplication1;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<AzureSqlDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AzureSql")));
+builder.Services.AddDbContext<AzureSqlDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AzureSqlDatabase")));
 
 var app = builder.Build();
 
