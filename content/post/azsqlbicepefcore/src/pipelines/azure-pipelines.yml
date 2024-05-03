@@ -74,7 +74,7 @@ stages:
           serverName: $(sqlServerName)
           databaseName: $(sqlServerDatabaseName)
           sqlFile: '$(Pipeline.Workspace)\**\sql\*.sql'
-          SqlAdditionalArguments: -Variable "productTeamIdentityName='Product Team'", "applicationIdentityName='$(applicationIdentityName)'", "env=${{ parameters.deployEnvironment }}"
+          SqlAdditionalArguments: -Variable "productTeamIdentityName='Product Team'", "applicationIdentityName='$(applicationIdentityName)'", "env='dev'"
       - task: SqlAzureDacpacDeployment@1
         displayName: 'Deploy EF Migration'
         inputs:
