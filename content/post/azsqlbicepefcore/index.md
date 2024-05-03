@@ -27,7 +27,7 @@ My task was to spin up an Azure SQL Server using the tools that my team uses - a
 
 The code for this post (and in all the examples below) is available [here](https://github.com/benjaminsampica/bensampica.com/tree/main/content/post/azsqlbicepefcore).
 
-Here's the end-to-end toolchain we are using, which the post will use:
+Here's the end-to-end toolchain we are using and which the post will use:
 
 - .NET 8
 - Entity Framework Core (with its built-in migrations)
@@ -39,7 +39,7 @@ Overall, the end-state architecture is created to satisfy a process that require
 
 {{< figure src="sqldatabase.png" title="Azure SQL Database Diagram" lightbox="true" >}}
 
-Yours might differ, but this is what is being built and hopefully you can pull most of the pieces of this. 
+Yours might differ but this is what is being built and hopefully you can pull most of the pieces of this. 
 
 ## Assumptions
 
