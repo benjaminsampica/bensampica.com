@@ -3,7 +3,7 @@
 title: Ben Sampica
 
 # Name pronunciation (optional)
-name_pronunciation: Ben Sam-Peek-uh
+name_pronunciation: Ben Sam-Pick-uh
 
 # Full name (for SEO)
 first_name: Ben
