@@ -47,7 +47,7 @@ I've made a few assumptions in order to keep this post focused specifically on A
 
 1. You already have a resource group in Azure.
 2. There is an existing service connection in Azure that ties back to Azure DevOps so you can deploy your infrastructure-as-code to the resource group.
-3. You have an existing user-managed identity with `User.Read.All`, `GroupMember.Read.All`, and `Application.Read.All` permissions that you are able to use as the primary user managed identity for the database. This is necessary (and shown in use later) to be able to create users in the database from Entra. Unsure what this is? [Click here](https://learn.microsoft.com/en-us/azure/azure-sql/database/authentication-azure-ad-user-assigned-managed-identity?view=azuresql).
+3. You have an existing user-managed identity with `Directory.Read.All` permissions that you are able to use as the primary user managed identity for the database. This is necessary (and shown in use later) to be able to create users in the database from Entra. Unsure what this is? [Click here](https://learn.microsoft.com/en-us/azure/azure-sql/database/authentication-azure-ad-user-assigned-managed-identity?view=azuresql).
 
 ## The C# Code
 
@@ -110,7 +110,7 @@ var appName = 'azuresql'
 #disable-next-line no-hardcoded-location
 var location = 'North Central US'
 
-// Already created & must have ability to read Entra. `User.Read.All`, `GroupMember.Read.All`, and `Application.Read.All` permissions.
+// Already created & must have ability to read Entra. `Directory.Read.All` permissions.
 resource dbIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-preview' existing = {
   name: '${deployEnvironment}-${appName}-dbumi-01'
 }
@@ -134,7 +134,7 @@ resource sqlServer 'Microsoft.Sql/servers@2023-05-01-preview' = {
       // The login name of the server administrator group.
       login: '${deployEnvironment}-${applicationDatabaseAdminsGroupName}'
     }
-    // This identity will be used when determining what in Azure the identity can see - which is why we need User.Read.All, etc. in order to CREATE EXTERNAL USER's from Entra.
+    // This identity will be used when determining what in Azure the identity can see - which is why we need Directory.Read.All in order to CREATE EXTERNAL USER's from Entra.
     primaryUserAssignedIdentityId: dbIdentity.id
   }
 
