@@ -1,5 +1,5 @@
 ---
-title: A Complete Guide to HTMX + .NET Minimal APIs - Part 1
+title: A Complete Guide to HTMX + .NET Minimal APIs
 subtitle: Combining the Modern Web with the simplicity of Web 1.0. 
 summary: How to use .NET Minimal APIs and HTMX to create a fast and interactive website. 
 authors:
@@ -60,7 +60,7 @@ Blazor Web is great but there's quite a few things that I find myself reaching f
 
 ## Creating The Project
 
-{{< notice tip >}}
+{{< notice note >}}
 Want to just see the code? [Click here!](https://github.com/benjaminsampica/bensampica.com/tree/main/content/post/minimalapihtmx)
 {{< /notice >}}
 
@@ -393,7 +393,7 @@ Here is the code:
 
 ### With Degradation Support
 
-{{< notice tip >}}
+{{< notice note >}}
 A reminder that this type of degradation handling is _optional_ and use-case dependent. 
 {{< /notice >}}
 
