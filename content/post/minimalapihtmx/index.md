@@ -1,6 +1,6 @@
 ---
 title: A Complete Guide to HTMX + .NET Minimal APIs
-subtitle: Combining the Modern Web with the simplicity of Web 1.0. 
+subtitle: Combining Modern Web with the Simplicity of Web 1.0. 
 summary: How to use .NET Minimal APIs and HTMX to create a fast and interactive website. 
 authors:
 - ben-sampica
@@ -30,16 +30,14 @@ beginning of the web to create fast and interactive websites. Taken from its own
 
 > htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext. 
 
-HTMX may surprise traditional web developers for its "rule"-bending motivations
+HTMX may surprise traditional web developers for its "rule"-bending motivations:
 
-```
 - Why should only <a> & <form> be able to make HTTP requests?
 - Why should only click & submit events trigger them?
 - Why should only GET & POST methods be available?
 - Why should you only be able to replace the entire screen?
-```
 
-By-and-large, HTMX (and hypermedia, of course) embrace the concept of [HATEOAS)(https://intercoolerjs.org/2016/05/08/hatoeas-is-for-humans.html), Hypertext As The Engine Of Application State. 
+By-and-large, HTMX (and hypermedia, of course) embrace the concept of [HATEOAS](https://intercoolerjs.org/2016/05/08/hatoeas-is-for-humans.html), Hypertext As The Engine Of Application State. 
 What this means is that there is no server or client maintaining state; no huge javascript/WASM payload as an "application" and no persistent websocket connection.
 
 For more of the "why hypermedia was built for this all along" you can read the collection of [essays](https://htmx.org/essays/) 
@@ -65,11 +63,11 @@ Blazor Web is great but there's quite a few things that I find myself reaching f
 - Changing pages in Blazor SSR doesn't bring you to the top of the page if both pages have below-the-fold content and you have scrolled down.
 - Dynamically loading javascript scripts is janky and leave behind code when they're swapped out.
 - Managing render modes in Blazor is really complicated. It's powerful but nonetheless complicated. Websockets, render modes, caching, etc..
-- To get a little more subjective, submitting forms in Blazor SSR is [janky](https://learn.microsoft.com/en-us/aspnet/core/blazor/forms/?view=aspnetcore-8.0) 🤷‍♂️ .
+- To get a little more subjective, submitting forms in Blazor SSR is [janky](https://learn.microsoft.com/en-us/aspnet/core/blazor/forms/?view=aspnetcore-8.0) 🤷‍♂️.
 - I also like vertically slicing features and combining Blazor WASM + Server interactivity forces you into a `.Client` project with just the interactive components and forces components to be separated.
 
 {{< notice tip >}}
-HTMX has a lot of different mechanisms to handle triggering which you can read about [here](https://htmx.org/attributes/hx-trigger/). 
+HTMX has a lot of different ways to respond to events which you can read about [here](https://htmx.org/attributes/hx-trigger/). 
 {{< /notice >}}
 
 ## Creating The Project
@@ -146,11 +144,7 @@ You can place these anywhere in the project directory. I am opting for a vertica
             </main>
         </div>
 
-        <div id="blazor-error-ui">
-            An unhandled error has occurred.
-            <a href="" class="reload">Reload</a>
-            <a class="dismiss">🗙</a>
-        </div>
+        <!-- I removed the exception notification - that is covered elsewhere. -->
     </body>
 </html>
 ```
@@ -288,6 +282,7 @@ When the button is clicked, the counter needs to increment up by one. Since the 
 in order for the counter to increment. HTMX is not even needed at this point just plain hyperlinks and query parameters, as showcased below.
 
 ```html
+<!-- Features/Counter.razor -->
 @layout HtmxLayout
 
 <PageTitle>Counter</PageTitle>
@@ -618,7 +613,8 @@ Here is the code
 
 ### Updating The Minimal API endpoint
 
-Since we created the `CounterForm` model our endpoints need to return that into our component and page. Additionally, when we submit a post request we need to run our validation and return the result back into `CounterInfo.razor`.
+Since we created the `CounterForm` model our endpoints need to return that into our component and page. 
+Additionally, when we submit a post request we need to run our validation and return the result back into `CounterInfo.razor`.
 
 ```csharp
 // Program.cs
@@ -681,9 +677,58 @@ The obvious use-case is a e-commerce page with items you can add to your cart. T
 added to the cart.
 HTMX triggers operate by sending headers back through the response from the server via `HX-Trigger` so something like a `added-to-cart` event would be sent once the item is successfully added to the cart.
 
+To provide a contrived example I am going to add a success message at the top of our `HtmxLayout` that we can tap into when something is successful.
+
+```html
+<!-- HtmxLayout.razor 
+    Code omitted for brevity.
+ -->
+<div class="page">
+    <div class="sidebar">
+        <NavMenu/>
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+        </div>
+
+        <article class="content px-4">
+            <!-- Alert added here with a trigger that will fire anytime a response is received with a header called `success-alert` -->
+            <div hx-trigger="success-alert from:body" hx-get="/success-alert"></div>
+            @Body
+        </article>
+    </main>
+</div>
+```
+For the alert I am going to put it in a separate component that can be rendered by a new minimal api endpoint.
+```html
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    Success!
+</div>
 ```
 
+Finally, here is the new endpoint showing the `HX-Trigger` header and the new `/success-alert` endpoint.
+```csharp
+app.MapPost("/counter/increment", RazorComponentResult<CounterInfo>([FromForm] CounterForm form, HttpContext httpContext) =>
+    {
+        var validator = new CounterForm.CounterFormValidator();
+        var result = validator.Validate(form);
+        if (!result.IsValid) return new(new { CounterForm = form, ValidationResult = result });
+        
+        httpContext.Response.Headers.Append("HX-Trigger", "success-alert");
+        
+        form.CurrentCount++;
+        return new(new { CounterForm = form });
+    });
+
+app.MapGet("/success-alert", () => new RazorComponentResult<SuccessAlert>()); // New endpoint.
 ```
+
+This results in a success message displaying when I successfully submit the form. Yay! Again, this is possible because we don't actually swap the entire page we only swap
+the tiny piece of html that we need to change the state to what is needed.
+
+{{< figure src="images/success-message.png" title="Success!" lightbox="true" >}}
 
 {{< notice tip >}}
 Another way to handle content swapping somewhere else is to use out-of-band swaps which you can learn more about [here](https://htmx.org/attributes/hx-swap-oob/).
@@ -735,3 +780,10 @@ htmx disable states.
 
 Rx nuget package
 Htmx.Net (razor)
+
+## Wrap Up
+
+I hope this was helpful to someone. I had broad ambitions for this post and it grew quickly in what I thought was important. I just can't simply cover every single use-case you might have
+but hopefully this is enough to get you thinking with (and consider using) HTMX. 
+
+Leave any comments below or engage with me on social media with questions!
