@@ -681,7 +681,7 @@ HTMX triggers operate by sending headers back through the response from the serv
 To provide a contrived example I am going to add a success message at the top of our `HtmxLayout` that we can tap into when something is successful.
 
 ```html
-<!-- HtmxLayout.razor 
+<!-- Features/Shared/HtmxLayout.razor 
     Code omitted for brevity.
  -->
 <div class="page">
