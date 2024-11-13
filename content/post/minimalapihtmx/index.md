@@ -1,7 +1,7 @@
 ---
-title: A Complete Guide to HTMX + .NET Minimal APIs
+title: A Guide to HTMX + .NET Minimal APIs
 subtitle: Combining Modern Web with the Simplicity of Web 1.0. 
-summary: How to use .NET Minimal APIs and HTMX to create a fast and interactive website. 
+summary: Creating a HTMX and .NET Minimal API from scratch and adding necessary features like validation and error handling. 
 authors:
 - ben-sampica
 categories:
@@ -646,7 +646,8 @@ Bringing this all together, we need to utilize more of the Blazor framework in o
 ```html
 <!-- Features/CounterInfo.razor -->
 <CascadingValue Value="ValidationResult">
-    <form id="counter" hx-post="counter/increment" hx-swap="outerHTML" hx-target="#counter">
+    <!-- By default, HTMX will place the results from `hx-post` inside the element ("innerHTML"). We want to replace the entire body including the <form> tag so that they don't inadvertently nest. -->
+    <form id="counter" hx-post="counter/increment" hx-swap="outerHTML" hx-target="#counter"> 
         <HtmxAntiforgeryToken />
         <input type="number" value="@CounterForm.CurrentCount" name="@nameof(CounterForm.CurrentCount)" class="form-control-plaintext w-100"/>
         <label class="w-100">
@@ -716,7 +717,7 @@ app.MapPost("/counter/increment", RazorComponentResult<CounterInfo>([FromForm] C
         var result = validator.Validate(form);
         if (!result.IsValid) return new(new { CounterForm = form, ValidationResult = result });
         
-        httpContext.Response.Headers.Append("HX-Trigger", "success-alert");
+        httpContext.Response.Headers.Append("HX-Trigger", "success-alert"); // Append a header called 'HX-Trigger', which HTMX understands, with a value of 'success-alert'.
         
         form.CurrentCount++;
         return new(new { CounterForm = form });
@@ -734,7 +735,141 @@ the tiny piece of html that we need to change the state to what is needed.
 Another way to handle content swapping somewhere else is to use out-of-band swaps which you can learn more about [here](https://htmx.org/attributes/hx-swap-oob/).
 {{< /notice >}}
 
-## Table Data
+## Table Data With Paging
+
+A common problem that we need to solve is showing tabular data. With HTMX, this is no problem at all. I am going to reimplement the sample `/weather` page to
+server-side page with data. Lets break this down into what we need to do:
+
+1. When the page first loads, show a loading spinner.
+2. Send an HTTP request to load the table with data.
+3. When I press "Back" we should requery the data and decrease the page number count until page is 1, at which point we want to disable the button.
+4. When I press "Forward" we should requery the data and increase the page number count, at which point we want to disable the button when there are no more results.
+
+Fast-forwarding from what we have already learned from the previous sections we can easily use HTMX to do this.
+
+### Weather That Shows No Data
+
+Let's get all the boilerplate out of the way that we know we are going to need. First, we're going to add the components I know we will need. 
+These deviate slightly from the sample pages but largely it is the same concept.
+
+```html
+<!-- Weather.razor -->
+@layout HtmxLayout
+
+<PageTitle>Weather</PageTitle>
+
+<h1>Weather</h1>
+
+<p>This component demonstrates showing data.</p>
+
+<form hx-get="/weather/list" hx-trigger="load"> <!-- When the page loads, fetch data from /weather/list.-->
+</form>
+```
+
+```html
+<!-- WeatherList.razor -->
+<table class="table">
+    <thead>
+    <tr>
+        <th>Date</th>
+        <th>Temp. (C)</th>
+        <th>Temp. (F)</th>
+        <th>Summary</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var forecast in Forecasts)
+    {
+        <tr>
+            <td>@forecast.Date.ToShortDateString()</td>
+            <td>@forecast.TemperatureC</td>
+            <td>@forecast.TemperatureF</td>
+            <td>@forecast.Summary</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@code {
+    [Parameter] public ICollection<WeatherForecast> Forecasts { get; set; } = [];
+    
+    public class WeatherForecast
+    {
+        public DateOnly Date { get; set; }
+        public int TemperatureC { get; set; }
+        public string? Summary { get; set; }
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    }
+}
+```
+
+Next, I am going to just add two new endpoints to our `Program.cs` file that is setting up our initial state.
+
+```csharp
+// Program.cs
+// Code omitted for brevity.
+app.MapGet("/weather", () => new RazorComponentResult<Weather>()); // New endpoint.
+app.MapGet("/weather/list", () => new RazorComponentResult<WeatherList>()); // New endpoint.
+```
+
+{{< figure src="images/forecast-base.png" title="The empty weather page." lightbox="true" >}}
+
+### Loading
+
+Now, let's handle the case where the server takes a moment to show weather data but we want to show the user something while we are waiting.
+For this, HTMX has us covered! We can add an attribute called `hx-indicator` ([documentation](https://htmx.org/attributes/hx-indicator/)) which will, when an HTMX request occurs, will have a class called `htmx-request` added to it.
+
+Here's the `Loading.razor` component with that in mind.
+
+```html
+<!-- Loading.razor -->
+<div class="d-flex justify-content-center align-items-center">
+    <div class="spinner-border text-primary htmx-indicator" style="width: 10em; height: 10em; "/>
+</div>
+```
+
+We haven't touched this file yet since the inital boilerplate, but we are going to modify the global css file to add some styles to show our spinner based on `hx-indicator` and `htmx-request`.
+
+```css
+/* app.css */
+.htmx-indicator {
+   display: none;
+}
+
+.htmx-request .htmx-indicator, .htmx-request.htmx-indicator {
+    display: inline;
+}
+```
+
+Finally, we are going to add the `Loading.razor` component to our `Weather` page _inside_ the form and then add a delay to the endpoint so we can see it.
+We want the loading component to be inside the form so that the loading disappears when the request from the server returns - replacing the content within.
+
+```html
+<!-- Weather.razor
+    Code omitted for brevity.
+    -->
+<form hx-get="/weather/list" hx-trigger="load">
+    <Loading />
+</form>
+```
+
+```csharp
+// Program.cs
+// Code omitted for brevity.
+
+app.MapGet("/weather/list", async () =>
+{
+    await Task.Delay(5000); // Delay for 5 seconds.
+    return new RazorComponentResult<WeatherList>();
+});
+```
+
+{{< figure src="images/forecast-loading.png" title="Loading the weather." lightbox="true" >}}
+
+Looks great! When five seconds are up, the empty table shows.
+
+### Paging
+
 
 ## A Long Page Of Dynamic Content
 
