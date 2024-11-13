@@ -651,6 +651,8 @@ If I click the button without putting in a name, the form correctly returns the 
 
 ## A Long Page Of Dynamic Content
 
+## Handling HTMX Errors
+
 ## Advanced Topics
 
 ### The Browser "Back" Button
