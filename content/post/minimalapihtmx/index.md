@@ -672,7 +672,8 @@ There isn't much to say in this section besides that Blazor Hybrid using MAUI's 
 There are some really cheap ways to even bring along an existing web app into a native app by simply pointing your `BlazorWebView` to your existing web app without even sharing the components. Admittedly, I have not submitted this shell app to the respective iOS and Android app stores.
 
 {{< notice warning >}}
-Apple has explicit language protecting their App Store against barebone apps as stated above. 
+Apple has language protecting their App Store against barebone apps like the one stated above.
+
 Your mileage may vary but you can increase your chances by clearly stating the value proposition of doing so and not going into the internals of the implementation.
 {{< /notice >}}
 
