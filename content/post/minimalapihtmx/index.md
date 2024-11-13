@@ -704,6 +704,7 @@ To provide a contrived example I am going to add a success message at the top of
 ```
 For the alert I am going to put it in a separate component that can be rendered by a new minimal api endpoint.
 ```html
+<!-- Features/Shared/SuccessAlert.razor -->
 <div class="alert alert-success" role="alert">
     Success!
 </div>
@@ -711,6 +712,8 @@ For the alert I am going to put it in a separate component that can be rendered 
 
 Finally, here is the new endpoint showing the `HX-Trigger` header and the new `/success-alert` endpoint.
 ```csharp
+// Program.cs
+// Code omitted for brevity.
 app.MapPost("/counter/increment", RazorComponentResult<CounterInfo>([FromForm] CounterForm form, HttpContext httpContext) =>
     {
         var validator = new CounterForm.CounterFormValidator();
