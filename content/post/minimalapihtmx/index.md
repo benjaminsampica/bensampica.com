@@ -511,7 +511,7 @@ I am going to install that in the project and prepare the form for that field:
 
 ### Package Install and Validator
 
-Install the `FluentValidation` package via the IDE's nuget package manager or via CLI `dotnet add package FluentValidation` then I'm going to create the following class:
+We must first install the `FluentValidation` package via the IDE's nuget package manager or via CLI `dotnet add package FluentValidation` and then we can to create the following class:
 
 ```csharp
 public class CounterForm
