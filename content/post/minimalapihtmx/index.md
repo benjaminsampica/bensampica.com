@@ -1,5 +1,5 @@
 ---
-title: A Guide to HTMX + .NET Minimal APIs
+title: A Complete Guide to HTMX + .NET Minimal APIs
 subtitle: Combining Modern Web with the Simplicity of Web 1.0. 
 summary: Creating a HTMX and .NET Minimal API from scratch and adding necessary features like validation and error handling. 
 authors:
@@ -889,7 +889,9 @@ app.MapGet("/weather", Results<RazorComponentResult<Weather>, RazorComponentResu
 Looks great! When five seconds are up, the empty table shows.
 
 ### Real Data + Paging
-
+{{< notice note >}}
+Want to just see the code? [Click here!](https://github.com/benjaminsampica/bensampica.com/tree/main/content/post/minimalapihtmx)
+{{< /notice >}}
 Finally, lets add some real data in with paging capabilities. There is a lot going on here so lets break it down piece by piece. 
 
 First, I have made some generic paging classes that we will implement. Our weather request will implement `PagedRequest` and our weather response will implement `PagedResponse<T>`.
@@ -899,16 +901,30 @@ The idea is that these can be used for any type of tabular data, however, not ju
 // Features/Shared/Paging.cs
 public abstract class PagedRequest
 {
-    private readonly int _page = 1;
+    private int _page = 1;
 
     public int Page
     {
         get => _page;
-        init => _page = value <= 0 ? 1 : value;
+        set => _page = value <= 0 ? 1 : value;
     }
 
     public virtual int Size { get; set; } = 10;
     public int Skip => (Page - 1) * Size;
+    
+    protected static ValueTask<T> BindInternalAsync<T>(HttpContext context)
+        where T : PagedRequest
+    {
+        var result = Activator.CreateInstance<T>();
+
+        _ = int.TryParse(context.Request.Query[nameof(Page)], out var page);
+        result.Page = page;
+        
+        _ = int.TryParse(context.Request.Query[nameof(Size)], out var size);
+        result.Size = size;
+
+        return ValueTask.FromResult(result);
+    }
 }
 
 public abstract class PagedResponse<T> where T : class
@@ -955,15 +971,229 @@ Now, we are going to make a generic component that handles the paging using thes
 }
 ```
 
-Next, I am going to modify the overall weather forecast page to accept another `hx-trigger` type - `submit`. Additionally, I have added the `
+Next, I am going to modify the overall weather forecast page to accept another `hx-trigger` type - `submit`. Also, I have added `hx-push-url="true"` so that the paging parameters are sent to the browser search bar for easy direct navigation.
+Finally, I have added the `<WeatherList>` component underneath the form.
 
-## Handling HTMX Errors
+```html
+<!-- Features/Weather.razor -->
+<form hx-get="/weather" hx-trigger="load, submit" hx-push-url="true">
+    <WeatherList />
+</form>
+```
+
+The reason I added the `WeatherList` component directly is because I moved the `Loading` spinner underneath it. The loading spinner will show whenever the page is loading (when going back and forward pages 
+for example), not just the first time like before.
+
+```html
+<!-- Features/WeatherList.razor -->
+<Loading />
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Date</th>
+        <th>Temp. (C)</th>
+        <th>Temp. (F)</th>
+        <th>Summary</th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (Response is not null)
+    {
+        @foreach (var forecast in Response?.Items ?? [])
+        {
+            <tr>
+                <td>@forecast.Date.ToShortDateString()</td>
+                <td>@forecast.TemperatureC</td>
+                <td>@forecast.TemperatureF</td>
+                <td>@forecast.Summary</td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>
+
+<div class="row d-flex justify-content-end">
+    <div class="col-lg-auto">
+        <Paging Request="Request" Response="Response"></Paging>
+    </div>
+</div>
+
+@code {
+    [Parameter] public WeatherForecastRequest Request { get; set; } = new();
+    [Parameter] public WeatherForecastResponse? Response { get; set; }
+    
+    public class WeatherForecast
+    {
+        public DateOnly Date { get; init; }
+        public int TemperatureC { get; init; }
+        public string? Summary { get; init; }
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    }
+
+    public class WeatherForecastRequest : PagedRequest
+    {
+        // View more at https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis/parameter-binding?view=aspnetcore-9.0#bindasync
+        public static async ValueTask<WeatherForecastRequest> BindAsync(HttpContext context)
+        {
+            var request = await BindInternalAsync<WeatherForecastRequest>(context);
+            // Other properties can be added here like filters.
+            
+            return request;
+        }
+    }
+
+    public class WeatherForecastResponse : PagedResponse<WeatherForecast>
+    {
+        // Other data can be send back.
+    }
+}
+```
+
+Finally, we need to update our minimal API endpoint to accept `WeatherForecastRequest` and to skip and take depending on what the passed page number is. We will return a 
+`WeatherForecastResponse` with the page number, total count, and size of the query. Size is not an option for the user to pick but totally could be!
+
+```csharp
+// Program.cs
+// Code omitted for brevity..
+app.MapGet("/weather", Results<RazorComponentResult<Weather>, RazorComponentResult<WeatherList>>(WeatherList.WeatherForecastRequest query, HttpContext httpContext) =>
+{
+    var isHtmxRequest = httpContext.Request.Headers.ContainsKey("HX-Request"); 
+    var isBoosted = httpContext.Request.Headers.ContainsKey("HX-Boosted"); 
+    if (!isHtmxRequest || isBoosted) // If a user directly navigates to the page (non-HTMX) OR the anchor link is clicked on the navbar.
+    {
+        return new RazorComponentResult<Weather>();
+    }
+    
+    var startDate = DateOnly.FromDateTime(DateTime.Now);
+    var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
+    var forecasts = Enumerable.Range(1, 100).Select(index => new WeatherList.WeatherForecast
+    {
+        Date = startDate.AddDays(index),
+        TemperatureC = Random.Shared.Next(-20, 55),
+        Summary = summaries[Random.Shared.Next(summaries.Length)]
+    }).ToArray();
+
+    var pagedForecasts = forecasts
+        .Skip(query.Skip)
+        .Take(query.Size)
+        .ToArray();
+
+    var response = new WeatherList.WeatherForecastResponse
+    {
+        Items = pagedForecasts,
+        Page = query.Page,
+        Size = query.Size,
+        TotalCount = forecasts.Length
+    };
+    
+    return new RazorComponentResult<WeatherList>(new { response });
+});
+```
+
+Success! Here is what the entire page looks like.
+
+{{< figure src="images/forecast-complete.png" title="The table with paging." lightbox="true" >}}
+
+## Handling HTMX Errors & Other Status Codes
+
+Status code pages can leverage the existing ASP.NET Core middleware about 99% of the way there. Just as a refresher lets add what we need to our `Program.cs` file. A new endpoint that takes in a status code
+as well as the middleware the .NET team has already made for us.
+
+```csharp
+// Program.cs
+// Code omitted for brevity.
+if (app.Environment.IsProduction()) // This is usually the other way but to demonstrate the functionality I swapped it.
+{
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseStatusCodePagesWithRedirects("/StatusCode/{0}");
+    app.UseExceptionHandler("/StatusCode/500", true);
+    app.UseHsts();
+}
+
+app.MapGet("/statuscode/{code:int}", (int code) 
+    => new RazorComponentResult<StatusCode>(new { code }));
+```
+
+Here is the `StatusCode.razor` page. Nothing special happening in here.
+
+```html
+@layout HtmxLayout
+
+<Title>
+    @Code
+</Title>
+
+<div class="d-flex align-items-center justify-content-center h-100">
+    <div class="text-center">
+        <h1 class="display-1 fw-bold text-primary"><i class="fa-solid fa-truck-ramp-box"></i> We're Sorry.</h1>
+        <p class="lead">
+            @Message
+        </p>
+        <a href="/" class="btn btn-primary">Go Home</a>
+    </div>
+</div>
+
+@code
+{
+    [Parameter] public int Code { get; set; }
+    
+    private string Message => Code switch
+    {
+        400 => "The request that was sent was not in the right format. Please retry it or try again later.",
+        401 => "You cannot access this page. Please log in and then try again.",
+        403 => "You do not have permission to access this page.",
+        404 => "The page you are looking for was not found.",
+        _ => "Something went wrong. Please try this page again later."
+    };
+}
+```
+
+The only thing we need to add is the ability to redirect to this page when something goes wrong via an HTMX request. When an exception occurs at this point of the code, the user experience is confusing - nothing happens at all (except in the console).
+
+All we need to do is add a little bit of middleware to HTMX via a javascript file that runs when the window first loads. If HTMX receives a response back where the status code is greater than or equal to `400`, redirect to our status code page.
+
+```js
+// wwwroot/client-side-handling.js
+window.addEventListener("load", () => {
+    htmx.on("htmx:responseError", (event) => {
+        if (event.detail.xhr.status >= 400) {
+            window.location = window.location.origin + "/statuscode/" + event.detail.xhr.status;
+        }
+    });
+});
+```
+
+Of course, this script needs added to the `HtmxLayout.razor` file. Easy as that, works great as you can see from the picture below.
+
+{{< figure src="images/error-handling.png" title="An expected 404 page." lightbox="true" >}}
 
 ## Advanced Topics
 
 ### The Browser "Back" Button
 
-hx-push-url
+The browser back button can be a problem no matter if you're using Blazor Web, React, or HTMX. With HTMX we can configure what to do if there is a cache miss on history, which is what every browser pulls from in order to quickly send a page back. Because interacting through websites is forward and includes things like `HX-Request` and `HX-Boosted` headers, when we use the _Back_ button a request will occasionally include those headers too and the user will see just a component rendered - missing the page around it. You can read more about this [here](https://htmx.org/reference/#config).
+
+We can avoid this by configuring HTMX to refresh the full page instead via two things. Another middleware script, and configuring HTMX itself.
+
+```js
+// wwwroot/remove-cached-history.js
+// This script, along with the htmx-config refreshOnHistoryMiss key, makes sure that navigating backwards triggers a full page refresh rather than making an AJAX call.
+// This is important in order to maintain query parameters are sent correctly to the minimal api endpoints.
+window.addEventListener("load", () => {
+    document.body.addEventListener('htmx:pushedIntoHistory', () => {
+        localStorage.removeItem('htmx-history-cache')
+    })
+});
+```
+
+```html
+<!-- HtmxLayout.razor -->
+<meta name="htmx-config" content='{"refreshOnHistoryMiss":"true"}'/>
+```
 
 ### Preserving State
 
@@ -989,6 +1219,50 @@ Your mileage may vary but you can increase your chances by clearly stating the v
 
 ### Automatically adding endpoints
 
+Since all of our HTML is going to flow through endpoints, that can be easy to forget to add every endpoint every time. When considering things like authorization groups and all the other middleware or filters you might need, its easier to colocate the razor and the endpoints themselves. We can create an interface and do some assembly scanning in order to automatically register everything.
+
+```csharp
+// Features/Shared/RouteExtensions.cs
+public static class RouteExtensions
+{
+    public static IEndpointRouteBuilder MapApplicationRoutes(this IEndpointRouteBuilder routeBuilder)
+    {
+        var routeDefinitions = typeof(Program).Assembly
+            .GetTypes()
+            .Where(t => t.IsAssignableTo(typeof(IRouteDefinition))
+                        && t is { IsAbstract: false, IsInterface: false })
+            .Select(Activator.CreateInstance)
+            .Cast<IRouteDefinition>();
+
+        foreach (var routeDefinition in routeDefinitions) routeDefinition.MapRoutes(routeBuilder);
+
+        return routeBuilder;
+    }
+}
+
+public interface IRouteDefinition
+{
+    IEndpointRouteBuilder MapRoutes(IEndpointRouteBuilder routes);
+}
+```
+
+This can be implemented directly on on component pages or in the code behind file
+
+```csharp
+// Features/EndpointRouting.razor.cs
+
+public partial class EndpointRouting : IRouteDefinition
+{
+    public IEndpointRouteBuilder MapRoutes(IEndpointRouteBuilder routes)
+    {
+        routes.MapGet("/endpointrouting", () => new RazorComponentResult<EndpointRouting>());
+        
+        return routes;
+    }
+}
+
+```
+
 ### An Api / Component Layout I Prefer
 
 ### Disabling Buttons On Submit
@@ -1002,7 +1276,7 @@ Htmx.Net (razor)
 
 ## Wrap Up
 
-I hope this was helpful to someone. I had broad ambitions for this post and it grew quickly in what I thought was important. I just can't simply cover every single use-case you might have
+I hope this was helpful. I had broad ambitions for this post and it grew quickly in what I thought was important. I just can't simply cover every single use-case you might have
 but hopefully this is enough to get you thinking with (and consider using) HTMX. 
 
-Please leave any comments below or hit me up on social media with questions!
+Please leave any comments below - especially better ways of doing something - by talking with me on social media with questions. Thanks for reading!
