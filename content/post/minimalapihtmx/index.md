@@ -1191,7 +1191,7 @@ window.addEventListener("load", () => {
 ```
 
 ```html
-<!-- HtmxLayout.razor -->
+<!-- Features/Shared/HtmxLayout.razor -->
 <meta name="htmx-config" content='{"refreshOnHistoryMiss":"true"}'/>
 ```
 
