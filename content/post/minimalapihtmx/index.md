@@ -337,7 +337,7 @@ app.MapGet("/counter/increment", ([FromQuery] int? currentCount = 0)
     => new RazorComponentResult<CounterInfo>(new { CurrentCount = currentCount + 1 })); // New endpoint.
 ```
 ```html
-// Features/Counter.razor
+<!-- Features/Counter.razor -->
 @layout HtmxLayout
 
 <PageTitle>Counter</PageTitle>
@@ -347,7 +347,7 @@ app.MapGet("/counter/increment", ([FromQuery] int? currentCount = 0)
 <CounterInfo/>
 ```
 ```html
-// Features/CounterInfo.razor
+<!--  Features/CounterInfo.razor -->
 <!-- There is no layout because this is a "partial" or component being returned - not a page.-->
 <div id="counter">
     <p role="status">
