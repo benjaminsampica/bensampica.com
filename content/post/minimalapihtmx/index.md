@@ -641,11 +641,13 @@ Bringing this all together, we need to utilize more of the Blazor framework in o
 }
 ```
 
-If I click the button without putting in a name, the form correctly returns the new state (and only the new form state) back to me - no full page reload!
+If I click the button without putting in a name the form correctly returns the new state (and only the new form state) back to me - no full page reload!
 
 {{< figure src="images/validation-message.png" title="A happy failure message." lightbox="true" >}}
 
 ## Swapping Content Somewhere Else
+
+So we can easily swap content using a button inside of a form that really just mutates the form itself as I just demonstrated. But consider a scenario where I click on a button and then it should update some piece of html somewhere else. The obvious use-case is a e-commerce page with items you can add to your cart. To re-use the blazor sample pages I have already been working with I am going to have the `Counter` page take the name that is entered and 
 
 ## Table Data
 
@@ -659,15 +661,27 @@ If I click the button without putting in a name, the form correctly returns the 
 
 hx-push-url
 
-### Force persisting state
+### Preserving State
 
 there may be some things you wish to never be swapped or invoked again which can be advantageous when they are infrequently changing things - dynamic items on an navbar are good candidates.
 
-### Blazor MAUI w/ Htmx
+### Blazor MAUI With Htmx
+
+There isn't much to say in this section besides that Blazor Hybrid using MAUI's `BlazorWebView` works with HTMX - it is all just HTML, CSS, and a little bit of javascript. There are some really cheap ways to even bring along an existing web app 
+into a native app by simply pointing your `BlazorWebView` to your existing web app, without even sharing the components. Admittedly, I have not submitted this shell app to the respective iOS and Android app stores.
+
+{{< notice warning >}}
+Apple has explicit language protecting their App Store against barebone apps like this. 
+Your mileage may vary but you can increase your chances by clearly stating the value proposition of doing so and not going into the internals of the implementation.
+{{< /notice >}}
 
 ### Automatically adding endpoints
 
-### A Layout Pattern I Like
+### An Api / Component Layout I Prefer
+
+### Disabling Buttons On Submit
+
+htmx disable states.
 
 ### Alternative / Assistive Libraries
 
