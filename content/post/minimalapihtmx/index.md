@@ -786,4 +786,4 @@ Htmx.Net (razor)
 I hope this was helpful to someone. I had broad ambitions for this post and it grew quickly in what I thought was important. I just can't simply cover every single use-case you might have
 but hopefully this is enough to get you thinking with (and consider using) HTMX. 
 
-Leave any comments below or engage with me on social media with questions!
+Please leave any comments below or hit me up on social media with questions!
