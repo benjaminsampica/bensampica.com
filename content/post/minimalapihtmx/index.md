@@ -1280,8 +1280,10 @@ HTMX has many extensions which solve all sorts of different problems. Importantl
 
 ### Alternative / Assistive Libraries
 
-Rx nuget package
-Htmx.Net (razor)
+If some of this seems overwhelming or too much work - that's okay. There are some great community NuGet packages which using HTMX under the hood but have abstracted away some of the complexity. Two of those packages are below:
+
+1. [Rizzy](https://github.com/JalexSocial/Rizzy)
+2. [HTMX.Net](https://github.com/khalidabuhakmeh/Htmx.Net)
 
 ## Wrap Up
 
