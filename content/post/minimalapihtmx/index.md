@@ -703,7 +703,7 @@ To provide a contrived example I am going to add a success message at the top of
 ```
 For the alert I am going to put it in a separate component that can be rendered by a new minimal api endpoint.
 ```html
-<div class="alert alert-success alert-dismissible fade show" role="alert">
+<div class="alert alert-success" role="alert">
     Success!
 </div>
 ```
