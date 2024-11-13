@@ -551,7 +551,7 @@ Essentially, we need to inject the current `HttpContext` and `IAntiforgery` serv
 and finally include a hidden `input` with the token values so that the form post can include them.
 
 ```csharp
-<!-- HtmxAntiforgeryToken.razor -->
+<!-- Features/Shared/HtmxAntiforgeryToken.razor -->
 @using Microsoft.AspNetCore.Antiforgery
 
 <input type="hidden" name="@_antiforgeryFieldName" value="@_antiforgeryToken" />
@@ -580,7 +580,7 @@ Just like the antiforgery token there are is a little bit of boilerplate needed 
 Here is the code
 
 ```csharp
-<!-- HtmxValidationMessage.razor -->
+<!-- Features/Shared/HtmxValidationMessage.razor -->
 @using System.Linq.Expressions
 @typeparam TValue
 
@@ -753,7 +753,7 @@ Let's get all the boilerplate out of the way that we know we are going to need. 
 These deviate slightly from the sample pages but largely it is the same concept.
 
 ```html
-<!-- Weather.razor -->
+<!-- Features/Weather.razor -->
 @layout HtmxLayout
 
 <PageTitle>Weather</PageTitle>
@@ -762,12 +762,12 @@ These deviate slightly from the sample pages but largely it is the same concept.
 
 <p>This component demonstrates showing data.</p>
 
-<form hx-get="/weather/list" hx-trigger="load"> <!-- When the page loads, fetch data from /weather/list.-->
+<form hx-get="/weather" hx-trigger="load"> <!-- When the page loads, fetch data from /weather.-->
 </form>
 ```
 
 ```html
-<!-- WeatherList.razor -->
+<!-- Features/WeatherList.razor -->
 <table class="table">
     <thead>
     <tr>
@@ -803,13 +803,24 @@ These deviate slightly from the sample pages but largely it is the same concept.
 }
 ```
 
-Next, I am going to just add two new endpoints to our `Program.cs` file that is setting up our initial state.
+Next, I am going to just add a single new endpoint to our `Program.cs` file that is setting up our initial state.
 
 ```csharp
 // Program.cs
 // Code omitted for brevity.
-app.MapGet("/weather", () => new RazorComponentResult<Weather>()); // New endpoint.
-app.MapGet("/weather/list", () => new RazorComponentResult<WeatherList>()); // New endpoint.
+app.MapGet("/weather", Results<RazorComponentResult<Weather>, RazorComponentResult<WeatherList>>(HttpContext httpContext) =>
+{
+    // HTMX sends this header when the request is sent by HTMX.
+    var isHtmxRequest = httpContext.Request.Headers.ContainsKey("HX-Request"); 
+    // HTMX sends this header when the request is boosted. A boosted request happens when the anchor link is clicked on the navbar.
+    var isBoosted = httpContext.Request.Headers.ContainsKey("HX-Boosted"); 
+    if (!isHtmxRequest || isBoosted) // If a user directly navigates to the page (non-HTMX) OR the anchor link is clicked on the navbar.
+    {
+        return new RazorComponentResult<Weather>(); // Return the page.
+    }
+    
+    return new RazorComponentResult<WeatherList>(); // Send just the component.
+});
 ```
 
 {{< figure src="images/forecast-base.png" title="The empty weather page." lightbox="true" >}}
@@ -822,16 +833,16 @@ For this, HTMX has us covered! We can add an attribute called `hx-indicator` ([d
 Here's the `Loading.razor` component with that in mind.
 
 ```html
-<!-- Loading.razor -->
+<!-- Features/Shared/Loading.razor -->
 <div class="d-flex justify-content-center align-items-center">
     <div class="spinner-border text-primary htmx-indicator" style="width: 10em; height: 10em; "/>
 </div>
 ```
 
-We haven't touched this file yet since the inital boilerplate, but we are going to modify the global css file to add some styles to show our spinner based on `hx-indicator` and `htmx-request`.
+We haven't touched `app.css` yet since the inital boilerplate but now we are going to modify this global css file to add some styles to show our spinner based on `hx-indicator` and `htmx-request`.
 
 ```css
-/* app.css */
+/* wwwroot/app.css */
 .htmx-indicator {
    display: none;
 }
@@ -845,10 +856,10 @@ Finally, we are going to add the `Loading.razor` component to our `Weather` page
 We want the loading component to be inside the form so that the loading disappears when the request from the server returns - replacing the content within.
 
 ```html
-<!-- Weather.razor
+<!-- Features/Weather.razor
     Code omitted for brevity.
     -->
-<form hx-get="/weather/list" hx-trigger="load">
+<form hx-get="/weather" hx-trigger="load">
     <Loading />
 </form>
 ```
@@ -857,10 +868,19 @@ We want the loading component to be inside the form so that the loading disappea
 // Program.cs
 // Code omitted for brevity.
 
-app.MapGet("/weather/list", async () =>
+app.MapGet("/weather", Results<RazorComponentResult<Weather>, RazorComponentResult<WeatherList>>(HttpContext httpContext) =>
 {
     await Task.Delay(5000); // Delay for 5 seconds.
-    return new RazorComponentResult<WeatherList>();
+    // HTMX sends this header when the request is sent by HTMX.
+    var isHtmxRequest = httpContext.Request.Headers.ContainsKey("HX-Request"); 
+    // HTMX sends this header when the request is boosted. A boosted request happens when the anchor link is clicked on the navbar.
+    var isBoosted = httpContext.Request.Headers.ContainsKey("HX-Boosted"); 
+    if (!isHtmxRequest || isBoosted) // If a user directly navigates to the page (non-HTMX) OR the anchor link is clicked on the navbar.
+    {
+        return new RazorComponentResult<Weather>(); // Return the page.
+    }
+    
+    return new RazorComponentResult<WeatherList>(); // Send just the component.
 });
 ```
 
@@ -868,10 +888,74 @@ app.MapGet("/weather/list", async () =>
 
 Looks great! When five seconds are up, the empty table shows.
 
-### Paging
+### Real Data + Paging
 
+Finally, lets add some real data in with paging capabilities. There is a lot going on here so lets break it down piece by piece. 
 
-## A Long Page Of Dynamic Content
+First, I have made some generic paging classes that we will implement. Our weather request will implement `PagedRequest` and our weather response will implement `PagedResponse<T>`.
+The idea is that these can be used for any type of tabular data, however, not just for the weather.
+
+```csharp
+// Features/Shared/Paging.cs
+public abstract class PagedRequest
+{
+    private readonly int _page = 1;
+
+    public int Page
+    {
+        get => _page;
+        init => _page = value <= 0 ? 1 : value;
+    }
+
+    public virtual int Size { get; set; } = 10;
+    public int Skip => (Page - 1) * Size;
+}
+
+public abstract class PagedResponse<T> where T : class
+{
+    public required int Page { get; init; }
+    public required int Size { get; init; }
+    public required int TotalCount { get; init; }
+    public required ICollection<T> Items { get; init; } = [];
+
+    public int TotalPages => (int)Math.Ceiling((decimal)TotalCount / Size);
+    public bool HasMorePages => Page < TotalPages;
+}
+```
+
+Now, we are going to make a generic component that handles the paging using these abstract classes. We are going to use basic submit buttons that then trigger the form.
+
+```html
+<!-- Features/Shared/Paging.razor -->
+@typeparam T where T : class
+
+<div class="btn-group w-100 paging">
+    <button class="btn btn-outline-primary @PreviousCssClass" value="@(Response?.Page - 1)" name="@Name" type="submit">
+        <span>&laquo; Previous</span>
+    </button>
+    <div class="btn btn-secondary pe-none">
+        <span>Page @Response?.Page</span>
+    </div>
+    <button class="btn btn-outline-primary @NextCssClass" value="@(Response?.Page + 1)" name="@Name" type="submit">
+        <span>Next &raquo;</span>
+    </button>
+</div>
+
+<input type="hidden" name="@Name" value="@(Request?.Page ?? 1)" />
+
+@code {
+    [Parameter, EditorRequired] public PagedResponse<T>? Response { get; set; }
+    [Parameter, EditorRequired] public PagedRequest? Request { get; set; }
+
+    private string Name => nameof(PagedRequest.Page);
+    private bool IsNextEnabled => Response?.HasMorePages is true;
+    private bool IsPreviousEnabled => Response?.Page is not null && Response.Page != 1;
+    private string PreviousCssClass => IsPreviousEnabled ? "" : "disabled";
+    private string NextCssClass => IsNextEnabled ? "" : "disabled";
+}
+```
+
+Next, I am going to modify the overall weather forecast page to accept another `hx-trigger` type - `submit`. Additionally, I have added the `
 
 ## Handling HTMX Errors
 
