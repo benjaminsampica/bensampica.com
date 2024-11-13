@@ -1,0 +1,19 @@
+@using Microsoft.AspNetCore.Antiforgery
+
+<input type="hidden" name="@_antiforgeryFieldName" value="@_antiforgeryToken" />
+
+@code {
+    [CascadingParameter] public HttpContext HttpContext { get; set; } = null!;
+    [Inject] public IAntiforgery Antiforgery { get; set; } = null!;
+
+    private string _antiforgeryToken = string.Empty;
+    private string _antiforgeryFieldName = string.Empty;
+
+    protected override void OnParametersSet()
+    {
+        var set = Antiforgery.GetAndStoreTokens(HttpContext);
+
+        _antiforgeryToken = set.RequestToken!;
+        _antiforgeryFieldName = set.FormFieldName;
+    }
+}

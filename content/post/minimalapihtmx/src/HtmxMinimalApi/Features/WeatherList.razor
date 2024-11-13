@@ -1,0 +1,62 @@
+<Loading />
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Date</th>
+        <th>Temp. (C)</th>
+        <th>Temp. (F)</th>
+        <th>Summary</th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (Response is not null)
+    {
+        @foreach (var forecast in Response?.Items ?? [])
+        {
+            <tr>
+                <td>@forecast.Date.ToShortDateString()</td>
+                <td>@forecast.TemperatureC</td>
+                <td>@forecast.TemperatureF</td>
+                <td>@forecast.Summary</td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>
+
+<div class="row d-flex justify-content-end">
+    <div class="col-lg-auto">
+        <Paging Request="Request" Response="Response"></Paging>
+    </div>
+</div>
+
+@code {
+    [Parameter] public WeatherForecastRequest Request { get; set; } = new();
+    [Parameter] public WeatherForecastResponse? Response { get; set; }
+    
+    public class WeatherForecast
+    {
+        public DateOnly Date { get; init; }
+        public int TemperatureC { get; init; }
+        public string? Summary { get; init; }
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    }
+
+    public class WeatherForecastRequest : PagedRequest
+    {
+        // View more at https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis/parameter-binding?view=aspnetcore-9.0#bindasync
+        public static async ValueTask<WeatherForecastRequest> BindAsync(HttpContext context)
+        {
+            var request = await BindInternalAsync<WeatherForecastRequest>(context);
+            // Other properties can be added here like filters.
+            
+            return request;
+        }
+    }
+
+    public class WeatherForecastResponse : PagedResponse<WeatherForecast>
+    {
+        // Other data can be send back.
+    }
+}

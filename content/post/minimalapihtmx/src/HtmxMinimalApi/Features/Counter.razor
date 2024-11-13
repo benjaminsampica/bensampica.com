@@ -1,0 +1,12 @@
+@layout HtmxLayout
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<CounterInfo CounterForm="CounterForm"/>
+
+@code
+{
+    [Parameter] public CounterForm CounterForm { get; set; } = new();
+}

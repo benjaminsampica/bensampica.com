@@ -1,6 +1,6 @@
 ---
 title: A Complete Guide to HTMX + .NET Minimal APIs
-subtitle: Combining Modern Web with the Simplicity of Web 1.0. 
+subtitle: How to Build Real Things You Might Need for Your Production Applications.
 summary: Creating a HTMX and .NET Minimal API from scratch and adding necessary features like validation and error handling. 
 authors:
 - ben-sampica

@@ -1,0 +1,18 @@
+<CascadingValue Value="ValidationResult">
+    <form id="counter" hx-post="counter/increment" hx-swap="outerHTML" hx-target="#counter">
+        <HtmxAntiforgeryToken />
+        <input type="number" value="@CounterForm.CurrentCount" name="@nameof(CounterForm.CurrentCount)" class="form-control-plaintext w-100"/>
+        <label class="w-100">
+            Counter Submission Name
+            <InputText @bind-Value="CounterForm.Name" name="@nameof(CounterForm.Name)"/>
+            <HtmxValidationMessage For="() => CounterForm.Name "/>
+        </label>
+        <button class="btn btn-primary">Click me</button>
+    </form>
+</CascadingValue>
+
+@code 
+{
+    [Parameter] public CounterForm CounterForm { get; set; } = new();
+    [Parameter] public ValidationResult ValidationResult { get; set; } = new();
+}

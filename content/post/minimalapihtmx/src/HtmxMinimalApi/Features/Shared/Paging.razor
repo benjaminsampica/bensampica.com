@@ -1,0 +1,27 @@
+@typeparam T where T : class
+
+<div class="btn-group w-100 paging">
+    <button class="btn btn-outline-primary @PreviousCssClass" value="@(Response?.Page - 1)" name="@Name" type="submit">
+        <span>&laquo; Previous</span>
+    </button>
+    <div class="btn btn-secondary pe-none">
+        <span>Page @Response?.Page</span>
+    </div>
+    <button class="btn btn-outline-primary @NextCssClass" value="@(Response?.Page + 1)" name="@Name" type="submit">
+        <span>Next &raquo;</span>
+    </button>
+</div>
+
+<input type="hidden" name="@nameof(Request.Size)" value="@Request?.Size"/>
+<input type="hidden" name="@Name" value="@(Request?.Page ?? 1)" />
+
+@code {
+    [Parameter, EditorRequired] public PagedResponse<T>? Response { get; set; }
+    [Parameter, EditorRequired] public PagedRequest? Request { get; set; }
+
+    private string Name => nameof(PagedRequest.Page);
+    private bool IsNextEnabled => Response?.HasMorePages is true;
+    private bool IsPreviousEnabled => Response?.Page is not null && Response.Page != 1;
+    private string PreviousCssClass => IsPreviousEnabled ? "" : "disabled";
+    private string NextCssClass => IsNextEnabled ? "" : "disabled";
+}
