@@ -1217,9 +1217,9 @@ Apple has language protecting their App Store against barebone apps like the one
 Your mileage may vary but you can increase your chances by clearly stating the value proposition of doing so and not going into the internals of the implementation.
 {{< /notice >}}
 
-### Automatically adding endpoints
+### Automatically Adding endpoints
 
-Since all of our HTML is going to flow through endpoints, that can be easy to forget to add every endpoint every time. When considering things like authorization groups and all the other middleware or filters you might need, its easier to colocate the razor and the endpoints themselves. We can create an interface and do some assembly scanning in order to automatically register everything.
+Since all of our HTML is going to flow through endpoints we are going to have a lot of endpoints and that can be easy to forget to add every endpoint every time. When considering things like authorization groups and all the other middleware or filters you might need, its easier to colocate the razor and the endpoints themselves. We can create an interface and do some assembly scanning in order to automatically register everything.
 
 ```csharp
 // Features/Shared/RouteExtensions.cs
@@ -1246,11 +1246,10 @@ public interface IRouteDefinition
 }
 ```
 
-This can be implemented directly on on component pages or in the code behind file
+This can be implemented directly on on component pages or in the code behind file.
 
 ```csharp
 // Features/EndpointRouting.razor.cs
-
 public partial class EndpointRouting : IRouteDefinition
 {
     public IEndpointRouteBuilder MapRoutes(IEndpointRouteBuilder routes)
@@ -1260,14 +1259,24 @@ public partial class EndpointRouting : IRouteDefinition
         return routes;
     }
 }
-
 ```
 
-### An Api / Component Layout I Prefer
+Finally, we just need to invoke this in our `Program.cs` file
+```csharp
+// Program.cs
+// Code omitted for brevity.
+app.MapApplicationRoutes();
+```
+
+I strongly prefer this approach as it pairs very nicely with vertical slicing and the principle of proximity.
 
 ### Disabling Buttons On Submit
 
-htmx disable states.
+When we click a form submit we want to make sure the server has enough time to process the request. Often times, users will click buttons multiple times either by accident or through impatience. We can prevent this by using an HTMX extension called `loading-states`. You can read the documentation how to do this [here](https://github.com/bigskysoftware/htmx-extensions/blob/main/src/loading-states/README.md).
+
+{{< notice tip >}}
+HTMX has many extensions which solve all sorts of different problems. Importantly, they are _opt-in_. You can view the entire list [here](https://htmx.org/extensions/).
+{{< /notice >}}
 
 ### Alternative / Assistive Libraries
 
