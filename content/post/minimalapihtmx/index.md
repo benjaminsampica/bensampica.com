@@ -613,7 +613,7 @@ app.MapPost("/counter/increment",  RazorComponentResult<CounterInfo>([FromForm] 
 
 ### Tie It All Together On The Counter
 
-{{< notice tip >}}
+{{< notice note >}}
 Want to just see the code? [Click here!](https://github.com/benjaminsampica/bensampica.com/tree/main/content/post/minimalapihtmx)
 {{< /notice >}}
 
