@@ -19,9 +19,14 @@ toc: true
 
 ## Introduction 
 
-With the release of [.NET 8](https://devblogs.microsoft.com/dotnet/announcing-dotnet-8/), you can now return a `RazorComponentResult<T>` from minimal api's which means that blazor components and pages can be returned easily from an endpoint. All dependencies will be injected in the blazor component/service, albeit the rending model they operate under will always be completely static (unless you opt-in to Blazor Web via its bootstrapping script, which is _not_ what I'm going to do). Additionally, .NET 8 brought in some automatic binding features for minimal api so we can easily post forms and files to them.
+With the release of [.NET 8](https://devblogs.microsoft.com/dotnet/announcing-dotnet-8/), you can now return a `RazorComponentResult<T>` from minimal api's which 
+means that blazor components and pages can be returned easily from an endpoint. All dependencies will be injected in the blazor component/service, 
+albeit the rending model they operate under will always be completely static (unless you opt-in to Blazor Web via its bootstrapping script, 
+which is _not_ what I'm going to do). Additionally, .NET 8 brought in some automatic binding features for minimal api so we can easily post forms and files to them.
 
-There is a growing tech chatter over a tiny library with a big heart (and a surprisingly large following on [X](https://x.com/htmx_org) ) called [HTMX](https://htmx.org/) (formerly _intercooler.js_). HTMX is a really simple library that leverages the tools given to us since the very beginning of the web to create fast and interactive websites. Taken from its own website:
+There is a growing tech chatter over a tiny library with a big heart (and a surprisingly large following on [X](https://x.com/htmx_org) ) 
+called [HTMX](https://htmx.org/) (formerly _intercooler.js_). HTMX is a really simple library that leverages the tools given to us since the very 
+beginning of the web to create fast and interactive websites. Taken from its own website:
 
 > htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext. 
 
@@ -34,13 +39,18 @@ HTMX may surprise traditional web developers for its "rule"-bending motivations
 - Why should you only be able to replace the entire screen?
 ```
 
-By-and-large, HTMX (and hypermedia, of course) embrace the concept of [HATEOAS)(https://intercoolerjs.org/2016/05/08/hatoeas-is-for-humans.html), Hypertext As The Engine Of Application State. What this means is that there is no server or client maintaining state; no huge javascript/WASM payload as an "application" and no persistent websocket connection.
+By-and-large, HTMX (and hypermedia, of course) embrace the concept of [HATEOAS)(https://intercoolerjs.org/2016/05/08/hatoeas-is-for-humans.html), Hypertext As The Engine Of Application State. 
+What this means is that there is no server or client maintaining state; no huge javascript/WASM payload as an "application" and no persistent websocket connection.
 
-For more of the "why hypermedia was built for this all along" you can read the collection of [essays](https://htmx.org/essays/) or even their free book: [Hypermedia Systems](https://hypermedia.systems/book/contents/).
+For more of the "why hypermedia was built for this all along" you can read the collection of [essays](https://htmx.org/essays/) 
+or even their free book: [Hypermedia Systems](https://hypermedia.systems/book/contents/).
 
-I know my bias against these toolchains is coming out and I sound slightly like a crazy person for touting technologies in a old-is-new again fashion but my angle here is that those tools are really great for low-to-medium interactive applications. There are a _ton_ of use cases for using them and when you need a interactive application, you should consider using them.
+I know my bias against these toolchains is coming out and I sound slightly like a crazy person for touting technologies in a old-is-new again 
+fashion but my angle here is that those tools are really great for low-to-medium interactive applications. 
+There are a _ton_ of use cases for using them and when you need a interactive application, you should consider using them.
 
-However, there are a _ton_ of use cases for CRUD apps and tons of use cases for CRUD + islands of interactivity apps (the term _islands of interactivity_ meaning static content with portions that are interactive). And that's where HTMX really shines - dissolving complexity and returning to the roots of www.
+However, there are a _ton_ of use cases for CRUD apps and tons of use cases for CRUD + islands of interactivity apps (the term _islands of interactivity_ meaning static 
+content with portions that are interactive). And that's where HTMX really shines - dissolving complexity and returning to the roots of www.
 
 Lets first cover why we're not going to use Blazor Web (SSR/WASM/Server) and use HTMX as a drop-in replacement.
 
@@ -50,7 +60,7 @@ Blazor Web is great but there's quite a few things that I find myself reaching f
 
 - `htmx.js` is only ~14KB. `blazor.web.js` is ~200kb.
 - Loading content dynamically based on viewport (intersect, scrolling into view, etc.) is not supported. Only stream rendering is supported (serving the page and then only once performing some asynchronous work).
-- Loading content dynamically based on a trigger (load, something is clicked, something is clicked _again_, throttling, queueing, etc.). Not supported.
+- Loading content dynamically based on a trigger (load, something is clicked, something is clicked _again_, throttling, queueing, polling, etc.). Not supported.
 - Loading content dynamically somewhere on the page based on something that happened somewhere else on the page. Not supported.
 - Changing pages in Blazor SSR doesn't bring you to the top of the page if both pages have below-the-fold content and you have scrolled down.
 - Dynamically loading javascript scripts is janky and leave behind code when they're swapped out.
@@ -58,19 +68,24 @@ Blazor Web is great but there's quite a few things that I find myself reaching f
 - To get a little more subjective, submitting forms in Blazor SSR is [janky](https://learn.microsoft.com/en-us/aspnet/core/blazor/forms/?view=aspnetcore-8.0) 🤷‍♂️ .
 - I also like vertically slicing features and combining Blazor WASM + Server interactivity forces you into a `.Client` project with just the interactive components and forces components to be separated.
 
+{{< notice tip >}}
+HTMX has a lot of different mechanisms to handle triggering which you can read about [here](https://htmx.org/attributes/hx-trigger/). 
+{{< /notice >}}
+
 ## Creating The Project
 
 {{< notice note >}}
 Want to just see the code? [Click here!](https://github.com/benjaminsampica/bensampica.com/tree/main/content/post/minimalapihtmx)
 {{< /notice >}}
 
-Let us start fresh with a brand new dotnet minimal api and the end goal is going to be to recreate the Blazor sample template with HTMX with a couple extras to make this a complete guide. 
+Let us start fresh with a brand new dotnet minimal api and the end goal is going to be to recreate the Blazor sample template with HTMX with a lot of extras to make this a complete guide. 
 
 ```bash
 dotnet new webapi --output HtmxMinimalApi --no-openapi
 ```
 
-No OpenApi support? Yes that's fine! The API endpoints are going to return HTML and versioning constantly is the point. This is really no different than a server-side rendered application like ASP.NET MVC - the theme has been and is going to continue to be that we are travelling back in time with modern technology.
+No OpenApi support? Yes that's fine! The API endpoints are going to return HTML and versioning constantly is the point. This is really no different than a server-side 
+rendered application like ASP.NET MVC - the theme has been and is going to continue to be that we are travelling back in time with modern technology.
 
 Additionally, for now I am going to throw out all the weather forecast api boilerplate. It will come back in a modified form later. Below is my entire `Program.cs`.
 
@@ -90,9 +105,12 @@ app.Run();
 
 ## Adding A Layout & Navbar
 
-Did I forget to mention I really like the Blazor component developer experience? Because I do. I am going to add a layout, which all of the real pages are going to return and the navbar. Just like a Blazor Web application we are still going to differentiate between pages and components because we will have API endpoints that return both.
+Did I forget to mention I really like the Blazor component developer experience? Because I do. I am going to add a layout, which all of the real pages are 
+going to return and the navbar. Just like a Blazor Web application we are still going to differentiate between pages and components because we will have API endpoints 
+that return both.
 
-Since the goal is to recreate the sample pages, I am just going to pull these straight from a `dotnet new blazor` project with a couple tweaks. You can place these anywhere in the project directory. I am opting for a vertical slice type of folder layout.
+Since the goal is to recreate the sample pages, I am just going to pull these straight from a `dotnet new blazor` project with a couple tweaks. 
+You can place these anywhere in the project directory. I am opting for a vertical slice type of folder layout.
 
 ```html
 <!-- Features/Shared/HtmxLayout.razor 
@@ -111,7 +129,7 @@ Since the goal is to recreate the sample pages, I am just going to pull these st
         <script src="https://unpkg.com/htmx.org@2.0.0"></script> <!-- This is the only thing I have added. HTMX! -->
         <HeadOutlet/>
     </head>
-    <body hx-boost="true">
+    <body> 
         <div class="page">
             <div class="sidebar">
                 <NavMenu/>
@@ -151,7 +169,7 @@ Since the goal is to recreate the sample pages, I am just going to pull these st
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
     <nav class="flex-column">
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+            <NavLink class="nav-link" href="">
                 <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
             </NavLink>
         </div>
@@ -183,7 +201,8 @@ Since the goal is to recreate the sample pages, I am just going to pull these st
 
 ## The First Page - Home
 
-This is going to be a pattern but I am going to pull the home page from the sample template because we want it to look exactly the same. Except we are _also_ going to include the `HtmxLayout` as the layout for this page.
+This is going to be a pattern but I am going to pull the home page from the sample template because we want it to look exactly the same. 
+Except we are _also_ going to include the `HtmxLayout` as the layout for this page.
 
 ```html
 @layout HtmxLayout
@@ -195,7 +214,8 @@ This is going to be a pattern but I am going to pull the home page from the samp
 Welcome to your new app.
 ```
 
-Now this is where the magic starts happening. Like I mentioned in the introduction, I am going to use `RenderComponentResult<T>` to actually return the home page from the minimal api. Here is the new `Program.cs`.
+Now this is where the magic starts happening. Like I mentioned in the introduction, I am going to use `RenderComponentResult<T>` to actually return the home page 
+from the minimal api. Here is the new `Program.cs`.
 
 ```csharp
 // Program.cs
@@ -264,7 +284,8 @@ But wait - the counter button doesn't work!
 
 ## The First Island of Interactivity
 
-When the button is clicked, the counter needs to increment up by one. Since the only state is the hypermedia itself 😎, we will need to refresh the HTML on the page in order for the counter to increment. HTMX is not even needed at this point just plain hyperlinks and query parameters, as showcased below.
+When the button is clicked, the counter needs to increment up by one. Since the only state is the hypermedia itself 😎, we will need to refresh the HTML on the page 
+in order for the counter to increment. HTMX is not even needed at this point just plain hyperlinks and query parameters, as showcased below.
 
 ```html
 @layout HtmxLayout
@@ -373,7 +394,8 @@ The request back from the new `/counter/increment` endpoint when the anchor butt
 
 Very good! We're just re-generating the HTML we need to change the state of the web page and HTMX is swapping it onto the target.
 
-As an aside, since we are using HTMX to enhance the anchor it could _technically_ be any element as long as the `hx-` elements are present. Do note that by opting to put this functionality on _any_ element, degraded clients (those without javascript) may need a workaround or suffer degraded features.
+As an aside, since we are using HTMX to enhance the anchor it could _technically_ be any element as long as the `hx-` elements are present. 
+Do note that by opting to put this functionality on _any_ element, degraded clients (those without javascript) may need a workaround or suffer degraded features.
 
 Speaking of degraded features, the current implementation does _not_ degrade well. Let's fix that.
 
@@ -387,7 +409,10 @@ With HTMX, I do have some options. I'm going to pick one of them - wrapping the 
 2. Add a hidden input with the name `currentCount` and value of the current count.
 3. Turn the `<a>` button back into a `<button>`
 
-An added advantage that you might notice in your browser search bar is that the current count shows up as a query parameter. That's pretty neat because, again, we're leveraging the browser itself to be able to restore the state of the hypermedia. The Blazor starter template link returns the counter to zero when you directly navigate there. Using traditional hypermedia, we can accept parameters naturally to restore the state. Of course, you can do this too with Blazor Web SSR which is to its advantage too!
+An added advantage that you might notice in your browser search bar is that the current count shows up as a query parameter. 
+That's pretty neat because, again, we're leveraging the browser itself to be able to restore the state of the hypermedia. 
+The Blazor starter template link returns the counter to zero when you directly navigate there. 
+Using traditional hypermedia, we can accept parameters naturally to restore the state. Of course, you can do this too with Blazor Web SSR which is to its advantage too!
 
 Here is the code:
 
@@ -476,7 +501,8 @@ app.MapGet("/counter/increment", ([FromQuery] int? currentCount = 0)
 
 ## Validation
 
-To demonstrate validation we're going to go off-sample and add a name field to the counter page. I like the package called FluentValidation so much and honestly I feel like most people are not using DataAnnotations for API-surface validation beyond _very_ simple scenarios or for demos.
+To demonstrate validation we're going to go off-sample and add a name field to the counter page. 
+I like the package called FluentValidation so much and honestly I feel like most people are not using DataAnnotations for API-surface validation beyond _very_ simple scenarios or for demos.
 
 I am going to install that in the project and prepare the form for that field:
 
@@ -525,7 +551,9 @@ app.UseStaticFiles();
 app.UseAntiforgery(); // Add this line.
 ```
 
-The antiforgery token boilerplate is a little verbose but necessary in order to be able to send form posts. Essentially, we need to inject the current `HttpContext` and `IAntiforgery` service into a component, which I have named `HtmxAntiforgeryToken.razor`, generate the tokens, and finally include a hidden `input` with the token values so that the form post can include them.
+The antiforgery token boilerplate is a little verbose but necessary in order to be able to send form posts. 
+Essentially, we need to inject the current `HttpContext` and `IAntiforgery` service into a component, which I have named `HtmxAntiforgeryToken.razor`, generate the tokens, 
+and finally include a hidden `input` with the token values so that the form post can include them.
 
 ```csharp
 <!-- HtmxAntiforgeryToken.razor -->
@@ -647,7 +675,19 @@ If I click the button without putting in a name the form correctly returns the n
 
 ## Swapping Content Somewhere Else
 
-So we can easily swap content using a button inside of a form that really just mutates the form itself as I just demonstrated. But consider a scenario where I click on a button and then it should update some piece of html somewhere else. The obvious use-case is a e-commerce page with items you can add to your cart. To re-use the blazor sample pages I have already been working with I am going to have the `Counter` page take the name that is entered and 
+So we can easily swap content using a button inside of a form that really just mutates the form itself as I just demonstrated. 
+But consider a scenario where I click on a button and then it should update some piece of html somewhere else. 
+The obvious use-case is a e-commerce page with items you can add to your cart. The number of items in your cart usually resides outside of the shopping area and needs updated every time something is
+added to the cart.
+HTMX triggers operate by sending headers back through the response from the server via `HX-Trigger` so something like a `added-to-cart` event would be sent once the item is successfully added to the cart.
+
+```
+
+```
+
+{{< notice tip >}}
+Another way to handle content swapping somewhere else is to use out-of-band swaps which you can learn more about [here](https://htmx.org/attributes/hx-swap-oob/).
+{{< /notice >}}
 
 ## Table Data
 
@@ -663,7 +703,13 @@ hx-push-url
 
 ### Preserving State
 
-there may be some things you wish to never be swapped or invoked again which can be advantageous when they are infrequently changing things - dynamic items on an navbar are good candidates.
+A few potential good candidates for preserving state:
+
+1. Dynamic items in the navbar where they should only change state through HTMX event triggers.
+2. Content that contains videos where someone has played it so as to not lose the position.
+3. Things that open or close, like accordions, where you want to swap the accordion parent content but maintain an accordion's item being open.
+
+You can preserve state by attaching `hx-preserve` on the element which will automatically preserve any child elements too. Read more about preserving state [here](https://htmx.org/attributes/hx-preserve/).
 
 ### Blazor MAUI With Htmx
 
