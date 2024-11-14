@@ -1178,11 +1178,11 @@ Of course, this script needs added to the `HtmxLayout.razor` file. Easy as that,
 
 ### Using 'MapStaticAssets' in .NET 9
 
-Being able to use `.MapStaticAssets` for its build-time compression, e-tagging, and cache busting features is a no-brainer over the traditional `.UseStaticAssets`. The only problem is that `.MapStaticAssets` has some internals that actually plays off of `MapRazorComponents<T>`, which you would think you wouldn't need in a minimal api + htmx context. That is not the case.
+Being able to use `.MapStaticAssets` for its build-time compression, e-tagging, and cache busting features is a no-brainer over the traditional `.UseStaticFiles`. The only problem is that `.MapStaticAssets` has some internals that actually plays off of `MapRazorComponents<T>`, which you would think you wouldn't need in a minimal api + htmx context. That is not the case.
 
 There is currently no known workaround for this but I've opened a issue on the [dotnet repository on GitHub](https://github.com/dotnet/aspnetcore/issues/58937).
 
-Fortunately, `.MapStaticAssets` working features includes what `.UseStaticAssets` used to do, as well as the e-tag feature. So a least it is better than it was in .NET 8, I guess. Stay tuned.
+Fortunately, `.MapStaticAssets` working features includes what `.UseStaticFiles` used to do, as well as the e-tag feature. So a least it is better than it was in .NET 8, I guess. Stay tuned.
 
 ### The Browser "Back" Button
 
