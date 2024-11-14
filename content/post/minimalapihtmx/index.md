@@ -1182,6 +1182,8 @@ Being able to use `.MapStaticAssets` for its build-time compression, e-tagging, 
 
 There is currently no known workaround for this but I've opened a issue on the [dotnet repository on GitHub](https://github.com/dotnet/aspnetcore/issues/58937).
 
+Fortunately, `.MapStaticAssets` working features includes what `.UseStaticAssets` used to do, as well as the e-tag feature. So a least it is better than it was in .NET 8, I guess. Stay tuned.
+
 ### The Browser "Back" Button
 
 The browser back button can be a problem no matter if you're using Blazor Web, React, or HTMX. With HTMX we can configure what to do if there is a cache miss on history, which is what every browser pulls from in order to quickly send a page back. Because interacting through websites is forward and includes things like `HX-Request` and `HX-Boosted` headers, when we use the _Back_ button a request will occasionally include those headers too and the user will see just a component rendered - missing the page around it. You can read more about this [here](https://htmx.org/reference/#config).
