@@ -611,7 +611,7 @@ Here is the code
 
 ```
 
-### Updating The Minimal API endpoint
+### Updating The Minimal API Endpoint
 
 Since we created the `CounterForm` model our endpoints need to return that into our component and page. 
 Additionally, when we submit a post request we need to run our validation and return the result back into `CounterInfo.razor`.
@@ -1175,6 +1175,12 @@ Of course, this script needs added to the `HtmxLayout.razor` file. Easy as that,
 {{< figure src="images/error-handling.png" title="An expected 404 page." lightbox="true" >}}
 
 ## Advanced Topics
+
+### Using 'MapStaticAssets' in .NET 9
+
+Being able to use `.MapStaticAssets` for its build-time compression, e-tagging, and cache busting features is a no-brainer over the traditional `.UseStaticAssets`. The only problem is that `.MapStaticAssets` has some internals that actually plays off of `MapRazorComponents<T>`, which you would think you wouldn't need in a minimal api + htmx context. That is not the case.
+
+There is currently no known workaround for this but I've opened a issue on the [dotnet repository on GitHub](https://github.com/dotnet/aspnetcore/issues/58937).
 
 ### The Browser "Back" Button
 
