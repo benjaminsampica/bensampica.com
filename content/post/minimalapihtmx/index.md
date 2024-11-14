@@ -32,7 +32,7 @@ beginning of the web to create fast and interactive websites. Taken from its own
 
 HTMX may surprise traditional web developers for its "rule"-bending motivations:
 
-- Why should only <a> & <form> be able to make HTTP requests?
+- Why should only `<a>` & `<form>` be able to make HTTP requests?
 - Why should only click & submit events trigger them?
 - Why should only GET & POST methods be available?
 - Why should you only be able to replace the entire screen?
@@ -44,8 +44,8 @@ For more of the "why hypermedia was built for this all along" you can read the c
 or even their free book: [Hypermedia Systems](https://hypermedia.systems/book/contents/).
 
 I know my bias against these toolchains is coming out and I sound slightly like a crazy person for touting technologies in a old-is-new again 
-fashion but my angle here is that those tools are really great for low-to-medium interactive applications. 
-There are a _ton_ of use cases for using them and when you need a interactive application, you should consider using them.
+fashion but my angle here is that those tools are really great for extremely high interactive applications. 
+There are a _ton_ of use cases for using them (like stock trader apps) and when you need a high interactivity you should consider using them.
 
 However, there are a _ton_ of use cases for CRUD apps and tons of use cases for CRUD + islands of interactivity apps (the term _islands of interactivity_ meaning static 
 content with portions that are interactive). And that's where HTMX really shines - dissolving complexity and returning to the roots of www.
@@ -752,7 +752,7 @@ Fast-forwarding from what we have already learned from the previous sections we 
 
 ### Weather That Shows No Data
 
-Let's get all the boilerplate out of the way that we know we are going to need. First, we're going to add the components I know we will need. 
+Let's get all the boilerplate out of the way that we know we are going to need. First, we're going to add some components and pages.
 These deviate slightly from the sample pages but largely it is the same concept.
 
 ```html
@@ -831,7 +831,7 @@ app.MapGet("/weather", Results<RazorComponentResult<Weather>, RazorComponentResu
 ### Loading
 
 Now, let's handle the case where the server takes a moment to show weather data but we want to show the user something while we are waiting.
-For this, HTMX has us covered! We can add an attribute called `hx-indicator` ([documentation](https://htmx.org/attributes/hx-indicator/)) which will, when an HTMX request occurs, will have a class called `htmx-request` added to it.
+For this, HTMX has us covered! We can add an attribute called `hx-indicator` ([documentation](https://htmx.org/attributes/hx-indicator/)) which will, when an HTMX request occurs, have a class called `htmx-request` added to it.
 
 Here's the `Loading.razor` component with that in mind.
 
