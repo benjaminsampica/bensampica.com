@@ -1301,4 +1301,4 @@ If some of this seems overwhelming or too much work - that's okay. There are som
 I hope this was helpful. I had broad ambitions for this post and it grew quickly in what I thought was important. I just can't simply cover every single use-case you might have
 but hopefully this is enough to get you thinking with (and consider using) HTMX. 
 
-Please leave any comments below - especially better ways of doing something - by talking with me on social media with questions. Thanks for reading!
+Please leave any comments below - especially better ways of doing something - or by engaging with me on social media. Thanks for reading!
