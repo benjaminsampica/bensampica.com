@@ -1,0 +1,35 @@
+@inherits LayoutComponentBase
+
+<!DOCTYPE html>
+<html class="h-100" lang="en-us">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <base href="/"/>
+    <link rel="stylesheet" href="bootstrap/bootstrap.min.css"/>
+    <link rel="stylesheet" href="app.css"/>
+    <link href="HtmxMinimalApi.styles.css" rel="stylesheet">
+    <script src="https://unpkg.com/htmx.org@2.0.0"></script>
+    <script src="client-error-handling.js"></script>
+    <script src="remove-cached-history.js"></script>
+    <HeadOutlet/>
+</head>
+<body hx-boost="true">
+<div class="page">
+    <div class="sidebar">
+        <NavMenu/>
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+        </div>
+
+        <article class="content px-4">
+            <div hx-trigger="success-alert from:body" hx-get="/success-alert"></div>
+            @Body
+        </article>
+    </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+@layout HtmxLayout
+
+<PageTitle>Weather</PageTitle>
+
+<h1>Weather</h1>
+
+<p>This component demonstrates showing data.</p>
+
+<form hx-get="/weather" hx-trigger="load, submit" hx-push-url="true">
+    <WeatherList />
+</form>

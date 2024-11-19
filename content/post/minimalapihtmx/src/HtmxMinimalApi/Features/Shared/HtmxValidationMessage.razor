@@ -1,0 +1,27 @@
+@using System.Linq.Expressions
+@typeparam TValue
+
+@if (HasError(For))
+{
+    <div class="text-danger">@Message</div>
+}
+
+@code {
+    [CascadingParameter] public ValidationResult ValidationResult { get; set; } = new();
+    [Parameter, EditorRequired] public Expression<Func<TValue>>? For { get; set; }
+
+    private string? Message { get; set; }
+
+    private bool HasError(Expression<Func<TValue>>? @for)
+    {
+    var fieldIdentifier = FieldIdentifier.Create(@for!);
+
+    var error = ValidationResult.Errors.FirstOrDefault(x => x.PropertyName == fieldIdentifier.FieldName);
+
+    if (error == null) return false;
+
+    Message = error.ErrorMessage;
+
+    return true;
+    }
+}

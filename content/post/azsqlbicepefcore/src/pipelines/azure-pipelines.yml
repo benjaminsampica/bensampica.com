@@ -1,0 +1,93 @@
+trigger:
+  branches:
+    include:
+    - main
+
+stages:
+- stage: Build
+  jobs:
+  - job:
+    pool:
+      vmImage: ubuntu-latest
+    displayName: 'Test, & Publish'
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet publish'
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: '-o $(Build.ArtifactStagingDirectory)'
+        modifyOutputPath: false
+    - script: dotnet tool install --global dotnet-ef 
+      displayName: dotnet tool install dotnet-ef
+    - task: DotNetCoreCLI@2
+      displayName: 'Create migration'
+      inputs:
+        command: custom
+        custom: ef
+        arguments: 'migrations script --idempotent --project src/WebApplication --output $(Build.ArtifactStagingDirectory)/Migrations/migration.sql'
+    - publish: $(Build.ArtifactStagingDirectory)
+      displayName: 'Publish to Azure Devops'
+      artifact: drop
+- stage: Deploy
+  dependsOn: Build
+  condition: succeeded()
+  jobs:
+  - job: deploy
+    pool:
+      vmImage: windows-latest
+    steps:
+      - task: AzureCLI@2
+        displayName: 'Deploy Infrastructure'
+        inputs:
+          # Replace applicationDatabaseAdminsGroupName, applicationDatabaseAdminsObjectId, and azuresql
+          azureSubscription: azuresql-${{ parameters.deployEnvironment }}
+          scriptType: ps
+          scriptLocation: inlineScript
+          inlineScript: |
+            $jsonResult = az deployment group create `
+              --resource-group ${{ parameters.deployEnvironment }}-ncus-azuresql-rg-01 `
+              --template-file $(Build.SourcesDirectory)/iac/main.bicep `
+              --parameters `
+                  applicationDatabaseAdminsGroupName=App_SqlDbAdmins `
+                  applicationDatabaseAdminsObjectId=37f7f235-527c-4136-accd-4a02d197296e ` 
+                  deployEnvironment=${{ parameters.deployEnvironment }} `
+              --mode Complete `
+              | ConvertFrom-Json
+      
+            $sqlServerName = $jsonResult.properties.outputs.sqlServerName.value
+            $sqlServerDatabaseName = $jsonResult.properties.outputs.sqlServerDatabaseName.value
+            $applicationIdentityName = $jsonResult.properties.outputs.applicationIdentityName.value
+            Write-Host "##vso[task.setvariable variable=sqlServerName;]$sqlServerName"
+            Write-Host "##vso[task.setvariable variable=sqlServerDatabaseName;]$sqlServerDatabaseName"
+            Write-Host "##vso[task.setvariable variable=applicationIdentityName;]$applicationIdentityName"
+      - download: current
+        artifact: drop
+      - task: SqlAzureDacpacDeployment@1
+        # replace productTeamIdentityName
+        displayName: 'Setup initial permissions'
+        condition: 
+        inputs:
+          azureSubscription: azuresql-${{ parameters.deployEnvironment }}
+          authenticationType: 'servicePrincipal'
+          deployType: 'sqlTask'
+          serverName: $(sqlServerName)
+          databaseName: $(sqlServerDatabaseName)
+          sqlFile: '$(Pipeline.Workspace)\**\sql\*.sql'
+          SqlAdditionalArguments: -Variable "productTeamIdentityName='Product Team'", "applicationIdentityName='$(applicationIdentityName)'", "env='dev'"
+      - task: SqlAzureDacpacDeployment@1
+        displayName: 'Deploy EF Migration'
+        inputs:
+          azureSubscription: azuresql-${{ parameters.deployEnvironment }}
+          authenticationType: 'servicePrincipal'
+          deployType: 'sqlTask'
+          serverName: $(sqlServerName)
+          databaseName: $(sqlServerDatabaseName)
+          sqlFile: '$(Pipeline.Workspace)\**\Migrations\migration.sql'
+      - task: AzureWebApp@1
+        displayName: Deploy Web Application
+        inputs:
+          appType: webApp
+          azureSubscription: azuresql-${{ parameters.deployEnvironment }}
+          appName: ${{ parameters.deployEnvironment }}-ncus-azuresql-app-01
+          package: $(Agent.BuildDirectory)/drop/WebApplication1/*.zip

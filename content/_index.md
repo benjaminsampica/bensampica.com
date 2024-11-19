@@ -9,7 +9,31 @@ design:
   spacing: "6rem"
 
 sections:
+  - block: collection
+    id: news
+    content:
+      title: Recent Posts
+      subtitle: ''
+      text: ''
+      # Page type to display. E.g. post, talk, publication...
+      page_type: post
+      # Choose how many pages you would like to display (0 = all pages)
+      count: 5
+      # Filter on criteria
+      filters:
+        author: ""
+        category: ""
+        tag: ""
+        exclude_featured: false
+        exclude_future: false
+        exclude_past: false
+        publication_type: ""
+      # Choose how many pages you would like to offset by
+      offset: 0
+      # Page order: descending (desc) or ascending (asc) date.
+      order: desc
   - block: resume-biography-3
+    id: about
     content:
       # Choose a user profile to display (a folder name within `content/authors/`)
       username: admin
@@ -30,55 +54,74 @@ sections:
           size: cover
           position: center
           parallax: false
-  - block: markdown
+  - block: experience
     content:
-      title: '📚 My Research'
-      subtitle: ''
-      text: |-
-        Use this area to speak to your mission. I'm a research scientist in the Moonshot team at DeepMind. I blog about machine learning, deep learning, and moonshots.
-
-        I apply a range of qualitative and quantitative methods to comprehensively investigate the role of science and technology in the economy.
-        
-        Please reach out to collaborate 😃
+      title: Experience
+      # Date format for experience
+      #   Refer to https://wowchemy.com/docs/customization/#date-format
+      date_format: Jan 2006
+      # Experiences.
+      #   Add/remove as many `experience` items below as you like.
+      #   Required fields are `title`, `company`, and `date_start`.
+      #   Leave `date_end` empty if it's your current employer.
+      #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
+      items:
+        - title: Co-Founder
+          company: Send Trucks
+          company_url: 'https://www.sendtrucks.com'
+          location: Ankeny, IA
+          date_start: '2023-06-01'
+          date_end: ''
+        - title: Lead Software Engineer
+          company: Casey's General Stores
+          company_url: 'https://www.caseys.com'
+          location: Ankeny, IA
+          date_start: '2024-06-01'
+          date_end: ''
+        - title: Senior Software Engineer
+          company: Casey's General Stores
+          company_url: 'https://www.caseys.com'
+          location: Ankeny, IA
+          date_start: '2021-12-20'
+          date_end: '2024-06-01'
+        - title: Software Engineer III
+          company: Comoto Holdings, Inc.
+          company_url: 'https://ridecomoto.com/'
+          location: Philadelphia, PA
+          date_start: '2021-06-28'
+          date_end: '2021-11-28'
+        - title: Senior Application Developer
+          company: Homesteaders Life Company
+          company_url: 'https://www.homesteaderslife.com/'
+          location: Des Moines, IA
+          date_start: '2020-08-17'
+          date_end: '2021-06-28'
+        - title: Web Application Developer
+          company: Polk County
+          company_url: 'https://www.polkcountyiowa.gov'
+          location: Des Moines, IA
+          date_start: '2019-08-21'
+          date_end: '2020-08-14'
+        - title: Software Engineer
+          company: Casey's General Stores
+          company_url: 'https://www.caseys.com'
+          location: Ankeny, IA
+          date_start: '2019-03-16'
+          date_end: '2019-08-21'
+        - title: Associate Web Developer
+          company: Polk County
+          company_url: 'https://www.polkcountyiowa.gov'
+          location: Des Moines, IA
+          date_start: '2016-06-26'
+          date_end: '2019-03-16'
     design:
-      columns: '1'
-  - block: collection
-    id: papers
-    content:
-      title: Featured Publications
-      filters:
-        folders:
-          - publication
-        featured_only: true
-    design:
-      view: article-grid
-      columns: 2
-  - block: collection
-    content:
-      title: Recent Publications
-      text: ""
-      filters:
-        folders:
-          - publication
-        exclude_featured: false
-    design:
-      view: citation
-  - block: collection
-    id: talks
-    content:
-      title: Recent & Upcoming Talks
-      filters:
-        folders:
-          - event
-    design:
-      view: article-grid
-      columns: 1
+      columns: '2'
   - block: markdown
     content:
       title: Computers
       subtitle: 'I love hardware. Here are some of the computers I have built over the years.'
       text: |-
-        {{< gallery album="computers" >}}
+
     design:
       columns: 1
 ---

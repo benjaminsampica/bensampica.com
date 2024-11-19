@@ -1,0 +1,29 @@
+@layout HtmxLayout
+
+<Title>
+    @Code
+</Title>
+
+<div class="d-flex align-items-center justify-content-center h-100">
+    <div class="text-center">
+        <h1 class="display-1 fw-bold text-primary"><i class="fa-solid fa-truck-ramp-box"></i> We're Sorry.</h1>
+        <p class="lead">
+            @Message
+        </p>
+        <a href="/" class="btn btn-primary">Go Home</a>
+    </div>
+</div>
+
+@code
+{
+    [Parameter] public int Code { get; set; }
+    
+    private string Message => Code switch
+    {
+        400 => "The request that was sent was not in the right format. Please retry it or try again later.",
+        401 => "You cannot access this page. Please log in and then try again.",
+        403 => "You do not have permission to access this page.",
+        404 => "The page you are looking for was not found.",
+        _ => "Something went wrong. Please try this page again later."
+    };
+}
