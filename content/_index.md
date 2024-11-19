@@ -121,7 +121,6 @@ sections:
       title: Computers
       subtitle: 'I love hardware. Here are some of the computers I have built over the years.'
       text: |-
-
     design:
       columns: 1
 ---
