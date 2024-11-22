@@ -45,15 +45,15 @@ sections:
     design:
       css_class: dark
       background:
-        color: black
-        image:
-          # Add your image background to `assets/media/`.
-          filename: parabolic-rectangle.svg
-          filters:
-            brightness: 1.0
-          size: cover
-          position: center
-          parallax: false
+        color: dark
+        # image:
+        ##   Add your image background to `assets/media/`.
+        #   filename: parabolic-rectangle.svg
+        #   filters:
+        #     brightness: 0.0
+        #   size: cover
+        #   position: center
+        #   parallax: true
   - block: experience
     content:
       title: Experience
@@ -119,8 +119,19 @@ sections:
   - block: markdown
     content:
       title: Computers
-      subtitle: 'I love hardware. Here are some of the computers I have built over the years.'
       text: |-
+        I love hardware. Here are some of the computers I have built over the years.
+        ![](/albums/computers/9.jpg)
+        ![](/albums/computers/10.jpg)
+        ![](/albums/computers/11.jpg)
+        ![](/albums/computers/12.jpg)
+        ![](/albums/computers/13.jpg)
+        ![](/albums/computers/14.jpg)
+        ![](/albums/computers/15.jpg)
+        ![](/albums/computers/16.jpg)
+        ![](/albums/computers/17.jpg)
+        ![](/albums/computers/20.jpg)
+        ![](/albums/computers/21.jpg)
     design:
-      columns: 1
+      columns: 2
 ---
