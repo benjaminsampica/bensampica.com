@@ -7,8 +7,8 @@ authors:
 tags:
 - DotNet
 - CSharp
-date: '2024-11-24T00:00:00Z'
-lastmod: '2024-11-24T00:00:00Z'
+date: '2024-11-22T00:00:00Z'
+lastmod: '2024-11-22T00:00:00Z'
 featured: false
 draft: false
 toc: true
