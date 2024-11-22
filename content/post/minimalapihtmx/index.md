@@ -499,7 +499,7 @@ app.MapGet("/counter/increment", ([FromQuery] int? currentCount = 0)
 To demonstrate validation we're going to go off-sample and add a name field to the counter page. 
 I like the package called FluentValidation so much and honestly I feel like most people are not using DataAnnotations for API-surface validation beyond _very_ simple scenarios or for demos.
 
-I am going to install that in the project and prepare the form for that field:
+I am going to install that in the project and prepare the form for that field. Let's do the following:
 
 1. Install the fluent validation package.
 2. Add a class with a validator.
@@ -511,7 +511,7 @@ I am going to install that in the project and prepare the form for that field:
 
 ### Package Install and Validator
 
-We must first install the `FluentValidation` package via the IDE's nuget package manager or via CLI `dotnet add package FluentValidation` and then we can to create the following class:
+We must first install the `FluentValidation` package via the IDE's nuget package manager or via CLI `dotnet add package FluentValidation` and then we can create the following class:
 
 ```csharp
 public class CounterForm
@@ -546,9 +546,9 @@ app.UseStaticFiles();
 app.UseAntiforgery(); // Add this line.
 ```
 
-The antiforgery token boilerplate is a little verbose but necessary in order to be able to send form posts. 
-Essentially, we need to inject the current `HttpContext` and `IAntiforgery` service into a component, which I have named `HtmxAntiforgeryToken.razor`, generate the tokens, 
-and finally include a hidden `input` with the token values so that the form post can include them.
+The antiforgery token razorbboilerplate is a little verbose but necessary in order to be able to send form posts. 
+Essentially, we need to inject the current `HttpContext` and `IAntiforgery` service into a component, which I have named `HtmxAntiforgeryToken.razor`, then generate the tokens, 
+and finally include a hidden `input` with the token values so that the form post can include them. This looks like the below.
 
 ```csharp
 <!-- Features/Shared/HtmxAntiforgeryToken.razor -->
@@ -575,7 +575,7 @@ and finally include a hidden `input` with the token values so that the form post
 
 ### Adding Validation Messages
 
-Just like the antiforgery token there are is a little bit of boilerplate needed in order to return the messages. We are going to tap into Blazor's existing form logic via `FieldIdentifier` in order to streamline as much as we can. Additionally, I wanted this to _feel_ like other component libraries (including Blazor's own).
+Just like the antiforgery token there is a little bit of boilerplate needed in order to return the messages. We are going to tap into Blazor's existing form logic via `FieldIdentifier` in order to streamline as much as we can. Additionally, I wanted this to _feel_ like other component libraries (including Blazor's own).
 
 Here is the code
 
