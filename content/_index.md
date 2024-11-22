@@ -46,14 +46,14 @@ sections:
       css_class: dark
       background:
         color: dark
-        # image:
-        ##   Add your image background to `assets/media/`.
-        #   filename: parabolic-rectangle.svg
-        #   filters:
-        #     brightness: 0.0
-        #   size: cover
-        #   position: center
-        #   parallax: true
+        image:
+        #   Add your image background to `assets/media/`.
+          filename: parabolic-rectangle.svg
+          filters:
+            brightness: 1.0
+          size: cover
+          position: center
+          parallax: true
   - block: experience
     content:
       title: Experience
