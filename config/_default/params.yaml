@@ -36,7 +36,7 @@ header:
     show_theme_chooser: true
     logo:
       text: "Ben Sampica"
-      filename: "me.png"
+      filename: "icon.png"
 
 # Site footer
 footer:
