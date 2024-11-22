@@ -117,6 +117,8 @@ timer.Change(Timeout.Infinity, Timeout.Infinity)
 timer.Change(TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(5));
 ```
 
+It is important to note that whenever the Change method is invoked, the current elapsed time of the current trigger is lost. For example, if a timer triggers every five seconds and at the fourth second a Change is invoked with a new 5 second delay, it will be 5 seconds before the timer callback triggers. The previous 4 seconds elapsing does not matter.
+
 ## Testing with an ITimer
 Just like if you're working with dates & times, you should dependency inject the `TimeProvider` into a class in order to use it. To register the time provider to the dependency injection container a single concrete implementation is implemented already for us. This looks something like
 
