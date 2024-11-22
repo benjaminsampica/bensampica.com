@@ -157,7 +157,7 @@ public void ShouldInvokeEveryFiveSeconds()
 
     timeProvider.Advance(TimeSpan.FromSeconds(10));
 
-    Assert.That(foo.BarCreationCount, 2); // Should invoke twice.
+    Assert.Equals(foo.BarCreationCount, 2); // Should invoke twice.
 }
 ```
 
