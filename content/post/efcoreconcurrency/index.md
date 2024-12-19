@@ -22,7 +22,7 @@ Starting with Entity Framework Core 7 (.NET 7), you can now add [interceptors](h
 
 Concurrency is an advanced topic and configuring it is a little different depending on what database provider you are using. 
 
-# Implementation
+## Implementation
 
 For this example, I'm going to be using SQL Server. We can configure the database entity (in this case `Person`) with a `[Timestamp]` attribute on a property. For SQL Server this will add a `rowversion` [type of column](https://learn.microsoft.com/en-us/sql/t-sql/data-types/rowversion-transact-sql?view=sql-server-ver16).
 
