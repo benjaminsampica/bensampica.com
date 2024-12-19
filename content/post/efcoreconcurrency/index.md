@@ -16,7 +16,7 @@ toc: true
 
 {{< toc >}}
 
-## Introducion
+## Introduction
 
 Starting with Entity Framework Core 7 (.NET 7), you can now add [interceptors](https://learn.microsoft.com/en-us/ef/core/logging-events-diagnostics/interceptors). To be reductive, these are essentially ways we can inject or handle behavior during EF's lifecycle methods - when a connection opens, before saving changes, and, as the focus of this article, when a concurrency exception is going to be thrown.
 
