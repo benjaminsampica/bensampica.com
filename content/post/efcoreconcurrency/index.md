@@ -5,7 +5,7 @@ summary: "How to configure Entity Framework to handle concurrency with .NET 7 or
 authors:
   - ben-sampica
 tags:
-  - CSharp
+  - Dotnet
   - EFCore
 date: "2024-12-19T00:00:00Z"
 lastmod: "2024-12-19T00:00:00Z"
