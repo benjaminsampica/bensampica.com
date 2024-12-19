@@ -48,7 +48,7 @@ public class RetryDbUpdateConcurrencyExceptionInterceptor(ILogger<RetryDbUpdateC
             entry.CurrentValues.SetValues(entry.Entity);
         }
 
-        return InterceptionResult.Suppress(); // If it makes it here.
+        return InterceptionResult.Suppress(); // If it makes it here, suppress the exception.
     }
 }
 ```
