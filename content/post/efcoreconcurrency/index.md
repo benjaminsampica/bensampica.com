@@ -20,7 +20,11 @@ toc: true
 
 Starting with Entity Framework Core 7 (.NET 7), you can now add [interceptors](https://learn.microsoft.com/en-us/ef/core/logging-events-diagnostics/interceptors). To be reductive, these are essentially ways we can inject or handle behavior during EF's lifecycle methods - when a connection opens, before saving changes, and, as the focus of this article, when a concurrency exception is going to be thrown.
 
-Concurrency is an advanced topic and configuring it is a little different depending on what database provider you are using. For this example, I'm going to be using SQL Server. We can configure the database entity (in this case `Person`) with a `[Timestamp]` attribute on a property. For SQL Server this will add a `rowversion` [type of column](https://learn.microsoft.com/en-us/sql/t-sql/data-types/rowversion-transact-sql?view=sql-server-ver16).
+Concurrency is an advanced topic and configuring it is a little different depending on what database provider you are using. 
+
+# Implementation
+
+For this example, I'm going to be using SQL Server. We can configure the database entity (in this case `Person`) with a `[Timestamp]` attribute on a property. For SQL Server this will add a `rowversion` [type of column](https://learn.microsoft.com/en-us/sql/t-sql/data-types/rowversion-transact-sql?view=sql-server-ver16).
 
 ```csharp
 public class Employee
