@@ -81,7 +81,9 @@ app.MapGet("/weather", Results<RazorComponentResult<Weather>, RazorComponentResu
     return new RazorComponentResult<WeatherList>(new { response });
 });
 
-app.MapGet("/statuscode/{code:int}", (int code) 
+// https://learn.microsoft.com/en-us/aspnet/core/web-api/handle-errors?view=aspnetcore-9.0#exception-handler
+// Do not mark the error handler action method with HTTP method attributes. Explicit verbs prevent some requests from reaching the action method.
+app.Map("/statuscode/{code:int}", (int code) 
     => new RazorComponentResult<StatusCode>(new { code }));
 
 app.MapApplicationRoutes();
