@@ -332,14 +332,15 @@ This has some obvious downsides stemming from the largest one that the entire pa
 1. We are shipping a lot of html back and forth which is a lot of bytes.
 2. The state of the page (the hypermedia-only state) needs to be entirely rebuilt from scratch. This application is simple but most are not.
 3. Because the page is being entirely rebuilt from scratch database calls to rebuild things on the navbar (like a cart counter) and whatnot need requeried and rebuilt.
-4. Non-javascript devices can still use the site.
+
+That being said, javascript disabled devices can still use the site.
 
 Enter HTMX. There are a few things that HTMX does out of the box which are built for this. To be reductive (those interested can read the [documentation](https://htmx.org/)), a delta of the existing DOM and the new DOM is taken and a swap of content. Nothing that the browser doesn't technically do anyway. The calls are perfomed via AJAX.
 
-Let's tweak the counter to use HTMX. I'm going to place an `id` tag on the place we want to "refresh" or swap the html. Additionally, placing `hx-target` and `hx-post` tags on the `<a>` tag will do the following:
+Let's tweak the counter to use HTMX. I'm going to place an `id` tag on the place we want to "refresh" or swap the html. Additionally, placing `hx-target` and `hx-get` tags on the `<a>` tag will do the following:
 
 1. When the anchor tag is clicked
-2. HTMX performs an AJAX call to the target url specified in the `hx-post` attribute value.
+2. HTMX performs an AJAX call to the target url specified in the `hx-get` attribute value. The request is the GET verb since that is the attribute we used.
 3. When the request returns, place the response into the location of the `hx-target`.
 
 A separate component is desired so that whenever we click the button we only return the new state of the html page exactly where we want to update it.
