@@ -121,6 +121,7 @@ sections:
       title: Computers
       text: |-
         I love hardware. Here are some of the computers I have built over the years.
+        ![](/albums/computers/8.jpg)
         ![](/albums/computers/9.jpg)
         ![](/albums/computers/10.jpg)
         ![](/albums/computers/11.jpg)
