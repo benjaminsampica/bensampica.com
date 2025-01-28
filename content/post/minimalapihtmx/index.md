@@ -833,7 +833,7 @@ Next, I am going to just add a single new endpoint to our `Program.cs` file that
 ```csharp
 // Program.cs
 // Code omitted for brevity.
-app.MapGet("/weather", async Results<RazorComponentResult<Weather>, RazorComponentResult<WeatherList>>(HttpContext httpContext) =>
+app.MapGet("/weather", async Task<Results<RazorComponentResult<Weather>, RazorComponentResult<WeatherList>>> (HttpContext httpContext) =>
 {
     // HTMX sends this header when the request is sent by HTMX.
     var isHtmxRequest = httpContext.Request.Headers.ContainsKey("HX-Request"); 
