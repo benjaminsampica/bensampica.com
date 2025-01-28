@@ -216,6 +216,8 @@ from the minimal api. Here is the new `Program.cs`.
 // Program.cs
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddRazorComponents();
+
 var app = builder.Build();
 
 app.UseHttpsRedirection();
@@ -237,6 +239,8 @@ I am going to do the `Counter.razor` page next. All that needs done is add anoth
 ```csharp
 // Program.cs
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddRazorComponents();
 
 var app = builder.Build();
 
