@@ -552,7 +552,7 @@ app.UseStaticFiles();
 app.UseAntiforgery(); // Add this line.
 ```
 
-The antiforgery token razorbboilerplate is a little verbose but necessary in order to be able to send form posts. 
+The antiforgery token razor boilerplate is a little verbose but necessary in order to be able to send form posts. 
 Essentially, we need to inject the current `HttpContext` and `IAntiforgery` service into a component, which I have named `HtmxAntiforgeryToken.razor`, then generate the tokens, 
 and finally include a hidden `input` with the token values so that the form post can include them. This looks like the below.
 
@@ -669,6 +669,22 @@ Bringing this all together, we need to utilize more of the Blazor framework in o
 {
     [Parameter] public CounterForm CounterForm { get; set; } = new();
     [Parameter] public ValidationResult ValidationResult { get; set; } = new();
+}
+```
+
+```html
+<!-- Features/Counter.razor -->
+@layout HtmxLayout
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<CounterInfo CounterForm="CounterForm"/>
+
+@code
+{
+    [Parameter] public CounterForm CounterForm { get; set; } = new();
 }
 ```
 
