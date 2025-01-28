@@ -18,6 +18,8 @@ sections:
 
         If you're looking for something new to read, whether it be programming, agile, communication, DevOps, mathematics, or design, a list of all the books I own is below and hopefully one or more will interest you. No affiliate links are attached to any of these - I benefit in no way shape or form from you buying or purchasing anything.
 
+        _Last updated January 2025_
+
         ## Book List
 
         ### Interpersonal
