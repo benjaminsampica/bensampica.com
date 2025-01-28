@@ -497,7 +497,7 @@ If you do not want to handle degradation, the resulting code looks like this:
 // Program.cs
 // Code omitted for brevity...
 app.MapGet("/counter/increment", ([FromQuery] int? currentCount = 0) 
-    => new RazorComponentResult<CounterInfo>(new { currentCount++ });
+    => new RazorComponentResult<CounterInfo>(new { CurrentCount = currentCount + 1 });
 ```
 
 ## Validation
