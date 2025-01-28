@@ -895,7 +895,6 @@ We want the loading component to be inside the form so that the loading disappea
 
 app.MapGet("/weather", Results<RazorComponentResult<Weather>, RazorComponentResult<WeatherList>>(HttpContext httpContext) =>
 {
-    await Task.Delay(5000); // Delay for 5 seconds.
     // HTMX sends this header when the request is sent by HTMX.
     var isHtmxRequest = httpContext.Request.Headers.ContainsKey("HX-Request"); 
     // HTMX sends this header when the request is boosted. A boosted request happens when the anchor link is clicked on the navbar.
@@ -904,7 +903,9 @@ app.MapGet("/weather", Results<RazorComponentResult<Weather>, RazorComponentResu
     {
         return new RazorComponentResult<Weather>(); // Return the page.
     }
-    
+
+    await Task.Delay(5000); // Delay for 5 seconds to simulate long loading.
+
     return new RazorComponentResult<WeatherList>(); // Send just the component.
 });
 ```
