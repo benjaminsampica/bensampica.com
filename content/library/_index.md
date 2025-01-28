@@ -28,6 +28,8 @@ sections:
         - [Drive: The Surprising Truth About What Motivates Us](https://www.amazon.com/Drive-Surprising-Truth-About-Motivates/dp/1594484805)
         - [Dinosaur Brains](https://www.amazon.com/Dinosaur-Brains-Dealing-Impossible-People/dp/0345410211)
         - [Simply Said](https://www.amazon.com/Simply-Said-Communicating-Better-Beyond/dp/1119285283)
+        - [Nonviolent Communication](https://a.co/d/7VDUua1)
+        - [How To Reduce Workplace Conflict & Stress](https://a.co/d/0p1ZreJ)
 
         ### Agile
         - [Succeeding with Agile: Software Development Using Scrum](https://www.amazon.com/Succeeding-Agile-Software-Development-Using-dp-0321579364/dp/0321579364)
@@ -50,10 +52,14 @@ sections:
         - [Refactoring: Improving the Design of Existing Code](https://www.amazon.com/Refactoring-Improving-Existing-Addison-Wesley-Signature-dp-0134757599/dp/0134757599)
         - [Clean Architecture](https://www.amazon.com/Clean-Architecture-Craftsmans-Software-Structure-dp-0134494164/dp/0134494164)
         - [Clean Code: A Handbook of Agile Software Craftsmanship](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship-ebook/dp/B001GSTOAM)
-        - [Test Driven Development: By Example](https://www.amazon.com/Test-Driven-Development-Kent-Beck/dp/0321146530)
+        - [Test-Driven Development: By Example](https://a.co/d/gdPwFHK)
         - [Head First Design Patterns](https://www.amazon.com/Head-First-Design-Patterns-Brain-Friendly-ebook/dp/B00AA36RZY)
         - [Patterns of Enterprise Application Architecture](https://www.amazon.com/gp/product/0321127420)
         - [Think Like a Programmer](https://www.amazon.com/Think-Like-Programmer-Introduction-Creative/dp/1593274246)
+        - [A Philosophy of Software Design](https://a.co/d/7rf4nAR)
+        - [Modern Software Engineering](https://a.co/d/gtHwCoG)
+        - [Working Effectively With Legacy Code](https://a.co/d/8xXm9vX)
+
         #### Hard Skills
         - [Essential Angular for ASP.NET Core MVC 3](https://www.amazon.com/Essential-Angular-ASP-NET-Core-MVC-dp-1484252837/dp/1484252837)
         - [Concurrency in C# Cookbook](https://www.amazon.com/Concurrency-Cookbook-Asynchronous-Multithreaded-Programming/dp/149205450X)
@@ -61,20 +67,29 @@ sections:
         - [Microsoft Blazor: Building Web Applications in .NET](https://www.amazon.com/gp/product/1484259270)
         - [Async in C# 5.0: Unleash the Power of Async](https://www.amazon.com/Async-5-0-Unleash-Power/dp/1449337163)
         - [C# in Depth: Fourth Edition](https://www.amazon.com/C-Depth-Jon-Skeet-dp-1617294535/dp/1617294535)
+        - [Blazor In Action](https://a.co/d/3m65f69)
+        - [Programming Elixir](https://a.co/d/8fXmplU)
+        - [Functional Programming With C#](https://a.co/d/6dpk7ZQ)
+        - [Microsoft Blazor](https://a.co/d/hIalMwA)
 
         ### DevOps
         - [The Phoenix Project](https://www.amazon.com/Phoenix-Project-DevOps-Helping-Business/dp/1942788290)
         - [The Unicorn Project](https://www.amazon.com/Unicorn-Project-Developers-Disruption-Thriving/dp/1942788762)
         - [The DevOps Handbook](https://www.amazon.com/DevOps-Handbook-World-Class-Reliability-Organizations/dp/1942788002)
         - [The Mythical Man-Month](https://www.amazon.com/Mythical-Man-Month-Software-Engineering-Anniversary/dp/0201835959)
+        - [Team Topologies](https://a.co/d/0p1ZreJ)
+        - [Escaping The Build Trap](https://a.co/d/6QqLOQL)
+        - [Software Teaming](https://a.co/d/9HXRlyY)
+        - [Implementing Lean Software Development](https://a.co/d/abzz1cs)
 
         ### Mathematics
         - [Essential Algorithms: A Practical Approach to Computer Algorithms Using Python and C#](https://www.amazon.com/Essential-Algorithms-Practical-Approach-Computer/dp/1119575990)
         - [Grokking Algorithms: An illustrated guide for programmers and other curious people](https://www.amazon.com/Grokking-Algorithms-illustrated-programmers-curious/dp/1617292230)
 
-        ### Design
+        ### Product
         - [The Non-Designer's Design Book](https://www.amazon.com/Non-Designers-Design-Book-4th-dp-0133966151/dp/0133966151)
         - [The Design of Everyday Things: Revised and Expanded Edition](https://www.amazon.com/Design-Everyday-Things-Revised-Expanded/dp/0465050654)
+        - [The Product-led Organization](https://a.co/d/3Ky0Dx7)
     design:
       columns: 2
 ---
