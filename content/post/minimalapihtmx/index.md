@@ -245,7 +245,7 @@ app.UseStaticFiles();
 
 app.MapGet("/", () 
     => new RazorComponentResult<Home>());
-app.MapGet("/counter" () 
+app.MapGet("/counter", () 
     => new RazorComponentResult<Counter>()); // New endpoint.
 
 app.Run();
