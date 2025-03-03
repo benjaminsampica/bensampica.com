@@ -97,7 +97,7 @@ builder.Services.AddRazorComponents(); // We need to add razor component service
 var app = builder.Build();
 
 app.UseHttpsRedirection();
-app.UseStaticFiles(); // We need to add static files so they show up.
+app.MapStaticAssets(); // We need to add static files so they show up. Note that some of the benefits of .MapStaticAssets() do not work (yet) in Minimal APIs.
 
 app.Run();
 ```
@@ -122,10 +122,10 @@ You can place these anywhere in the project directory. I am opting for a vertica
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <base href="/"/>
-        <link rel="stylesheet" href="bootstrap/bootstrap.min.css"/>
-        <link rel="stylesheet" href="app.css"/>
+        <link rel="stylesheet" href="@Assets["bootstrap/bootstrap.min.css"]"/>
+        <link rel="stylesheet" href="@Assets["app.css"]"/>
         <link href="HtmxMinimalApi.styles.css" rel="stylesheet">
-        <script src="https://unpkg.com/htmx.org@2.0.0"></script> <!-- This is the only thing I have added. HTMX! -->
+        <script src="https://unpkg.com/htmx.org@2.0.4"></script> <!-- This is the only thing I have added. HTMX! -->
         <HeadOutlet/>
     </head>
     <body> 
@@ -1185,7 +1185,7 @@ The only thing we need to add is the ability to redirect to this page when somet
 All we need to do is add a little bit of middleware to HTMX via a javascript file that runs when the window first loads. If HTMX receives a response back where the status code is greater than or equal to `400`, redirect to our status code page.
 
 ```js
-// wwwroot/client-side-handling.js
+// wwwroot/client-error-handling.js
 window.addEventListener("load", () => {
     htmx.on("htmx:responseError", (event) => {
         if (event.detail.xhr.status >= 400) {

@@ -22,7 +22,7 @@ else
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+app.MapStaticAssets();
 app.UseAntiforgery();
 
 app.MapGet("/", () => new RazorComponentResult<Home>());
