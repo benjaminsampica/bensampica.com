@@ -1213,22 +1213,14 @@ Fortunately, `.MapStaticAssets` working features includes what `.UseStaticFiles`
 
 The browser back button can be a problem no matter if you're using Blazor Web, React, or HTMX. With HTMX we can configure what to do if there is a cache miss on history, which is what every browser pulls from in order to quickly send a page back. Because interacting through websites is forward and includes things like `HX-Request` and `HX-Boosted` headers, when we use the _Back_ button a request will occasionally include those headers too and the user will see just a component rendered - missing the page around it. You can read more about this [here](https://htmx.org/reference/#config).
 
-We can avoid this by configuring HTMX to refresh the full page instead via two things. Another middleware script, and configuring HTMX itself.
-
-```js
-// wwwroot/remove-cached-history.js
-// This script, along with the htmx-config refreshOnHistoryMiss key, makes sure that navigating backwards triggers a full page refresh rather than making an AJAX call.
-// This is important in order to maintain query parameters are sent correctly to the minimal api endpoints.
-window.addEventListener("load", () => {
-    document.body.addEventListener('htmx:pushedIntoHistory', () => {
-        localStorage.removeItem('htmx-history-cache')
-    })
-});
-```
+We can avoid this by configuring HTMX to refresh the full page instead via two things. By configuring HTMX itself and then including `hx-history` on the `body` attribute. Note that this may not be preferable for you in some situations. You can read more about `hx-history` [here](https://htmx.org/attributes/hx-history/).
 
 ```html
 <!-- Features/Shared/HtmxLayout.razor -->
 <meta name="htmx-config" content='{"refreshOnHistoryMiss":"true"}'/>
+
+<body hx-boost="true" hx-history="false">
+</body>
 ```
 
 ### Preserving State
@@ -1353,10 +1345,11 @@ You can test blazor components using [bUnit](https://bunit.dev/) and the minimal
 
 ### Alternative / Assistive Libraries
 
-If some of this seems overwhelming or too much work - that's okay. There are some great community NuGet packages which using HTMX under the hood but have abstracted away some of the complexity. Two of those packages are below:
+If some of this seems overwhelming or too much work - that's okay. There are some great community NuGet packages which using HTMX under the hood but have abstracted away some of the complexity. Some of those packages are below:
 
-1. [Rizzy](https://github.com/JalexSocial/Rizzy)
-2. [HTMX.Net](https://github.com/khalidabuhakmeh/Htmx.Net)
+1. [Rizzy](https://github.com/JalexSocial/Rizzy) - A fully-fleged framework for using HTMX in .NET. Uses Alpine.js for some client-side interactivity. 
+2. [HTMX.Net](https://github.com/khalidabuhakmeh/Htmx.Net) - Use HTMX with Razor pages (not Minimal APIs). Also brings in some helpers for triggers that may be useful even when not using Razor pages.
+3. [Surreal](https://github.com/gnat/surreal) - An alternative to Hyperscript that brings in locality-of-behavior.
 
 ## Wrap Up
 
