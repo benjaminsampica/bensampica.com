@@ -9,7 +9,7 @@ tags:
 - CSharp
 - HTMX
 date: '2024-11-13T00:00:00Z'
-lastmod: '2024-11-13T00:00:00Z'
+lastmod: '2024-03-03T00:00:00Z'
 url_code: https://github.com/benjaminsampica/bensampica.com/tree/main/content/post/minimalapihtmx
 featured: false
 draft: false
