@@ -20,6 +20,10 @@ toc: true
 
 ## Introduction 
 
+{{< notice tip >}}
+This post has been updated for .NET 9.
+{{< /notice >}}
+
 With the release of [.NET 8](https://devblogs.microsoft.com/dotnet/announcing-dotnet-8/), you can now return a `RazorComponentResult<T>` from minimal api's which 
 means that blazor components and pages can be returned easily from an endpoint. All dependencies will be injected in the blazor component/service, 
 albeit the rending model they operate under will always be completely static (unless you opt-in to Blazor Web via its bootstrapping script, 
