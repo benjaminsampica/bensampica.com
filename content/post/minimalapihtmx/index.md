@@ -20,7 +20,7 @@ toc: true
 
 ## Introduction 
 
-{{< notice tip >}}
+{{< notice note >}}
 This post has been updated for .NET 9.
 {{< /notice >}}
 
