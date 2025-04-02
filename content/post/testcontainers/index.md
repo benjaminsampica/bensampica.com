@@ -216,10 +216,10 @@ var respawn = await Respawner.CreateAsync(_database.GetConnectionString(), new R
 });
 ```
 
-After each test, we want to invoke the respawn to reset the database using the configured connection string. This typically just takes a millisecond or so so is much quicker than the alternatives like creating a container per test, recreating the database per test.
+After each test, we want to invoke the respawn to reset the database using the configured connection string. This typically just takes a millisecond or so so is much quicker than the alternatives like creating a container per test or recreating the database per test.
 
 ```csharp
 respawn.ResetAsync(scope.ServiceProvider.GetRequiredService<IConfiguration>().GetConnectionString("DefaultConnection")!);
 ```
 
-Thats it, happy coding. You can view a more thorough example [here](https://github.com/benjaminsampica/bensampica.com/tree/main/content/post/testcontainers).
+Thats it, happy coding! You can view a more thorough example [here](https://github.com/benjaminsampica/bensampica.com/tree/main/content/post/testcontainers).
