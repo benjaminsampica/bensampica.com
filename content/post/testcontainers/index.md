@@ -6,8 +6,11 @@ authors:
   - ben-sampica
 tags:
   - dotnet
+  - CSharp
+  - containers
 date: "2025-04-02T00:00:00Z"
 lastmod: "2025-04-02T00:00:00Z"
+url_code: https://github.com/benjaminsampica/bensampica.com/tree/main/content/post/testcontainers
 featured: false
 draft: false
 toc: true
