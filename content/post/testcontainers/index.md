@@ -20,6 +20,19 @@ toc: true
 
 ## Introduction
 
+Containers have become a key part of modern software development, offering a consistent and isolated environment for building, testing, and deploying applications. However, for many developers, managing Dockerfiles and container orchestration can feel like an unnecessary burden, especially when working on local development or testing workflows.
+
+This post is all about simplifying that process. By using tools like **TestContainers.NET** and **Respawner**, you can avoid the complexity of Dockerfiles while still leveraging the power of containers. Whether you're working with databases, Azure Storage, or other external dependencies, these tools make it easier to manage your environment and focus on writing code.
+
+Here’s what I'm going to cover:
+
+- How to build and run containerized .NET applications without Dockerfiles.
+- How to use **TestContainers.NET** to spin up lightweight, disposable containers for testing.
+- How to reset your database state between tests using **Respawner**.
+- How to address common challenges in local development and testing, like dependency orchestration and container overhead.
+
+Let’s dive in and explore how these tools can improve your development and testing workflows.
+
 ## Why Containers?
 
 Containers provide a consistent and isolated environment for running applications, making them an essential tool for modern development and testing. Here are some reasons to use containers:
