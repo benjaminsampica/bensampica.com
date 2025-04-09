@@ -1,6 +1,6 @@
 ---
-title: Testing & Local Development without Dockerfiles in .NET
-subtitle: Quickly run and test code for .NET projects without Dockerfiles.
+title: Testing & Local Development without Dockerfiles in .NET (TestContainers)
+subtitle: Quickly run and test code using TestContainers.
 summary: A guide to running and testing .NET projects without Dockerfiles using TestContainers.NET and Respawner.
 authors:
   - ben-sampica
@@ -124,7 +124,7 @@ There are two primary tools you can use to both simulate real external dependenc
 - **Azurite**: Emulate Azure Storage services locally.
 - **Postgres**: Run PostgreSQL containers for database testing.
 - **Service Bus**: Test messaging scenarios with a containerized Service Bus.
-- **Other Services**: Easily spin up other dependencies as needed for your application.
+- **Custom Images**: Easily spin up other dependencies as needed for your application.
 
 ### .NET Aspire
 
@@ -134,7 +134,7 @@ There are two primary tools you can use to both simulate real external dependenc
 - **Hardening in .NET 10**: Upcoming improvements in .NET 10 will make containerized development even more robust.
 - **High Investment by the .NET Team**: Microsoft continues to invest heavily in containerization support for .NET, ensuring better tooling and performance.
 
-For purposes of this post, I'm going to cover `TestContainers.NET` as there is less scaffoling involved for existing applications. For new applications, I would strongly weigh the pros and cons and see if .NET Aspire is appropriate.
+For purposes of this post, I'm going to cover `TestContainers.NET` as there is less scaffoling involved for existing applications. For new applications, I would strongly weigh the pros and cons and see if .NET Aspire is appropriate. Curious what .NET Aspire looks like instead? See [part two](https://github.com/benjaminsampica/bensampica.com/tree/main/content/post/aspiretunit)
 
 ## Problems We Have During Testing
 
@@ -235,7 +235,83 @@ var respawn = await Respawner.CreateAsync(_database.GetConnectionString(), new R
 After each test, we want to invoke the respawn to reset the database using the configured connection string. This typically just takes a millisecond or so so is much quicker than the alternatives like creating a container per test or recreating the database per test.
 
 ```csharp
-respawn.ResetAsync(scope.ServiceProvider.GetRequiredService<IConfiguration>().GetConnectionString("DefaultConnection")!);
+await respawn.ResetAsync(scope.ServiceProvider.GetRequiredService<IConfiguration>().GetConnectionString("DefaultConnection")!);
 ```
 
-Thats it, happy coding! You can view a more thorough example [here](https://github.com/benjaminsampica/bensampica.com/tree/main/content/post/testcontainers).
+To tie it all together, we can make an test base that all our tests can inherit from. Note I used `xunit` but you can use any test framework you want.
+
+```csharp
+[Collection(nameof(TestContainers))]
+public class IntegrationTestBase : IAsyncLifetime
+{
+    private readonly IServiceScope _serviceScope;
+    public IntegrationTestBase() { _serviceScope = _scopeFactory.CreateScope(); }
+    public Task DisposeAsync() => Task.CompletedTask;
+    public async Task InitializeAsync() => await ResetStateAsync();
+    public T GetRequiredService<T>() where T : notnull => _serviceScope.ServiceProvider.GetRequiredService<T>();
+}
+
+// The setup and library used don't really matter. But we always need to accomplish four things.
+// 1. Create the containers used for the tests only once.
+// 2. Create the application in memory as close to production as possible. WebApplicationFactory or Host.CreateApplicationBuilder are great choices.
+// 3. Create the database/container/service bus - whatever.
+// 4. Reset the state of them between tests quickly. Don't tear them down and recreate them to keep it speedy.
+[CollectionDefinition(nameof(TestContainers))]
+public class IntegrationTesting : ICollectionFixture<IntegrationTesting>, IAsyncLifetime
+{
+    internal static IServiceScopeFactory _scopeFactory = null!;
+    private MsSqlContainer _database = null!;
+    private static Respawner _respawner = null!;
+
+    public async Task InitializeAsync()
+    {
+        // Create Containers.
+        var databaseTask = MsSqlContainerFactory.CreateAsync(true, Assembly.GetExecutingAssembly().GetName().Name);
+
+        _database = await databaseTask;
+
+        // Build "App" as close to production as possible.
+        var hostBuilder = Host.CreateApplicationBuilder();
+        hostBuilder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            { "ConnectionStrings:DefaultConnection", _database.GetConnectionString() }
+        });
+        hostBuilder.Environment.EnvironmentName = "Test";
+
+        hostBuilder.AddApplicationServices();
+
+        _scopeFactory = hostBuilder.Services.BuildServiceProvider().GetRequiredService<IServiceScopeFactory>();
+
+        // EF Core is not required - just easier.
+        using var scope = _scopeFactory.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        await dbContext.Database.MigrateAsync();
+
+        // Can be done using raw SQL. You can read in .sql files too and execute them.
+        //var sqlConnection = new SqlConnection(_database.GetConnectionString());
+        //var sqlCommand = sqlConnection.CreateCommand();
+        //sqlCommand.CommandText = "CREATE DATABASE TestDatabase";
+        //await sqlCommand.ExecuteNonQueryAsync();
+
+        _respawner = await Respawner.CreateAsync(_database.GetConnectionString());
+    }
+
+    public async Task DisposeAsync()
+    {
+        await _database.DisposeAsync();
+    }
+
+    public static async Task ResetStateAsync()
+    {
+        await _respawner.ResetAsync(scope.ServiceProvider.GetRequiredService<IConfiguration>().GetConnectionString("DefaultConnection")!);
+    }
+}
+```
+
+You can view a more thorough example [here](https://github.com/benjaminsampica/bensampica.com/tree/main/content/post/testcontainers).
+
+Thats it, happy coding!
+
+## Some Notes
+
+There is a part two using .NET Aspire and TUNit - [click here!](https://github.com/benjaminsampica/bensampica.com/tree/main/content/post/aspiretunit)
