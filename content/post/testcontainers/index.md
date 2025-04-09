@@ -110,7 +110,7 @@ If you're putting this into an existing app, you'll also have to configure your 
     }
 ```
 
-## Tools For Local Dev & Testing
+After configuring this you can just run the profile in Visual Studio, Rider, or Visual Studio Code.
 
 ## Tools for Local Development & Testing
 
