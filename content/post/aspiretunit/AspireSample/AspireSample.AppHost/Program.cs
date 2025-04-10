@@ -1,8 +1,6 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var mssqlResource = builder.AddSqlServer("DefaultConnection")
-    .WithLifetime(ContainerLifetime.Persistent)
-    .WithDataVolume();
+var mssqlResource = builder.AddSqlServer("DefaultConnection");
 
 var apiService = builder.AddProject<Projects.AspireSample_ApiService>("apiservice")
     .WithReference(mssqlResource);

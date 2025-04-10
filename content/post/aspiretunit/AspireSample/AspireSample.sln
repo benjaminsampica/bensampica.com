@@ -10,6 +10,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspireSample.ApiService", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspireSample.Web", "AspireSample.Web\AspireSample.Web.csproj", "{A1810DDE-45C1-492E-8E38-E81008A7F9C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspireSample.AppHost.Tests", "AspireSample.AppHost.Tests\AspireSample.AppHost.Tests.csproj", "{BD525A11-8807-25CD-FB90-1CA3B7C5B349}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{A1810DDE-45C1-492E-8E38-E81008A7F9C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1810DDE-45C1-492E-8E38-E81008A7F9C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1810DDE-45C1-492E-8E38-E81008A7F9C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD525A11-8807-25CD-FB90-1CA3B7C5B349}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD525A11-8807-25CD-FB90-1CA3B7C5B349}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD525A11-8807-25CD-FB90-1CA3B7C5B349}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD525A11-8807-25CD-FB90-1CA3B7C5B349}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -314,4 +314,4 @@ Thats it, happy coding!
 
 ## Some Notes
 
-There is a part two using .NET Aspire and TUNit - [click here!](https://github.com/benjaminsampica/bensampica.com/tree/main/content/post/aspiretunit)
+There is a part two using .NET Aspire and TUNit - [click here!](https://bensampica.com/post/aspiretunit)

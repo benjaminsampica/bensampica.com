@@ -1,14 +1,18 @@
+using AspireSample.ApiService;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add service defaults & Aspire components.
 builder.AddServiceDefaults();
 
-// Add services to the container.
 builder.Services.AddProblemDetails();
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 app.UseExceptionHandler();
 
 var summaries = new[]
@@ -31,9 +35,19 @@ app.MapGet("/weatherforecast", () =>
 
 app.MapDefaultEndpoints();
 
+if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Test"))
+{
+    using var scope = app.Services.CreateScope();
+
+    var applicationDbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await applicationDbContext.Database.EnsureCreatedAsync();
+}
+
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }
+
+public partial class Program { } // For testing purposes
