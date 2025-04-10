@@ -22,7 +22,7 @@ toc: true
 
 [There is a part one using TestContainers and XUnit](https://bensampica.com/testcontainers), which also explains _why_ containers can improve many aspects of local development and testing.
 
-To recap - we want to run our applications locally and running our tests in an atomic, reproducible way. I'm making an assumption that you already know what .NET Aspire is and won't go into detail here. Not sure? [Read the overview](https://learn.microsoft.com/en-us/dotnet/aspire/get-started/aspire-overview)
+To recap - we want to run our applications locally and running our tests in an atomic, reproducible way. I'm making an assumption that you already know what .NET Aspire is and won't go into detail here. Not sure? [Read the overview](https://learn.microsoft.com/en-us/dotnet/aspire/get-started/aspire-overview).
 
 ## Initial Setup
 
@@ -31,15 +31,15 @@ In order to create the Aspire project we need to perform a few steps first.
 1. (Optional) If you do not already have the Aspire templates available, run `dotnet new install Aspire.ProjectTemplates`. These are likely already installed if you use Rider or Visual Studio.
 2. Create the project with `dotnet new aspire-starter --output AspireSample`.
 3. Upgrade the project to the latest .NET version (.NET 9 as of this posting).
-4. Update the NuGet packages in the `AspireSample.AppHost` project to `9.1.0` (as of this posting).
-5. In the `AspireSample.AppHost.csproj`, add `<Sdk Name="Aspire.AppHost.Sdk" Version="9.1.0"/>` below the `<Project Sdk="Microsoft.NET.Sdk">` reference.
+4. Update the NuGet packages in the `AspireSample.AppHost` project to `9.2.0` (as of this posting).
+5. In the `AspireSample.AppHost.csproj`, add `<Sdk Name="Aspire.AppHost.Sdk" Version="9.2.0"/>` below the `<Project Sdk="Microsoft.NET.Sdk">` reference.
 
 Your `.AppHost.csproj` should look like this.
 
 ```xml
   <Project Sdk="Microsoft.NET.Sdk">
 
-    <Sdk Name="Aspire.AppHost.Sdk" Version="9.1.0"/>
+    <Sdk Name="Aspire.AppHost.Sdk" Version="9.2.0"/>
 
     <PropertyGroup>
       <OutputType>Exe</OutputType>
@@ -55,8 +55,8 @@ Your `.AppHost.csproj` should look like this.
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Aspire.Hosting.AppHost" Version="9.1.0" />
-      <PackageReference Include="Aspire.Hosting.SqlServer" Version="9.1.0" />
+      <PackageReference Include="Aspire.Hosting.AppHost" Version="9.2.0" />
+      <PackageReference Include="Aspire.Hosting.SqlServer" Version="9.2.0" />
     </ItemGroup>
 
   </Project>
@@ -184,9 +184,9 @@ Earlier this year, Microsoft released _Microsoft.Testing.Platform_, which is a t
 
 [TUnit](https://tunit.dev/) is a new NuGet package, just like _MSTest_, _NUnit_, and _XUnit_, that is built on top of _Microsoft.Testing.Platform_. It brings along a similar set of tools that you are already familiar with but also includes some nice features like a rich assertion library (if you have been rug-pulled by _FluentAssertions_ like a lot of folks). A big thing I appreciate about _TUnit_ is that it is built atop source generators and with asynchronous-first approach so that tests run as fast as possible. If you want to see some examples or benchmarks, check out their [GitHub](https://github.com/thomhurst/TUnit).
 
-_Note:_ If you have not configured your IDE to use _Microsoft.Testing.Platform_ previously, there are a [few buttons you have to click](https://github.com/thomhurst/TUnit).
+_Note:_ If you have not configured your IDE to use _Microsoft.Testing.Platform_ previously, there are a [few buttons you have to click](https://github.com/thomhurst/TUnit#ide).
 
-Okay, now let's create a new test project called `AspireSample.AppHost.Testing`. Because there are no pre-built templates using _TUnit_, we're going to choose _NUnit_ and then modify it. Here's the original `.csproj`
+Okay, now let's create a new test project called `AspireSample.AppHost.Testing`. Because there are no pre-built templates using _TUnit_, we're going to choose _NUnit_ and then modify it. Here's the original `.csproj` from a brand new `dotnet new nunit` project.
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
@@ -237,7 +237,7 @@ And here's the _TUnit_ modified version.
 
 	<ItemGroup>
 		<ProjectReference Include="..\AspireSample.AppHost\AspireSample.AppHost.csproj" />
-		<ProjectReference Include="..\AspireSample.ApiService\AspireSample.ApiService.csproj"/> <!-- Reference the Web Api project (explained later). -->
+		<ProjectReference Include="..\AspireSample.ApiService\AspireSample.ApiService.csproj"/> <!-- Reference the Web Api project. -->
 	</ItemGroup>
 
 </Project>
