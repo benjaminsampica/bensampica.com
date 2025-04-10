@@ -32,7 +32,6 @@ public class DistributedApplicationBaseFactory : IAsyncInitializer, IAsyncDispos
     public WebApplicationFactory<Program> WebApplication { get; private set; } = null!;
     private Respawner _respawner = null!;
     private string _mssqlConnectionString = null!;
-    private string _storageAccountConnectionStringBlob = null!;
 
     public async ValueTask DisposeAsync()
     {
@@ -56,7 +55,7 @@ public class DistributedApplicationBaseFactory : IAsyncInitializer, IAsyncDispos
             .WithWebHostBuilder(builder =>
             {
                 builder.UseEnvironment("Test");
-                builder.UseSetting("ConnectionStrings:ArsDatabase", _mssqlConnectionString);
+                builder.UseSetting("ConnectionStrings:DefaultConnection", _mssqlConnectionString);
             });
 
         using var _ = WebApplication.Services.CreateScope();

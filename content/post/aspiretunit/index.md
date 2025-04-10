@@ -117,7 +117,7 @@ public class Todo
 }
 ```
 
-Just for this post, we're going to use the dbcontext's `EnsureCreatedAsync()` to build the database but in real code you'd use `MigrateAsync()`. Regardless of strategy, we only want to do this in either our test or development environments because in a production environment [you are probably deploying migrations in the pipeline](https://www.bensampica.com/post/azsqlbicepefcore/). Your `Program.cs` file will look like the following after registering the `DbContext` to the service provider and having it create the database on startup.
+Just for this post, we're going to use the dbcontext's `EnsureCreatedAsync()` to build the database but in real code you'd use `MigrateAsync()`. Regardless of strategy, we only want to do this in either our test or development environments because in a production environment [you are probably deploying migrations in the pipeline](https://www.bensampica.com/post/azsqlbicepefcore/). Your `Program.cs` file will look like the following after registering the `DbContext` to the service provider and having it create the database on startup. Make sure and review all the comments if you are building this yourself.
 
 ```csharp
 // Program.cs
@@ -168,7 +168,8 @@ if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Test"))
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+// Make this public.
+public record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }
@@ -368,8 +369,130 @@ public class DistributedApplicationBaseParallelLimit : IParallelLimit
 
 This sets all classes that inherit from `DistributedApplicationBase` to limit its parallelism to `1`.
 
+Next up, lets look at the meat of the factory itself that spins everything up.
+
+```csharp
+public async Task InitializeAsync()
+{
+    // Build the entire distributed application - all containers, configuration settings, etc.
+    var distributedBuilder = await DistributedApplicationTestingBuilder.CreateAsync<AspireSample_AppHost>();
+
+    distributedBuilder.Environment.EnvironmentName = "Test";
+    DistributedApplication = await distributedBuilder.BuildAsync();
+    await DistributedApplication.StartAsync();
+
+    _mssqlConnectionString = (await DistributedApplication.GetConnectionStringAsync("DefaultConnection"))!;
+
+    // Add services for web/integration tests.
+    WebApplication = new WebApplicationFactory<Program>()
+        .WithWebHostBuilder(builder =>
+        {
+            builder.UseEnvironment("Test");
+            builder.UseSetting("ConnectionStrings:DefaultConnection", _mssqlConnectionString);
+        });
+
+    using var _ = WebApplication.Services.CreateScope();
+
+    _respawner = await Respawner.CreateAsync(_mssqlConnectionString, new()
+    {
+        TablesToIgnore = ["__EFMigrationsHistory"]
+    });
+}
+```
+
+This is essentially the guts of the entire thing. .NET Aspire provides a convenient method from `Aspire.Hosting.Testing` in the form of `await DistributedApplicationTestingBuilder.CreateAsync<AspireSample_AppHost>()`. This essentially bootstraps the aspire host just like happens when we run it.
+
+```csharp
+distributedBuilder.Environment.EnvironmentName = "Test";
+DistributedApplication = await distributedBuilder.BuildAsync();
+await DistributedApplication.StartAsync();
+```
+
+Here we are setting the environment to test, building it, and then starting the host. We have to start the host manually because we are not using `Aspire.Host.Testing.DistributedApplicationFactory`, which is an option too depending on your context.
+
+Then, we are going to pull out the connection string and create a `WebApplicationFactory` too for the limitations stated above about using `DistributedApplication`.
+
+```csharp
+_mssqlConnectionString = (await DistributedApplication.GetConnectionStringAsync("DefaultConnection"))!;
+
+// Add services for web/integration tests.
+WebApplication = new WebApplicationFactory<Program>()
+    .WithWebHostBuilder(builder =>
+    {
+        builder.UseEnvironment("Test");
+        builder.UseSetting("ConnectionStrings:DefaultConnection", _mssqlConnectionString);
+    });
+```
+
+Finally, we are setting up our `Respawn` instance in order to reset the database via `ResetAsync()`.
+
+```csharp
+using var _ = WebApplication.Services.CreateScope();
+
+_respawner = await Respawner.CreateAsync(_mssqlConnectionString, new()
+{
+    TablesToIgnore = ["__EFMigrationsHistory"]
+});
+```
+
+That's it! We can now use these in tests. For example, here's a test that adds a `Todo` to the database and then creates an HttpClient that hits the `apiservice`s `/weatherforecast` endpoint.
+
+```csharp
+using Aspire.Hosting.Testing;
+using AspireSample.ApiService;
+using AspireSample.AppHost.Tests;
+using System.Net.Http.Json;
+
+public class UnitTest1 : DistributedApplicationBase
+{
+    [Test]
+    public async Task DoWork()
+    {
+        var todo = new Todo { Name = "Test" };
+        var dbContext = GetRequiredService<ApplicationDbContext>();
+
+        dbContext.Todos.Add(todo);
+        dbContext.SaveChanges();
+
+        var httpClient = GetDistributedApplication().CreateHttpClient("apiservice");
+
+        var forecast = await httpClient.GetFromJsonAsync<WeatherForecast[]>("weatherforecast");
+
+        await Assert.That(forecast).IsNotEmpty();
+    }
+}
+```
+
 ## The GitHub Workflow
 
+Running tests with `TUnit` requires a slight tweak to how we are used to running tests because we are also going to collect code coverage. The reason for this is that `Microsoft.Testing.Platform` does not play well with `dotnet test` parameters and part of workflows is likely passing parameters - such as collecting code coverage. Instead, we have to do `dotnet run` and then run the test project. Note that this is optional and it is actually possible to run tests using `dotnet test` but I found the syntax to be weirder and harder to read than just using `dotnet run`.
+
+_Note:_ .NET Aspire requires a development certificate install on GitHub's `ubuntu-latest` so I've included it as well.
+
+```yaml
+#.github/workflows/workflow.yml
+name: Deploy Application
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "9.0"
+      - name: Install .NET HTTPS Development Certificate # Required for .NET Aspire
+        run: |
+          dotnet tool update -g linux-dev-certs
+          dotnet linux-dev-certs install
+      - uses: actions/checkout@v4
+      - name: Test
+        run: |
+          dotnet restore
+          dotnet run -c Release --project src/AspireSample.AppHost.Tests/AspireSample.AppHost.Tests.csproj --coverage --coverage-output-format cobertura --results-directory ./coverage
 ```
 
-```
+As a final reminder you can view the code [here](https://github.com/benjaminsampica/bensampica.com/tree/main/content/post/aspiretunit). That's it - happy coding!

@@ -1,0 +1,22 @@
+name: Deploy Application
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "9.0"
+      - name: Install .NET HTTPS Development Certificate # Required for .NET Aspire
+        run: |
+          dotnet tool update -g linux-dev-certs
+          dotnet linux-dev-certs install
+      - uses: actions/checkout@v4
+      - name: Test
+        run: |
+          dotnet restore
+          dotnet run -c Release --project src/AspireSample.AppHost.Tests/AspireSample.AppHost.Tests.csproj --coverage --coverage-output-format cobertura --results-directory ./coverage
