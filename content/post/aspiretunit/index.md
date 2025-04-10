@@ -8,8 +8,8 @@ tags:
   - dotnet
   - CSharp
   - containers
-date: "2025-04-09T00:00:00Z"
-lastmod: "2025-04-09T00:00:00Z"
+date: "2025-04-10T00:00:00Z"
+lastmod: "2025-04-10T00:00:00Z"
 url_code: https://github.com/benjaminsampica/bensampica.com/tree/main/content/post/aspiretunit
 featured: false
 draft: false
