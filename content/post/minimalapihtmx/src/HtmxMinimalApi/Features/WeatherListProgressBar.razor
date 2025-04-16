@@ -1,0 +1,42 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th>Date</th>
+        <th>Temp. (C)</th>
+        <th>Temp. (F)</th>
+        <th>Summary</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr class="htmx-indicator">
+            <td colspan="4" class="p-0">
+                <div class="progress rounded-0" style="max-height:5px;" role="progressbar" aria-label="Loading…" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated w-100"></div>
+                </div>
+            </td>
+        </tr>
+        @if (Response is not null)
+        {
+            @foreach (var forecast in Response?.Items ?? [])
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                    <td>@forecast.Summary</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<div class="row d-flex justify-content-end">
+    <div class="col-lg-auto">
+        <Paging Request="Request" Response="Response"></Paging>
+    </div>
+</div>
+
+@code {
+    [Parameter] public WeatherList.WeatherForecastRequest Request { get; set; } = new();
+    [Parameter] public WeatherList.WeatherForecastResponse? Response { get; set; }
+}
