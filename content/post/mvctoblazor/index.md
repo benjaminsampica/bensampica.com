@@ -86,7 +86,7 @@ Do step 1-4 but you can omit:
 - `services.AddRazorPages();`
 - `endpoints.MapToFallbackFile("/Host");`
 
-For a complete coded example [here's an example repository](https://github.com/benjaminsampica/bensampicaPostExamples/tree/master/mvcToBlazor) that has this done for you with some sample components already there to showcase use.
+For a complete coded example [here's an example repository](https://github.com/benjaminsampica/bensampica.com/tree/main/content/post/mvctoblazor) that has this done for you with some sample components already there to showcase use.
 
 ## Some Notes
 
