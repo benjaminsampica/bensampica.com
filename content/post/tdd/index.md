@@ -58,7 +58,7 @@ Ideally, you have two players, one who plays the role of the _Forces of Order_ a
 
 ## The Practical
 
-View the repo [here](https://github.com/benjaminsampica/bensampicaPostExamples/tree/master/tdd). The problem domain is simply the `FizzBuzz` common problem. Can you test drive a similar solution?
+View the repo [here](https://github.com/benjaminsampica/bensampica.com/tree/main/content/post/tdd). The problem domain is simply the `FizzBuzz` common problem. Can you test drive a similar solution?
 
 ### Lore
 
