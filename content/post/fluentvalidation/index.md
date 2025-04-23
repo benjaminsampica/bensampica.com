@@ -37,7 +37,7 @@ projects: []
 
 [Fluent Validation](https://fluentvalidation.net/) is a .NET library for creating strong-typed, fluent validation rules. Built into the library are familiar validators like `EmailAddress` and `NotEmpty`, but also it's extremely nimble and allows creating custom validators or even reusing them. Out of the box, Fluent Validation works with ASP.NET Core's service container so that determining model rules can stay where it belongs - in an validator. Fluent Validation also comes with unit testing tools to easily validate that your model validation rules are functioning correctly.
 
-See the sample repo here: [FluentValidationExampleProject](https://github.com/benjaminsampica/bensampicaPostExamples/tree/master/fluentValidation)
+See the sample repo here: [FluentValidationExampleProject](https://github.com/benjaminsampica/bensampica.com/tree/main/content/post/fluentvalidation)
 
 ## The Theoretical
 Traditionally, MVC models have been validated in one of three ways.
