@@ -20,7 +20,7 @@ toc: true
 
 ## Introduction
 
-[There is a part one using TestContainers and XUnit](https://bensampica.com/testcontainers), which also explains _why_ containers can improve many aspects of local development and testing.
+[There is a part one using TestContainers and XUnit](https://bensampica.com/post/testcontainers), which also explains _why_ containers can improve many aspects of local development and testing.
 
 To recap - we want to run our applications locally and running our tests in an atomic, reproducible way. I'm making an assumption that you already know what .NET Aspire is and won't go into detail here. Not sure? [Read the overview](https://learn.microsoft.com/en-us/dotnet/aspire/get-started/aspire-overview).
 
