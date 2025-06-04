@@ -39,9 +39,9 @@ At my workplace at the time I would try and pair with other developers (about 9 
 
 ## 2020
 
-COVID-19 needs no introduction but this event is the one that I can single-handedly point to and say that it is _the event_ that I boarded the "mob programming" train. Though I had no idea what "mob programming" even was at the time, it began on March 16th (Monday) when our workplace told us to remain at home over the weekend. Even though all of us developers were bad at truly working together we were friends nonetheless. In order to keep seeing each other a core group of us who were closest decided we would gather at one person's home. 
+COVID-19 needs no introduction but this event is the one that I can single-handedly point to and say that it is _the event_ that I boarded the "mob programming" train. I had no idea what "mob programming" even was at the time, it began on March 16th (Monday) when our workplace told us to remain at home over the weekend. Even though all of us developers were bad at truly working together we were friends nonetheless. In order to keep seeing each other a core group of us who were closest decided we would gather at one person's home. 
 
-Naturally, nobody has a home office that can accomodate 4 other people at it so we hooked up all of our stuff at their kitchen table. Unfortunately I don't have a picture but imagine a bunch of laptops hooked up to monitors and computer equipment everywhere, nerds sitting on uncomfortable kitchen chairs hunkered over keyboards, like an early 2000s LAN party.
+Naturally, nobody had a home office that could accomodate 4 other people at it so we hooked up all of our stuff at their kitchen table. Unfortunately I don't have a picture but imagine a bunch of laptops hooked up to monitors and computer equipment everywhere, nerds sitting on uncomfortable kitchen chairs hunkered over keyboards, like an early 2000s LAN party.
 
 I don't even remember who said it now once it was all setup but once spoken we all giggled - it was brilliant.
 
@@ -80,7 +80,7 @@ Unfortunately, there isn't much opportunity to move up in a government job witho
 ## 2021
 
 ### Homesteaders
-Being in the most senior position on a development team granted me some flexibility and authority in how I wished the team to work. I was careful not to force my two co-workers (an associate and an intern) into working a way they were not comfortable with but when either had questions I would pair up with them and we would solve whatever problem it was. 
+At Homesteaders, being in the most senior position on a development team granted me some flexibility and authority in how I wished the team to work. I was careful not to force my two co-workers (an associate and an intern) into working a way they were not comfortable with but when either had questions I would pair up with them and we would solve whatever problem it was. 
 
 Within weeks, the associate and I would pair on most things. Over the coming winter, we completely rewrote the application we were working on. Primarily, it would send images to a cloud-based OCR and then send us the text back and we would further process it. We sped up this workflow by over 5x (30+ minutes to 6 minutes which was then limited by how fast the external OCR would send us results back). The project was a huge success and we got it done way earlier than anticipated. It was also Homesteader's first application to have any automated testing - much less a full suite.
 
@@ -90,21 +90,37 @@ Additionally, we suffered from our success. We were told we were going to delve 
 
 ### Comoto
 
-I was only here 5 months as a senior engineer. I ran into a like-minded soul named [Brian Gamble](https://www.linkedin.com/in/bjgamble/) who luckily was on my team and he also shared a desire and some experience with team programming. I can't remember if it was Brian that officially introduced me to the term "mob programming" but it was around this time I discovered [Woody Zuill](https://woodyzuill.com/) who coined the term outright. My first few weeks there happened to coincide with an "transformation" the organization was putting on where they brought in [Bob "Agile Bob" Hartman](https://agileforall.com/author/agile_bob/). He was pretty good.
+I was only here 5 months as a senior engineer. I ran into a like-minded soul named [Brian Gamble](https://www.linkedin.com/in/bjgamble/) who luckily was on my team and he also shared a desire and some experience with mob programming. I can't remember if it was Brian that officially introduced me to the term "mob programming" but it was around this time I discovered [Woody Zuill](https://woodyzuill.com/) who coined the term outright. My first few weeks there happened to coincide with an "transformation" the organization was putting on where they brought in [Bob "Agile Bob" Hartman](https://agileforall.com/author/agile_bob/). He was pretty good.
 
 I didn't really see any transformation though, haha.
 
-There was a ton of turnover at Comoto for a lot of reasons, one of which was there was a lot of turnover. The applications my team oversaw were [mysterious and important](https://www.youtube.com/watch?v=rWiekWdJUVw) - nobody remained who actually built them. Nobody remained who had even maintained them two years ago. 
+There was a ton of turnover at Comoto for a lot of reasons, one of which was there was a lot of turnover. The applications my team oversaw were [mysterious and important](https://www.youtube.com/watch?v=rWiekWdJUVw) - nobody remained who actually built them. Few remained who had even maintained them two years ago. 
 
-A lot of misery was had in the short months I was here but our team of four found a lot of joy team programming - flailing and screaming as we tried to figure out what the hell the previous dozen people had cobbled together (or broken) before us. I like to think we were as successful as we could be with four minds rather than one. I learned here that a misery shared is a misery halved and team programming was an excellent denominator.
+A lot of misery was had in the short months I was here but our team of four found a lot of joy in mob programming - flailing and screaming as we tried to figure out what the hell the previous dozen people had cobbled together (or broken) before us. I like to think we were as successful as we could be with four minds rather than one. I learned here that a misery shared is a misery halved and mob programming was an excellent denominator.
 
 There is no need to go into specifics on why I left but they were numerous. 
 
+### Casey's
+
+I left Comoto to join my current team at Casey's General Stores, a midwest gas station, as a senior engineer right at the tail end of 2021. I didn't mention this in the timeline as it was irrelevant to the beginning of my mob programming journey, but I actually worked at Casey's for about eight months at the beginning of 2019. Some aspects were good, many were bad, so I left and rejoined Polk County (which is the beginning of this post). I knew a lot of the folks on the team already from this first short stint (albeit I was on a different team).
+
+In December of 2021, the perception of the threat of COVID was starting to "die down" (whether right or wrong) and many organizations - Casey's included - began making moves to bring folks back into the office. My first few weeks that went into 2022 began back in an office. I lived about ten minutes away so this wasn't a big deal to come in. We could choose our schedule and most folks simply came in once or twice a week at the most.
+
 ## 2022
 
-I left Comoto to join my current team at Casey's General Stores, a midwest gas station, as a senior engineer right at the tail end of 2022. I didn't mention this in the timeline as it was irrelevant to the beginning of my mob programming journey, but I actually worked at Casey's for about eight months at the beginning of 2019. Some aspects were good, many were bad, so I left and rejoined Polk County (which is the beginning of this post).
+By this time, I had consumed a ton of media on mob programming from the likes of Woody Zuill, Allen Holub, Dave Farley, and more as well as having had a lot of success (albeit short-lived) on teams that mobbed. I did not come into Casey's expecting to mob at all but I did set clear expectations in my interview that I was big into pairing and teaming.
 
-In December of 2022, the perception of the threat of COVID was starting to "die down" and many organizations - Casey's included - began making moves to bring folks back into the office. My first few weeks that went into 2023 began back in an office. However, since I had already 
+### The First Day
+
+My very first day at Casey's was more productive compared to any first day anywhere else I have worked. It wasn't anything special Casey's had done - if I recall correctly my computer wasn't fully granted access to most things yet - but instead I pair programmed on some Azure DevOps pipelines with my best friend [Marcus Mihulka](https://www.linkedin.com/in/marcus-mihulka-09ab189a/). He had been working there a number of years already and we even shipped it on that first day. Marcus was foundational in what was to come and a fierce ally for all the various setbacks (or attempts to setback) that would come over the next few years.
+
+### The First Month
+
+At the time, Casey's was about a year into a common retail-Agile pattern of _The Agile Transformation_. This had all the typical trappings you'd expect - rebranding of roles, top-down mandates, and more - and there were some key folks that were the "Agile" people that were big into [SAFe](https://framework.scaledagile.com/). If you know me, I strongly support that any canned framework is a bunch of baloney and ineffective in its best form.
+
+I was a part of a "training" where these designated "Agile" folks were teaching us "Agile" in a one-hour meeting. Most of the one-hour meeting was unremarkable but as they explained through what a _Scrum Sprint_ was it was described as a "commitment". I made the mistake(?) of asking a single question about what "commitment" means. I gave an example that I'm committed to my wife, she would be upset if I asked her to commit to doing the dishes, and so I asked "What does commitment mean in our version of Scrum here at Casey's?".
+
+After the meeting, I was sent another follow-up meeting invite from my manager and his manager (who heard second-hand) to "discuss my behavior". Whoops! A little too spicy I guess. I learned quickly that this was, indeed, just another puddle-deep ocean-wide implementation of Agile and that I should be more careful.
 
 ## 2025 (Today)
 

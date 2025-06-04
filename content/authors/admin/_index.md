@@ -58,6 +58,11 @@ education:
     date_start: 2011-08-01
     date_end: 2013-05-01
 work:
+  - position: Owner
+    company_name: Blueprint Software
+    company_url: 'https://www.blueprint.software'
+    date_start: '2025-01-01'
+    date_end: ''
   - position: Co-Founder
     company_name: Send Trucks
     company_url: 'https://www.sendtrucks.com'
@@ -68,7 +73,7 @@ work:
     company_url: 'https://www.caseys.com'
     company_logo: ''
     date_start: '2024-06-01'
-    date_end: ''
+    date_end: '2025-05-01'
   - position: Senior Software Engineer
     company_name: Casey's General Stores
     company_url: 'https://www.caseys.com'
