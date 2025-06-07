@@ -33,6 +33,12 @@ app.MapGet("/weatherforecast", () =>
     return forecast;
 });
 
+app.MapGet("/todos", (ApplicationDbContext dbContext) =>
+{
+    var todos = dbContext.Todos.ToList();
+    return todos;
+});
+
 app.MapDefaultEndpoints();
 
 if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Test"))
