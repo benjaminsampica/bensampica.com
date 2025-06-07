@@ -20,4 +20,20 @@ public class UnitTest1 : DistributedApplicationBase
 
         await Assert.That(forecast).IsNotEmpty();
     }
+
+    [Test]
+    public async Task GetTodos()
+    {
+        var todo = new Todo { Name = "Test" };
+        var dbContext = GetRequiredService<ApplicationDbContext>();
+
+        dbContext.Todos.Add(todo);
+        dbContext.SaveChanges();
+
+        var httpClient = GetDistributedApplication().CreateHttpClient("apiservice");
+
+        var todos = await httpClient.GetFromJsonAsync<Todo[]>("todos");
+
+        await Assert.That(todos).IsNotEmpty();
+    }
 }
