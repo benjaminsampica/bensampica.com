@@ -134,7 +134,7 @@ There are two primary tools you can use to both simulate real external dependenc
 - **Hardening in .NET 10**: Upcoming improvements in .NET 10 will make containerized development even more robust.
 - **High Investment by the .NET Team**: Microsoft continues to invest heavily in containerization support for .NET, ensuring better tooling and performance.
 
-For purposes of this post, I'm going to cover `TestContainers.NET` as there is less scaffoling involved for existing applications. For new applications, I would strongly weigh the pros and cons and see if .NET Aspire is appropriate. Curious what .NET Aspire looks like instead? See [part two](https://github.com/benjaminsampica/bensampica.com/tree/main/content/post/aspiretunit)
+For purposes of this post, I'm going to cover `TestContainers.NET` as there is less scaffoling involved for existing applications. For new applications, I would strongly weigh the pros and cons and see if .NET Aspire is appropriate. Curious what .NET Aspire looks like instead? See [part two](https://www.bensampica.com/post/aspiretunit/).
 
 ## Problems We Have During Testing
 
