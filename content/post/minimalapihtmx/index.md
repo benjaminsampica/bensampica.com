@@ -11,7 +11,7 @@ tags:
 date: '2024-11-13T00:00:00Z'
 lastmod: '2025-08-14T00:00:00Z'
 url_code: https://github.com/benjaminsampica/bensampica.com/tree/main/content/post/minimalapihtmx
-featured: false
+featured: true
 draft: false
 toc: true
 ---
