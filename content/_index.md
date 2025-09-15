@@ -66,12 +66,6 @@ sections:
       #   Leave `date_end` empty if it's your current employer.
       #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
       items:
-        - title: Co-Founder
-          company: Send Trucks
-          company_url: 'https://www.sendtrucks.com'
-          location: Ankeny, IA
-          date_start: '2023-06-01'
-          date_end: ''
         - title: Lead Software Engineer
           company: Casey's General Stores
           company_url: 'https://www.caseys.com'

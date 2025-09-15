@@ -63,11 +63,6 @@ work:
     company_url: 'https://www.blueprint.software'
     date_start: '2025-01-01'
     date_end: ''
-  - position: Co-Founder
-    company_name: Send Trucks
-    company_url: 'https://www.sendtrucks.com'
-    date_start: '2023-06-01'
-    date_end: ''
   - position: Lead Software Engineer
     company_name: Casey's General Stores
     company_url: 'https://www.caseys.com'
