@@ -82,11 +82,9 @@ Unfortunately, there isn't much opportunity to move up in a government job witho
 ### Homesteaders
 At Homesteaders, being in the most senior position on a development team granted me some flexibility and authority in how I wished the team to work. I was careful not to force my two co-workers (an associate and an intern) into working a way they were not comfortable with but when either had questions I would pair up with them and we would solve whatever problem it was. 
 
-Within weeks, the associate and I would pair on most things. Over the coming winter, we completely rewrote the application we were working on. Primarily, it would send images to a cloud-based OCR and then send us the text back and we would further process it. We sped up this workflow by over 5x (30+ minutes to 6 minutes which was then limited by how fast the external OCR would send us results back). The project was a huge success and we got it done way earlier than anticipated. It was also Homesteader's first application to have any automated testing - much less a full suite.
+Within weeks, the associate and I would pair on most things. Over the coming winter, we completely rewrote the application we were working on. Primarily, it would send images to a cloud-based OCR and then send us the text back and we would further process it. We sped up this workflow by over 5x (30+ minutes to 6 minutes which was then limited by how fast the external OCR would send us results back). The project was a huge success and we got it done way earlier than anticipated. It was also Homesteader's first application to have any automated testing - but we had a full suite to boot!
 
-Unfortunately, I felt some hard resistance to many aspects that I read in books or even had at Polk County. For example, at Homesteaders, when an application was "finished" it would be handed off to a "run" team that would then fix any bugs or add small enhancements. This has many obvious downsides and I very much wanted to retain ownership of this application that my team had created. It was not to be.
-
-Additionally, we suffered from our success. We were told we were going to delve into the existing mainframe (which was COBOL) and enhance portions of it for at least the next eight months. I said "No", which of course didn't matter, and so I left a mere 11 months after I started.
+We were told we were going to delve into the existing mainframe (which was 30 year old COBOL) and enhance portions of it for at least the next eight months. I said "No", which of course didn't matter (but mattered a lot to my employment status) and so I left a mere 11 months after I started.
 
 ### Comoto
 
@@ -114,7 +112,7 @@ I was a part of a "training" where these designated "Agile" folks were teaching 
 
 After the meeting, I was sent another follow-up meeting invite from my manager and his manager (who heard second-hand) to "discuss my behavior". Whoops! I learned quickly that this was, indeed, just another puddle-deep ocean-wide implementation of Agile and that I should be more careful.
 
-## The First Year
+### The First Year
 
 The team quickly discovered a lot of joy and happiness in team programming. Slowly, over the course of three or four months, the pairing turned into 3 people, turned into 4, and on until we had everyone on the team on a call. It happened organically - I didn't force anyone into it; we simply organized that way because it was fun, it was fast, and it was _good_.
 
