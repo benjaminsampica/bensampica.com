@@ -108,15 +108,13 @@ My very first day at Casey's was more productive compared to any first day anywh
 
 At the time, Casey's was about a year into a common retail-Agile pattern of _The Agile Transformation_. This had all the typical trappings you'd expect - rebranding of roles, top-down mandates, and more - and there were some key folks that were the "Agile" people that were big into [SAFe](https://framework.scaledagile.com/). If you know me, I strongly support that any canned framework is a bunch of baloney and ineffective in its best form.
 
-I was a part of a "training" where these designated "Agile" folks were teaching us "Agile" in a one-hour meeting. Most of the one-hour meeting was unremarkable but as they explained through what a _Scrum Sprint_ was it was described as a "commitment". I made the mistake(?) of asking a single question about what "commitment" means. I gave an example that I'm committed to my wife, she would be upset if I asked her to commit to doing the dishes, and so I asked "What does commitment mean in our version of Scrum here at Casey's?".
-
-After the meeting, I was sent another follow-up meeting invite from my manager and his manager (who heard second-hand) to "discuss my behavior". Whoops! I learned quickly that this was, indeed, just another puddle-deep ocean-wide implementation of Agile and that I should be more careful.
+This mindset and approach naturally was unpopular with some leadership,  which was a constant source of tension as the weeks grew into months. There were some allies though, like the Agile Coaches, but less so amongst the Scrum Masters.
 
 ### The First Year
 
 The team quickly discovered a lot of joy and happiness in team programming. Slowly, over the course of three or four months, the pairing turned into 3 people, turned into 4, and on until we had everyone on the team on a call. It happened organically - I didn't force anyone into it; we simply organized that way because it was fun, it was fast, and it was _good_.
 
-We shucked a lot of the process I mentioned above. We moved away from story pointing, sprints, and really most of Scrum. It was all redundant given our speed, quality, and the fact that we were all constantly retrospecting every decision because we were all there as we made it.
+We shucked a lot of the process I mentioned above. We moved away from story pointing, sprints, and really most of Scrum. It was all redundant given our speed, quality, and the fact that we were all constantly retrospecting every decision because we were all there as we made it. 
 
 I do want to call out that this year was mostly done _remotely_ due to COVID. There was and has been no discernable difference, from my experience, between in-person and remote work in its effectiveness or efficacy. The only annoying approach was if the team was split (some remote, some in office) because conversations are harder to be had when some folks are in a room and some folks are on a call. But it was still faster and better than solo working, anyway. 
 
@@ -124,13 +122,23 @@ I do want to call out that this year was mostly done _remotely_ due to COVID. Th
 
 It should be noted that these years (and 2022) were filled mostly with joy inside the team. There was plenty of gnashing of teeth and systemic/organizational pain around the way we ultimately decided to work. In retrospective, nothing stands out in my mind that was not simply political posturing, finger-pointing at us for other's teams deficiencies (in their timelines), or simply a theatre of personalities that could not put aside petty bullshit to actually do work. Ya know, typical corporate stuff.
 
-The organization's dysfunction played to our benefit occassionally, as making decisions and executing them involved a lot of people. If folks were trying to force us to work in a way they wanted, there was a canyon of process that nobody approached. However, during these two years we did have a couple events of note:
+The organization's dysfunction played to our benefit occassionally, as making decisions and executing them involved a lot of people. If folks were trying to force us to work in a way they wanted, there was a canyon of process that nobody approached. 
+
+However, during these years we did have a few events of note:
 
 - We lost a [great engineer](https://www.linkedin.com/in/samantha-curiel-047785152/) to another internal team due to lack of being able to promote our own from within. While extremely sad for us, a very big benefit of team programming is there was no "handing off" of work. We lost capacity and their brilliance but we did not lose the ability to deliver quality software. We brought on a new engineer and the team dynamic changed (a little). Not better, not worse. Just different.
 
 - We moved an engineer off our team as they ended up not being a great fit after a couple years of trying everything to make it work. Another great benefit of team programming is that everyone understands everyone else's strengths and weaknesses. While this engineer did have some really great strengths, they did not align with our objectives, our goals, and our technical north stars (modernization via cloud, containers, etc..). Unfortunately, it took way too long (the process) to even move this engineer to somewhere where both the rest of the team and they were ultimately a lot happier.
 
 - We gained a contractor who was initially supposed to be our "support help" person to assist on our support rotations. However, [they were a great engineer](https://www.linkedin.com/in/sumesh-gaud?trk=blended-typeahead) and, because we mobbed support we ended up with basically no support. So they ended up in the mob, too. Unfortunately, Casey's fumbled hiring them.
+
+- We got an official conference room permanently booked, instead of having to conference room hop every day (or even multiple times a day)
+
+- We led and organized a reoccuring DevJam.
+
+- [One engineer on my team](https://www.linkedin.com/in/andrew-davidson-76353b176?trk=blended-typeahead) took it upon themselves to bring in games to play over lunch every day - for years. Such was the culture we built within the team.
+
+Also, a special shoutout to our [product owner](https://www.linkedin.com/in/stefanie-rose-332871115?trk=blended-typeahead) and our [manager](https://www.linkedin.com/in/ryanwahl?trk=blended-typeahead) who saw the outcomes, put up safety barriers, and participated in the joy and helped enable the team to grow as much as it could given the environment.
 
 ## 2025: Leaving A Legacy
 
