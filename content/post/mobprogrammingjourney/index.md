@@ -130,7 +130,7 @@ However, during these years we did have a few events of note:
 
 - We moved an engineer off our team as they ended up not being a great fit after a couple years of trying everything to make it work. Another great benefit of team programming is that everyone understands everyone else's strengths and weaknesses. While this engineer did have some really great strengths, they did not align with our objectives, our goals, and our technical north stars (modernization via cloud, containers, etc..). Unfortunately, it took way too long (the process) to even move this engineer to somewhere where both the rest of the team and they were ultimately a lot happier.
 
-- We gained a contractor who was initially supposed to be our "support help" person to assist on our support rotations. However, [they were a great engineer](https://www.linkedin.com/in/sumesh-gaud?trk=blended-typeahead) and, because we mobbed support we ended up with basically no support. So they ended up in the mob, too. Unfortunately, Casey's fumbled hiring them.
+- We gained a contractor who was initially supposed to be our "support help" person to assist on our support rotations. However, [they were a great engineer](https://www.linkedin.com/in/sumesh-gaud?trk=blended-typeahead) and, because we mobbed issues that arose we ended up with basically no issues. So they ended up in the mob, too. Unfortunately, Casey's fumbled hiring them.
 
 - We got an official conference room permanently booked, instead of having to conference room hop every day (or even multiple times a day)
 
