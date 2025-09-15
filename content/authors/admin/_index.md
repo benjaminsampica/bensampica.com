@@ -20,7 +20,7 @@ superuser: true
 highlight_name: true
 
 # Role/position/tagline
-role: Lead Software Developer
+role: Owner - Blueprint Software
 
 # Organizations/Affiliations to display in Biography blox
 # organizations:
