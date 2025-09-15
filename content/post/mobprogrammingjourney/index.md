@@ -134,7 +134,7 @@ The organization's dysfunction played to our benefit occassionally, as making de
 
 It was no secret on the team that I had been [moonlighting a company for a while](https://blueprint.software) and that my time was coming to a close. I was proud of what _we_ had built in the years that I was on the team. I was happy of the things I had learned from those I worked with, both teaching them and being taught by them. I think had we been given more autonomy (including our manager who was also lacking in autonomy), we would have made a couple more big changes regarding engineers, but that is the only regret that comes to mind as I write this.
 
-On the last day, I stood up from the "Megadesk" for the final time, crying and trying to hide it from my team, and turned to leave our shared space one last time. I bumbled out a "See ya" as I exited the door, left the building, and drove home. But not before I scribbled on the whiteboard, one final time, the words that had begun this journey of mine.
+On the last day, I stood up from the "Megadesk" for the final time, crying and trying to hide it from my team, and turned to leave our shared space one last time. I bumbled out a "See ya" as I exited the door, left the building, and drove home. But not before I scribbled on the whiteboard, one final time, the words that had begun this journey of mine and that I spent three and a half years repeating to my team.
 
 > Learning is the work.
 
