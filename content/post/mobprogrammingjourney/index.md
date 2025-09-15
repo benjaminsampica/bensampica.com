@@ -140,7 +140,7 @@ On the last day, I stood up from the "Megadesk" for the final time, crying and t
 
 > Learning is the work.
 
-It remains to be seen what kind of legacy the team can carry forward with regards to mob programming. I'm not selfish enough to call it _my_ legacy - it was _our_ legacy. Just like when we lost engineers when I was on the team and the team reshaped, so too will they reshape around the empty chair I left. Perhaps, in a few years, it'll warrant another post to see how it's all playing out.
+It remains to be seen what kind of legacy the team can carry forward with regards to mob programming. I'm not foolish or delusional enough to claim it as _my_ legacy - it was _our_ legacy. Just like when we lost engineers when I was on the team and the team reshaped, so too will they reshape around the empty chair I left. Perhaps, in a few years, it'll warrant another post to see how it's all playing out.
 
 ## Final Thoughts
 
