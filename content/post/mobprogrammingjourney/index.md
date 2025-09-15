@@ -6,8 +6,8 @@ authors:
 - ben-sampica
 tags:
 - Mob Programming
-date: '2025-05-05T00:00:00Z'
-lastmod: '2025-05-05T00:00:00Z'
+date: '2025-09-15T00:00:00Z'
+lastmod: '2025-09-15T00:00:00Z'
 featured: false
 draft: true
 toc: true
@@ -19,11 +19,11 @@ toc: true
 
 > Learning is the work.
 
-I first heard these words from [Allen Holub](https://holub.com) on LinkedIn sometime in early 2019. It was speaking of software development as a whole; that the _primary_ objective of a software developer is to _learn_. To learn to write software, learn to problem solve, learn to communicate, learn your domain, learn your client's actual needs - better. I had no idea then how these words would imprint on me as I read them.
+I first saw these words from [Allen Holub](https://holub.com) on LinkedIn in early 2019. He was talking about software development at its core: the real job of a software developer is to learn. To learn how to write code, how to solve problems, how to communicate, how to understand your domain, and - most importantly - how to uncover what people actually need.  
 
-At this time, I was working for Polk County in the state Iowa in a mid-level engineer position. It's the largest county in Iowa but still only had about ten developers total. We developers worked in complete silos with the work coming from three or four "product" people. At any given time a developer would have two or three ongoing workstreams from one or more of these people. It's incredible anything got done and if you think it was very wasteful you'd be right 🤣.
+At the time, I didn’t realize how much that idea would shape my career. But looking back, it became the guiding principle behind my growth as a developer and my journey into mob programming.  
 
-## 2019
+## 2019: Beginnings
 
 Soon thereafter, I gained an outsized interest in improving myself by [buying books](https://www.bensampica.com/library), joining many Reddit subreddits, and [posting on StackOverflow](https://stackoverflow.com/users/5000776/ben-sampica). The first book I ever read was [Joy Inc.](https://a.co/d/aKAWB18) which is coincidental because it's not a traditional software engineering book at all. This book laid the groundwork for what comes later though I didn't know it at the time.
 
@@ -37,7 +37,7 @@ I learned about pair programming from these books so I tried it out at work.
 
 At my workplace at the time I would try and pair with other developers (about 9 total) but it never really stuck for various reasons. Looking back on it, it was mainly a combination of the culture (everyone had their own work and command/control leaders), the environment (we had very tight cubes which made it physically hard), and we were simply just bad at it (watching versus actual collaboration). I learned from all my efforts at home that it felt _really good_ and _fulfilling_ to improve myself. Even though we totally _sucked_ at collaborating that feeling was multiplied when I helped others no matter how bad it was! 
 
-## 2020
+## 2020: Megadesk
 
 COVID-19 needs no introduction but this event is the one that I can single-handedly point to and say that it is _the event_ that I boarded the "mob programming" train. I had no idea what "mob programming" even was at the time, it began on March 16th (Monday) when our workplace told us to remain at home over the weekend. Even though all of us developers were bad at truly working together we were friends nonetheless. In order to keep seeing each other a core group of us who were closest decided we would gather at one person's home. 
 
@@ -47,7 +47,7 @@ I don't even remember who said it now once it was all setup but once spoken we a
 
 > Megadesk
 
-This was it. We had somehow stumbled into a proto-mob even though we were all working on different things. A few things happened that I only appreciated now having to reflect back on it:
+We laughed, but the name stuck. We had stumbled into a proto-mob: five developers in one space, still technically working on separate tasks, but constantly crossing over. A few things happened that I only appreciated now having to reflect back on it:
 
 1. We had the same core group of people in the office.
 2. We took these same people and changed the environment under which they worked.
@@ -77,7 +77,7 @@ You might think this inefficient but we were writing code that we considered ver
 
 Unfortunately, there isn't much opportunity to move up in a government job without someone else above you leaving. I left Polk County in the fall of 2020 and took a role as a senior developer at Homesteaders Life Insurance. I was very worried I would go back to the "old way of working".
 
-## 2021
+## 2021: Transition Years
 
 ### Homesteaders
 At Homesteaders, being in the most senior position on a development team granted me some flexibility and authority in how I wished the team to work. I was careful not to force my two co-workers (an associate and an intern) into working a way they were not comfortable with but when either had questions I would pair up with them and we would solve whatever problem it was. 
@@ -86,33 +86,25 @@ Within weeks, the associate and I would pair on most things. Over the coming win
 
 Unfortunately, I felt some hard resistance to many aspects that I read in books or even had at Polk County. For example, at Homesteaders, when an application was "finished" it would be handed off to a "run" team that would then fix any bugs or add small enhancements. This has many obvious downsides and I very much wanted to retain ownership of this application that my team had created. It was not to be.
 
-Additionally, we suffered from our success. We were told we were going to delve into the existing mainframe (which was COBOL) and enhance portions of it for at least the next six months. I said "No", which of course didn't matter, and so I left a mere 11 months after I started.
+Additionally, we suffered from our success. We were told we were going to delve into the existing mainframe (which was COBOL) and enhance portions of it for at least the next eight months. I said "No", which of course didn't matter, and so I left a mere 11 months after I started.
 
 ### Comoto
 
 I was only here 5 months as a senior engineer. I ran into a like-minded soul named [Brian Gamble](https://www.linkedin.com/in/bjgamble/) who luckily was on my team and he also shared a desire and some experience with mob programming. I can't remember if it was Brian that officially introduced me to the term "mob programming" but it was around this time I discovered [Woody Zuill](https://woodyzuill.com/) who coined the term outright. My first few weeks there happened to coincide with an "transformation" the organization was putting on where they brought in [Bob "Agile Bob" Hartman](https://agileforall.com/author/agile_bob/). He was pretty good.
 
-I didn't really see any transformation though, haha.
+I didn't really see any real change, though.
 
-There was a ton of turnover at Comoto for a lot of reasons, one of which was there was a lot of turnover. The applications my team oversaw were [mysterious and important](https://www.youtube.com/watch?v=rWiekWdJUVw) - nobody remained who actually built them. Few remained who had even maintained them two years ago. 
+There was a ton of turnover at Comoto for a lot of reasons, one of which was that _there was a lot of turnover_. The applications my team oversaw were [mysterious and important](https://www.youtube.com/watch?v=rWiekWdJUVw) - nobody remained who actually built them. Few remained who had even maintained them two years ago. 
 
 A lot of misery was had in the short months I was here but our team of four found a lot of joy in mob programming - flailing and screaming as we tried to figure out what the hell the previous dozen people had cobbled together (or broken) before us. I like to think we were as successful as we could be with four minds rather than one. I learned here that a misery shared is a misery halved and mob programming was an excellent denominator.
 
-There is no need to go into specifics on why I left but they were numerous. 
+## 2022: A New Hope
 
-### Casey's
-
-I left Comoto to join my current team at Casey's General Stores, a midwest gas station, as a senior engineer right at the tail end of 2021. I didn't mention this in the timeline as it was irrelevant to the beginning of my mob programming journey, but I actually worked at Casey's for about eight months at the beginning of 2019. Some aspects were good, many were bad, so I left and rejoined Polk County (which is the beginning of this post). I knew a lot of the folks on the team already from this first short stint (albeit I was on a different team).
-
-In December of 2021, the perception of the threat of COVID was starting to "die down" (whether right or wrong) and many organizations - Casey's included - began making moves to bring folks back into the office. My first few weeks that went into 2022 began back in an office. I lived about ten minutes away so this wasn't a big deal to come in. We could choose our schedule and most folks simply came in once or twice a week at the most.
-
-## 2022
-
-By this time, I had consumed a ton of media on mob programming from the likes of Woody Zuill, Allen Holub, Dave Farley, and more as well as having had a lot of success (albeit short-lived) on teams that mobbed. I did not come into Casey's expecting to mob at all but I did set clear expectations in my interview that I was big into pairing and teaming.
+By this time, I had consumed a ton of media on mob programming from the likes of Woody Zuill, Allen Holub, Dave Farley, and more as well as having had a lot of success (albeit short-lived) on teams that mobbed. I rejoined Casey’s General Stores, where I had briefly worked in 2019. Some aspects were good, many were bad, so I left and rejoined Polk County (which is the beginning of this post). This time I joined as a senior engineer with clear expectations: I valued pairing and teamwork. Notably, I didn't mention _mob programming_ at all.
 
 ### The First Day
 
-My very first day at Casey's was more productive compared to any first day anywhere else I have worked. It wasn't anything special Casey's had done - if I recall correctly my computer wasn't fully granted access to most things yet - but instead I pair programmed on some Azure DevOps pipelines with my best friend [Marcus Mihulka](https://www.linkedin.com/in/marcus-mihulka-09ab189a/). He had been working there a number of years already and we even shipped it on that first day. Marcus was foundational in what was to come and a fierce ally for all the various setbacks (or attempts to setback) that would come over the next few years.
+My very first day at Casey's was more productive compared to any first day anywhere else I have worked. It wasn't anything special Casey's had done - my computer wasn't fully granted access to most things and wouldn't be for almost an entire week - but instead I pair programmed on some Azure DevOps pipelines with the team.
 
 ### The First Month
 
@@ -120,10 +112,38 @@ At the time, Casey's was about a year into a common retail-Agile pattern of _The
 
 I was a part of a "training" where these designated "Agile" folks were teaching us "Agile" in a one-hour meeting. Most of the one-hour meeting was unremarkable but as they explained through what a _Scrum Sprint_ was it was described as a "commitment". I made the mistake(?) of asking a single question about what "commitment" means. I gave an example that I'm committed to my wife, she would be upset if I asked her to commit to doing the dishes, and so I asked "What does commitment mean in our version of Scrum here at Casey's?".
 
-After the meeting, I was sent another follow-up meeting invite from my manager and his manager (who heard second-hand) to "discuss my behavior". Whoops! A little too spicy I guess. I learned quickly that this was, indeed, just another puddle-deep ocean-wide implementation of Agile and that I should be more careful.
+After the meeting, I was sent another follow-up meeting invite from my manager and his manager (who heard second-hand) to "discuss my behavior". Whoops! I learned quickly that this was, indeed, just another puddle-deep ocean-wide implementation of Agile and that I should be more careful.
 
-## 2025 (Today)
+## The First Year
 
-I stood up from the "Megadesk" for the final time, crying and trying to hide it from Chris and Stroup, and turned to leave our shared space one last time. I bumbled out "See ya" as I exited the door, left the building, and drove home. But not before I scribbled on the whiteboard, one final time, the words that had begun this journey of mine.
+The team quickly discovered a lot of joy and happiness in team programming. Slowly, over the course of three or four months, the pairing turned into 3 people, turned into 4, and on until we had everyone on the team on a call. It happened organically - I didn't force anyone into it; we simply organized that way because it was fun, it was fast, and it was _good_.
+
+We shucked a lot of the process I mentioned above. We moved away from story pointing, sprints, and really most of Scrum. It was all redundant given our speed, quality, and the fact that we were all constantly retrospecting every decision because we were all there as we made it.
+
+I do want to call out that this year was mostly done _remotely_ due to COVID. There was and has been no discernable difference, from my experience, between in-person and remote work in its effectiveness or efficacy. The only annoying approach was if the team was split (some remote, some in office) because conversations are harder to be had when some folks are in a room and some folks are on a call. But it was still faster and better than solo working, anyway. 
+
+## 2023-2024
+
+It should be noted that these years (and 2022) were filled mostly with joy inside the team. There was plenty of gnashing of teeth and system & organizational pain around the way we ultimately decided to work.
+
+The organization's dysfunction played to our benefit occassionally, as making decisions and executing them involved a lot of people. If folks were trying to force us to work in a way they wanted, there was a canyon of process that nobody approached. However, during these two years we did have a couple events of note:
+
+- We lost a [great engineer](https://www.linkedin.com/in/samantha-curiel-047785152/) to another internal team due to lack of being able to promote our own from within. While extremely sad for us, a very big benefit of team programming is there was no "handing off" of work. We lost capacity and their brilliance but we did not lose the ability to deliver quality software. We brought on a new engineer and the team dynamic changed (a little). Not better, not worse. Just different.
+
+- We moved an engineer off our team as they ended up not being a great fit after a couple years of trying everything to make it work. Another great benefit of team programming is that everyone understands everyone else's strengths and weaknesses. While this engineer did have some really great strengths, they did not align with our objectives, our goals, and our technical north stars (modernization via cloud, containers, etc..). Unfortunately, it took way too long (the process) to even move this engineer to somewhere where both the rest of the team and they were ultimately a lot happier.
+
+## 2025 (Present)
+
+It was no secret on the team that I had been [moonlighting a company for a while](https://blueprint.software) and that my time was coming to a close. I was proud of what _we_ had built in the years that I was on the team. I was happy of the things I had learned from those I worked with, both teaching them and being taught by them. I think had we been given more autonomy (including our manager who was also lacking in autonomy), we would have made a couple more big changes regarding engineers, but that is the only regret that comes to mind as I write this.
+
+On the last day, I stood up from the "Megadesk" for the final time, crying and trying to hide it from my team, and turned to leave our shared space one last time. I bumbled out a "See ya" as I exited the door, left the building, and drove home. But not before I scribbled on the whiteboard, one final time, the words that had begun this journey of mine.
 
 > Learning is the work.
+
+## Final Thoughts
+
+From a kitchen-table LAN party in 2020 to a fully remote high-performing mob in 2025, my journey has shown me one truth: the best teams aren’t just writing software. They’re learning constantly - together. Brains that fire together, wire together.
+
+Mob programming isn’t about efficiency hacks or process compliance. It’s about creating environments where learning is inevitable and joy is found in the work itself.  
+
+And that’s why I believe, now more than ever: **learning is the work of an engineer.** 
