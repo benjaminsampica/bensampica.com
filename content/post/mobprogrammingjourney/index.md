@@ -124,7 +124,7 @@ I do want to call out that this year was mostly done _remotely_ due to COVID. Th
 
 ## 2023-2024
 
-It should be noted that these years (and 2022) were filled mostly with joy inside the team. There was plenty of gnashing of teeth and system & organizational pain around the way we ultimately decided to work.
+It should be noted that these years (and 2022) were filled mostly with joy inside the team. There was plenty of gnashing of teeth and systemic/organizational pain around the way we ultimately decided to work. In retrospective, nothing stands out in my mind that was not simply political posturing, finger-pointing at us for other's teams deficiencies (in their timelines), or simply a theatre of personalities that could not put aside petty bullshit to actually do work. Ya know, typical corporate stuff.
 
 The organization's dysfunction played to our benefit occassionally, as making decisions and executing them involved a lot of people. If folks were trying to force us to work in a way they wanted, there was a canyon of process that nobody approached. However, during these two years we did have a couple events of note:
 
