@@ -146,4 +146,4 @@ From a kitchen-table LAN party in 2020 to a fully remote high-performing mob in 
 
 Mob programming isn’t about efficiency hacks or process compliance. It’s about creating environments where learning is inevitable and joy is found in the work itself.  
 
-And that’s why I believe, now more than ever: **learning is the work of an engineer.** 
+And that’s why I believe, now more than ever: **learning is the work.** 
