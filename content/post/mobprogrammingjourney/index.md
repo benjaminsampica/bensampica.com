@@ -144,7 +144,7 @@ It remains to be seen what kind of legacy the team can carry forward with regard
 
 ## Final Thoughts
 
-From a kitchen-table LAN party in 2020 to a fully remote high-performing mob in 2025, my journey has shown me one truth: the best teams aren’t just writing software. They’re learning constantly - together. "Neurons that fire together, wire together", so the old [Hebbian adage goes](https://en.wikipedia.org/wiki/Hebbian_theory).
+From a kitchen-table in 2020 to a high-performing mob in 2025, my journey has shown me one truth: the best teams aren’t just writing software. They’re learning constantly - together. "Neurons that fire together, wire together", so the old [Hebbian adage goes](https://en.wikipedia.org/wiki/Hebbian_theory).
 
 Mob programming isn’t about efficiency hacks or process compliance. It’s about creating environments where learning is inevitable and joy is found in the work itself.  
 
