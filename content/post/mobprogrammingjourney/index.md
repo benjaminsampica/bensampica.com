@@ -120,7 +120,7 @@ We shucked a lot of the process I mentioned above. We moved away from story poin
 
 I do want to call out that this year was mostly done _remotely_ due to COVID. There was and has been no discernable difference, from my experience, between in-person and remote work in its effectiveness or efficacy. The only annoying approach was if the team was split (some remote, some in office) because conversations are harder to be had when some folks are in a room and some folks are on a call. But it was still faster and better than solo working, anyway. 
 
-## 2023-2024
+## 2023 & 2024: Peak Altitude
 
 It should be noted that these years (and 2022) were filled mostly with joy inside the team. There was plenty of gnashing of teeth and systemic/organizational pain around the way we ultimately decided to work. In retrospective, nothing stands out in my mind that was not simply political posturing, finger-pointing at us for other's teams deficiencies (in their timelines), or simply a theatre of personalities that could not put aside petty bullshit to actually do work. Ya know, typical corporate stuff.
 
