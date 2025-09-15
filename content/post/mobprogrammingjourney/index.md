@@ -130,7 +130,7 @@ The organization's dysfunction played to our benefit occassionally, as making de
 
 - We moved an engineer off our team as they ended up not being a great fit after a couple years of trying everything to make it work. Another great benefit of team programming is that everyone understands everyone else's strengths and weaknesses. While this engineer did have some really great strengths, they did not align with our objectives, our goals, and our technical north stars (modernization via cloud, containers, etc..). Unfortunately, it took way too long (the process) to even move this engineer to somewhere where both the rest of the team and they were ultimately a lot happier.
 
-## 2025 (Present)
+## 2025: Leaving A Legacy
 
 It was no secret on the team that I had been [moonlighting a company for a while](https://blueprint.software) and that my time was coming to a close. I was proud of what _we_ had built in the years that I was on the team. I was happy of the things I had learned from those I worked with, both teaching them and being taught by them. I think had we been given more autonomy (including our manager who was also lacking in autonomy), we would have made a couple more big changes regarding engineers, but that is the only regret that comes to mind as I write this.
 
@@ -138,9 +138,11 @@ On the last day, I stood up from the "Megadesk" for the final time, crying and t
 
 > Learning is the work.
 
+It remains to be seen what kind of legacy the team can carry forward with regards to mob programming. I'm not selfish enough to call it _my_ legacy - it was _our_ legacy. Just like when we lost engineers when I was on the team and the team reshaped, so too will they reshape around the empty chair I left. Perhaps, in a few years, it'll warrant another post to see how it's all playing out.
+
 ## Final Thoughts
 
-From a kitchen-table LAN party in 2020 to a fully remote high-performing mob in 2025, my journey has shown me one truth: the best teams aren’t just writing software. They’re learning constantly - together. Brains that fire together, wire together.
+From a kitchen-table LAN party in 2020 to a fully remote high-performing mob in 2025, my journey has shown me one truth: the best teams aren’t just writing software. They’re learning constantly - together. "Neurons that fire together, wire together", so the old [Hebbian adage goes](https://en.wikipedia.org/wiki/Hebbian_theory).
 
 Mob programming isn’t about efficiency hacks or process compliance. It’s about creating environments where learning is inevitable and joy is found in the work itself.  
 
