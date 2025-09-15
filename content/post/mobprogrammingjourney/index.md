@@ -8,8 +8,8 @@ tags:
 - Mob Programming
 date: '2025-09-15T00:00:00Z'
 lastmod: '2025-09-15T00:00:00Z'
-featured: false
-draft: true
+featured: true
+draft: false
 toc: true
 ---
 
