@@ -29,19 +29,22 @@ Soon thereafter, I gained an outsized interest in improving myself by [buying bo
 
 At this time, I had no kids and so many nights and weekends were spent consuming and participating in all this media and writing small apps. I made a lot of bad design decisions I never had to actually live with (but plenty of things I learned) like an over-engineered website for [district supervisor election](https://web.archive.org/web/20190109213614/https://angelaconnolly.org/) and a website for a video game team that [never released](https://www.mmorpg.com/zy-universe). 
 
-I also created a website for myself as an always-online resume and then quickly added on a blog. I wanted to track my own progress, improve my writing skills, and have something to show others (it seems to help when looking for jobs). My first daughter Piper was born at the very end of 2019 and here's a picture of us and our dog Percy. I think we're reading _[The Pragmatic Programmer](https://www.amazon.com/gp/product/0135957052)_.
+I also created a website for myself as an always-online resume and then quickly added on a blog. I wanted to track my own progress, improve my writing skills, and have something to show others (it seems to help when looking for jobs). 
+
+
+As part of building my website, I documented the book in [my library](https://bensampica.com/library) and began reading them daily. My first daughter was born at this time but the reading didn't stop - as you can see in the picture below. I think we're reading _[The Pragmatic Programmer](https://www.amazon.com/gp/product/0135957052)_.
 
 {{< figure src="images/2019.jpg" title="My daughter Piper and I weeks after she was born reading a book with our dog Percy." lightbox="true" >}}
 
 I learned about pair programming from these books so I tried it out at work.
 
-At my workplace at the time I would try and pair with other developers (about 9 total) but it never really stuck for various reasons. Looking back on it, it was mainly a combination of the culture (everyone had their own work and command/control leaders), the environment (we had very tight cubes which made it physically hard), and we were simply just bad at it (watching versus actual collaboration). I learned from all my efforts at home that it felt _really good_ and _fulfilling_ to improve myself. Even though we totally _sucked_ at collaborating that feeling was multiplied when I helped others no matter how bad it was! 
+At my workplace at the time I would try and pair with other developers (about 9 total) but it never really stuck. Looking back on it, it was mainly a combination of the culture (everyone had their own work and command/control leaders), the environment (we had very tight cubes which made it physically hard), and we were simply just bad at it (watching versus actual collaboration). I learned from all my efforts at home that it felt _really good_ and _fulfilling_ to improve myself. Even though we totally _sucked_ at collaborating that feeling was multiplied when I helped others - no matter how bad it was! 
 
 ## 2020: Megadesk
 
-COVID-19 needs no introduction but this event is the one that I can single-handedly point to and say that it is _the event_ that I boarded the "mob programming" train. I had no idea what "mob programming" even was at the time, it began on March 16th (Monday) when our workplace told us to remain at home over the weekend. Even though all of us developers were bad at truly working together we were friends nonetheless. In order to keep seeing each other a core group of us who were closest decided we would gather at one person's home. 
+COVID-19 needs no introduction but this event is the one that I can single-handedly point to and say that it is _the event_ that I boarded the "mob programming" train. I had no idea what "mob programming" even was at the time. For us, it began on March 16th (Monday) when our workplace told us to remain at home over the weekend. Even though all of us were bad at working together, we were friends. In order to keep seeing each other a core group of us decided we would gather at one person's home. 
 
-Naturally, nobody had a home office that could accomodate 4 other people at it so we hooked up all of our stuff at their kitchen table. Unfortunately I don't have a picture but imagine a bunch of laptops hooked up to monitors and computer equipment everywhere, nerds sitting on uncomfortable kitchen chairs hunkered over keyboards, like an early 2000s LAN party.
+Naturally, nobody had a home office that could accomodate four other people, so we hooked up all of our stuff at their kitchen table. Unfortunately, I don't have a picture but imagine a bunch of laptops hooked up to monitors and computer equipment everywhere, nerds sitting on uncomfortable kitchen chairs hunkered over keyboards, like an early 2000s LAN party.
 
 I don't even remember who said it now once it was all setup but once spoken we all giggled - it was brilliant.
 
@@ -98,7 +101,11 @@ A lot of misery was had in the short months I was here but our team of four foun
 
 ## 2022: A New Hope
 
-By this time, I had consumed a ton of media on mob programming from the likes of Woody Zuill, Allen Holub, Dave Farley, and more as well as having had a lot of success (albeit short-lived) on teams that mobbed. I rejoined Casey’s General Stores, where I had briefly worked in 2019. Some aspects were good, many were bad, so I left and rejoined Polk County (which is the beginning of this post). This time I joined as a senior engineer with clear expectations: I valued pairing and teamwork. Notably, I didn't mention _mob programming_ at all.
+By this time, I had consumed a ton of media on mob programming from the likes of Woody Zuill, Allen Holub, Dave Farley, and more as well as having had a lot of success (albeit short-lived) on teams that mobbed. 
+
+I rejoined Casey’s General Stores, where I had briefly worked in 2019. Some aspects were good, many were bad, so I had previously left and rejoined Polk County (which is the beginning of this post). 
+
+This time I joined as a senior engineer with clear expectations: I valued pairing and teamwork. Notably, I didn't mention _mob programming_ at all.
 
 ### The First Day
 
@@ -114,13 +121,13 @@ This mindset and approach naturally was unpopular with some leadership,  which w
 
 The team quickly discovered a lot of joy and happiness in team programming. Slowly, over the course of three or four months, the pairing turned into 3 people, turned into 4, and on until we had everyone on the team on a call. It happened organically - I didn't force anyone into it; we simply organized that way because it was fun, it was fast, and it was _good_.
 
-We shucked a lot of the process I mentioned above. We moved away from story pointing, sprints, and really most of Scrum. It was all redundant given our speed, quality, and the fact that we were all constantly retrospecting every decision because we were all there as we made it. 
+We shucked a lot of the process I mentioned above. We moved away from story pointing, sprints, and most of Scrum. It was all redundant given our speed, quality, and the fact that we were analyzing every decision together (retrospecting, you might say) because we were all there as we made it. 
 
-I do want to call out that this year was mostly done _remotely_ due to COVID. There was and has been no discernable difference, from my experience, between in-person and remote work in its effectiveness or efficacy. The only annoying approach was if the team was split (some remote, some in office) because conversations are harder to be had when some folks are in a room and some folks are on a call. But it was still faster and better than solo working, anyway. 
+I want to call out that this year was mostly done _remotely_ due to COVID. There was and has been no discernable difference, from my experience, between in-person and remote work in its effectiveness or efficacy. The only annoying approach was if the team was split (some remote, some in office) because conversations are harder to be had when some folks are in a room and some folks are on a call. Even with that uncommon annoyance, it was still faster and better than working solo, anyway. 
 
 ## 2023 & 2024: Peak Altitude
 
-It should be noted that these years (and 2022) were filled mostly with joy inside the team. There was plenty of gnashing of teeth and systemic/organizational pain around the way we ultimately decided to work. In retrospective, nothing stands out in my mind that was not simply political posturing, finger-pointing at us for other's teams deficiencies (in their timelines), or simply a theatre of personalities that could not put aside petty bullshit to actually do work. Ya know, typical corporate stuff.
+It should be noted that these years (and 2022) were filled mostly with joy inside the team. There was plenty of gnashing of teeth and systemic/organizational pain from others around the way we ultimately decided to work. In hindsight, nothing stands out in my mind that was not simply political posturing, finger-pointing at us for other's teams deficiencies (in their timelines), or simply a theatre of personalities that could not put aside petty bullshit to actually do work. You know, typical corporate stuff.
 
 The organization's dysfunction played to our benefit occassionally, as making decisions and executing them involved a lot of people. If folks were trying to force us to work in a way they wanted, there was a canyon of process that nobody approached. 
 
@@ -130,13 +137,15 @@ However, during these years we did have a few events of note:
 
 - We moved an engineer off our team as they ended up not being a great fit after a couple years of trying everything to make it work. Another great benefit of team programming is that everyone understands everyone else's strengths and weaknesses. While this engineer did have some really great strengths, they did not align with our objectives, our goals, and our technical north stars (modernization via cloud, containers, etc..). Unfortunately, it took way too long (the process) to even move this engineer to somewhere where both the rest of the team and they were ultimately a lot happier.
 
-- We gained a contractor who was initially supposed to be our "support help" person to assist on our support rotations. However, [they were a great engineer](https://www.linkedin.com/in/sumesh-gaud?trk=blended-typeahead) and, because we mobbed issues that arose we ended up with basically no issues. So they ended up in the mob, too. Unfortunately, Casey's fumbled hiring them.
+- When I had joined over half our entire team's time was spent working the support inbox. We gained a contractor who was initially supposed to be our "support help" person to assist on our support rotations. However, [they were a great engineer](https://www.linkedin.com/in/sumesh-gaud?trk=blended-typeahead) and, because we mobbed issues that arose, by the tail end of the second year we found ourselves with nearly no support. So they ended up in the mob, too. Unfortunately, Casey's fumbled hiring them. But the shouting of "Inbox Zero!" remained, signaling an empty inbox.
 
-- We got an official conference room permanently booked, instead of having to conference room hop every day (or even multiple times a day)
+- We got an official conference room permanently booked, instead of having to conference room hop every day (or even multiple times a day). We decorated the conference room and made it our own as much as was allowed.
 
 - We led and organized a reoccuring DevJam.
 
 - [One engineer on my team](https://www.linkedin.com/in/andrew-davidson-76353b176?trk=blended-typeahead) took it upon themselves to bring in games to play over lunch every day - for years. Such was the culture we built within the team.
+
+- Our team modernized most of our entire application portfolio of 20+ years in about 3 years, while still keeping up with any deadline thrown at us, and continuing to run the business.
 
 Also, a special shoutout to our [product owner](https://www.linkedin.com/in/stefanie-rose-332871115?trk=blended-typeahead) and our [manager](https://www.linkedin.com/in/ryanwahl?trk=blended-typeahead) who saw the outcomes, put up safety barriers, and participated in the joy and helped enable the team to grow as much as it could given the environment.
 
