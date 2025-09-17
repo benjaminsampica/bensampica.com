@@ -31,8 +31,7 @@ At this time, I had no kids and so many nights and weekends were spent consuming
 
 I also created a website for myself as an always-online resume and then quickly added on a blog. I wanted to track my own progress, improve my writing skills, and have something to show others (it seems to help when looking for jobs). 
 
-
-As part of building my website, I documented the book in [my library](https://bensampica.com/library) and began reading them daily. My first daughter was born at this time but the reading didn't stop - as you can see in the picture below. I think we're reading _[The Pragmatic Programmer](https://www.amazon.com/gp/product/0135957052)_.
+As part of building my website, I documented the books I was reading in [my library](https://bensampica.com/library) and began reading them daily. My first daughter was born at this time but the reading didn't stop - as you can see in the picture below. I think we're reading _[The Pragmatic Programmer](https://www.amazon.com/gp/product/0135957052)_.
 
 {{< figure src="images/2019.jpg" title="My daughter Piper and I weeks after she was born reading a book with our dog Percy." lightbox="true" >}}
 
