@@ -6,8 +6,8 @@ authors:
 - ben-sampica
 tags:
 - Software Craftsmanship
-date: '2025-11-13T00:00:00Z'
-lastmod: '2025-11-13T00:00:00Z'
+date: '2025-11-20T00:00:00Z'
+lastmod: '2025-11-20T00:00:00Z'
 featured: false
 draft: false
 toc: false
