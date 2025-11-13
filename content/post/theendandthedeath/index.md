@@ -17,11 +17,12 @@ Many engineers don’t burn out - they fade out. Slowly. Quietly. Without realiz
 
 One day you’re solving real problems, pulling ideas out of thin air, building things that feel like magic. Then you wake up years later and realize you’re not an engineer anymore. You’re a cog. A ticket-mover. A status-updater. A deck-builder. A corporate performer.
 
-And the only thing that changed was what you stopped caring about.
+And the only thing that changed was _what you stopped caring about_ and _who you stopped caring about_.
 
 ## When Engineering Was Still Engineering
 
-You didn’t start in this industry to babysit Jira boards.  
+You didn’t start in this industry to babysit Jira boards.
+
 You started because creation was addictive. Because you wanted to understand things. Because curiosity felt like breathing.
 
 You remember when you used to:
@@ -32,17 +33,14 @@ You remember when you used to:
 - argue about architecture because it actually mattered  
 - feel *pride* in the thing you built  
 
-Back then, engineering felt like craftsmanship.
+Back then, engineering felt like craftsmanship. Back then, you cared - not just about the code, but about the people who would use it and the people building it beside you.
 
 ## The Corporate Conditioning
 
 But corporate environments don’t want craftsmen.  
 They want throughput, predictability, and people who won’t cause trouble.
 
-They want engineers who ship quickly, not engineers who think deeply.  
-They want consistency, not curiosity.  
-They want “alignment,” not originality.  
-They want employees who care more about their performance review than the product.
+They want engineers who ship quickly, not engineers who think deeply. They want consistency, not curiosity. They want “alignment,” not originality. They want employees who care more about their performance review than the product or the people harmed by bad decisions.
 
 So the conditioning begins:
 
@@ -53,13 +51,16 @@ So the conditioning begins:
 - “Let’s save that improvement for later.” (There is no later.)
 - “We need more visibility from you.” (Meaning: perform more, think less.)
 
-Piece by piece, your standards lower.  
-Not because you want them to—because you’re punished every time they don’t.
+The system rewards those who chase promotions, visibility, and ladder-climbing optics. It punishes those who question, who care, who slow down bad decisions for the sake of people.
+
+Piece by piece, your standards lower.
+
+Not because you want them to - because you're trained to.
 
 That’s how the machine kills engineers:  
 **not through force, but through friction and incentives.**
 
-## The Moment You Stop Being an Engineer (The End)
+## The End of an Engineer
 
 There’s a specific moment when the switch flips. This is “The End.”
 
@@ -69,23 +70,26 @@ It’s when you stop asking:
 
 and start asking:
 
-> “What will look good in my self-evaluation?”
+> “What will make me look good in Q3?”
 
-or worse:
+or the darker one:
 
-> “What’s the fastest way to make this someone else’s problem?”
+> “How do I protect myself and push this onto someone else?”
 
-That’s the death.  
-Not loud. Not dramatic.  
-Just the quiet erosion of the instinct to care.
+That’s the death. Not loud. Not dramatic. Just the quiet erosion of the instinct to care - about your craft, your users, and your teammates.
 
-You stop learning because learning isn’t rewarded. You stop proposing better solutions because they create political risk. You stop refactoring because “the sprint is full.” You stop thinking beyond this week because long-term thinking doesn’t get you promoted.
+You stop learning because learning isn’t rewarded.
+You stop proposing better solutions because they create political risk.
+You stop refactoring because you stop caring about improving your environment. You stop thinking long-term because long-term thinking doesn’t get you promoted.  
 
-You become a compliant node in a large machine *and you start optimizing for the wrong things.*
+And worst of all... you stop lifting others up because helping people doesn’t move your career ladder metrics.
 
-Efficiency over curiosity. Visibility over quality. Career optics over engineering integrity. Process, rules, and rigidity over the people around you.
+You become a compliant node in a large machine, optimizing for the wrong things:
 
-Everything after this contributes to engineering death.
+- efficiency over curiosity  
+- visibility over quality  
+- ladder-climbing over craftsmanship  
+- self-preservation over team integrity
 
 ## The Death of an Engineer
 
@@ -93,10 +97,13 @@ A curious engineer is unpredictable. A thinking engineer asks hard questions. A 
 
 A dead engineer?
 
-A dead engineer ships whatever you put in front of them. They don’t resist. They don’t challenge. They don’t push back. They don’t dream.  
-They just keep climbing whatever corporate ladder happens to be nearby.
+A dead engineer ships whatever you put in front of them. They don’t resist. They don’t challenge. They don’t push back.
 
-Management calls this “maturity.” I would call it “giving the hell up.”
+And as long as it benefits their next promotion, they don’t give a damn what it does to the people around them.
+
+They will throw teammates under the bus to “increase ownership.” They will hoard information to stay indispensable. They will avoid mentoring because “it’s not on their goals.” They will happily step over better engineers if it gets them a title bump.
+
+Management calls this “maturity.” I call it “professional selfishness disguised as leadership.”
 
 The work becomes mechanical:
 
@@ -105,9 +112,9 @@ The work becomes mechanical:
 - close ticket  
 - repeat  
 
-No ownership. No wonder. No spark.
+No ownership. No wonder. No empathy.
 
-Just a carefully optimized routine that requires none of the qualities that once made you valuable or unique. The “engineering” part of your job has been destroyed and now it is just “software.”
+Just a carefully optimized routine that requires none of the qualities that once made you valuable or human. The “engineering” part is gone. The “colleague” part is gone. What’s left is a hollow operator with a polished LinkedIn banner.
 
 Ironically, this is often the moment corporate leadership decides you’re “ready for promotion.”
 
@@ -115,14 +122,17 @@ You’ve become a perfectly shaped piece of corporate compliance.
 
 ## Can an Engineer Come Back to Life?
 
-In my opinion, *yes*—but it takes a jolt. Something that snaps you out of the performance cycle and back into actual engineering. This might take many forms, but probably includes at least a few of:
+In my opinion, *yes*—but it takes a jolt. Something that snaps you out of the performance cycle and back into actual engineering. Something that reminds you that this work used to matter.
+
+Revival usually needs at least a few of these:
 
 - A new environment.  
 - A team that actually wants to think.  
 - A project worth caring about again.  
 - A culture where people solve problems instead of tracking them.  
-- A place where engineering isn’t a posture—it’s the actual job.  
-- Somewhere your brain is an asset, not an inconvenience.
+- A place where engineering isn’t a posture - it’s the actual job.  
+- Somewhere your brain and your heart are assets, not inconveniences.  
+- Teammates who value growth over politics.
 
 It’s not guaranteed. But it’s possible.
 
@@ -130,8 +140,4 @@ It’s not guaranteed. But it’s possible.
 
 The death of an engineer isn’t inevitable. But it *is* common.
 
-It happens the moment you accept that the paycheck matters more than the problem and more than the people around you. It happens when curiosity becomes a liability. It happens when excellence stops being worth the trouble. It happens when looking good matters more than building well.
-
-If you feel that death creeping in - name it. Don’t normalize it. Don’t let the machine trivialize the craft you used to love. Because once you stop caring, the machine wins.  
-
-And it doesn’t miss you once you’re gone.
+It happens the moment you accept that the paycheck matters more than the problem - and more than the people around you. It happens when curiosity becomes a liability. It happens when helping others slows down your “career velocity.” It happens when looking good matters more than building well. It happens when you trade engineering for politics.
