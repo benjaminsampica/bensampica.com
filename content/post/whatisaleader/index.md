@@ -19,7 +19,7 @@ Before reading what _I_ think a leader is, consider the people you know personal
 
 Here is my (current) manifesto on what a leader is…
 
-First and foremost, I believe that leadership is a characteristic of an individual. It is _NOT_ a position to which someone can be appointed.  Indeed, in my opinion many "managers" (especially in the corporate world) exhibit few qualities anyone would want to emulate (except maybe to climb a corporate ladder). 
+First and foremost, I believe that leadership is a characteristic of an individual. It is _NOT_ a position to which someone can be appointed.  Indeed, in my opinion many "managers" (especially in the corporate world) exhibit few qualities anyone would want to emulate (except maybe to climb a corporate ladder). Leadership and management are two entirely different things and calling a manager a leader is an appalling bit of doublespeak. You cannot appoint or assign a leader.
 
 I believe that everyone has the ability to _be_ a leader. When a leader emerges, they are sometimes unwillingly selected, but have been anoited by people through real action. What might those actions be?
 
@@ -106,4 +106,6 @@ Examples of behavior:
 
 ## Final note
 
-Real leadership isn’t about being liked, obeyed, or admired, it’s about being trusted. And trust is built through a thousand small, consistent actions, not a job title.
+People lead by providing an example of a better way of doing stuff. They demonstrate how your life can be improved by being a better person themselves and by treating others with respect, dignity, and displaying a baseline sense of trust, justice, and fairness. Leaders live by their ideals (and, in dire times, died by them too).
+
+Even the term "follower" might be delving too close to a cult-like behavior instead of a healthy relationship between one or more people. Leaders provide an example that other people think is worth emulating - without the worship.
