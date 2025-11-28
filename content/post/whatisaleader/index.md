@@ -106,6 +106,6 @@ Examples of behavior:
 
 ## Final note
 
-People lead by providing an example of a better way of doing stuff. They demonstrate how your life can be improved by being a better person themselves and by treating others with respect, dignity, and displaying a baseline sense of trust, justice, and fairness. Leaders live by their ideals (and, in dire times, died by them too).
+People lead by providing an example of a better way of doing stuff. They demonstrate how your life can be improved by being a better person themselves and by treating others with respect, dignity, and displaying a baseline sense of trust, justice, and fairness. Leaders live by their ideals.
 
 Even the term "follower" might be delving too close to a cult-like behavior instead of a healthy relationship between one or more people. Leaders provide an example that other people think is worth emulating - without the worship.
