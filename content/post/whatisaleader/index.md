@@ -88,22 +88,6 @@ Not nice one day, unpredictable the next. People know where they stand and what 
 
 For example, when you say you’ll do something, you do it. And not six months from now; in a reasonable amount of time. Consistency is power.
 
-## What's the easiest way to spot a fake leader?
-
-A fake leader needs authority to control people. A real leader earns trust so people choose to follow them.
-
-Examples of behavior:
-- They need authority to get compliance. If their title vanished, nobody would follow them.
-- They avoid decisions. They hide behind consensus, “alignment,” or endless meetings to avoid owning any decision.
-- They take credit and distribute blame. This is textbook fake leadership. People notice immediately.
-- They talk values but don’t live them. They preach accountability, transparency, or teamwork - yet do none of it themselves.
-- They get defensive when challenged. Real leaders welcome pressure-testing. Fake ones treat questions as threats.
-- They hoard information. They keep people in the dark so they stay in control.
-- They lead with fear or guilt. Intimidation, passive-aggressive comments, or guilt trips - these signal insecurity, not leadership. These people may bully others to get their way, taking advantage of others' desire to maintain social "order".
-- They change behavior depending on who’s watching. They’re “professional” upward and careless or dismissive downward.
-- They can’t stay calm. They melt under stress, lash out, or vanish when the team needs them most.
-- Their team is always exhausted, confused, or frustrated. A team’s condition is basically an x-ray of its leadership.
-
 ## Final note
 
 People lead by providing an example of a better way of doing stuff. They demonstrate how your life can be improved by being a better person themselves and by treating others with respect, dignity, and displaying a baseline sense of trust, justice, and fairness. Leaders live by their ideals.
