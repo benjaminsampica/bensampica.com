@@ -13,6 +13,3 @@ main:
   - name: My Library
     url: 'library'
     weight: 40
-  - name: My Podcast
-    url: 'https://www.voicesof.xyz'
-    weight: 50
