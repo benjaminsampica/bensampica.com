@@ -36,7 +36,7 @@ profiles:
   - icon: brands/github
     url: https://github.com/benjaminsampica
   - icon: brands/linkedin
-    url: https://www.linkedin.com/benthon
+    url: https://www.linkedin.com/in/benthon
   - icon: brands/bluesky
     url: https://bsky.app/profile/bensampica.com
 
