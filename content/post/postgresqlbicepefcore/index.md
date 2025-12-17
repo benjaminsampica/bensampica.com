@@ -198,7 +198,7 @@ After the database exists, we need to run two initial scripts that will add the 
 -- initial-create-postgres-db.sql
 
 -- ${APPLICATION_IDENTITY_NAME} is replaced in the workflow script `database-setup.sh`.
--- Example: $(applicationIdentity) would be replaced with the name of the user-managed identity resource created in the infrastructure as code (webapplication-dev-umi-01) which the application is running as.
+-- Example: ${APPLICATION_IDENTITY_NAME} would be replaced with the name of the user-managed identity resource created in the infrastructure as code (webapplication-dev-umi-01) which the application is running as.
 
 DO $$
 BEGIN
