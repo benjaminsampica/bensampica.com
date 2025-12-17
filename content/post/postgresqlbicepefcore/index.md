@@ -65,8 +65,9 @@ If you're familiar with EF Core with SQL Server, this is slightly different beca
 From a brand new `dotnet new webapi` application, add the following NuGet packages
 
 ```
-  Microsoft.EntityFrameworkCore.SqlServer
+  Npgsql.EntityFrameworkCore.PostgreSQL
   Microsoft.EntityFrameworkCore.Tools
+  Azure.Identity
 ```
 
 Create a DbContext and add any associated database models.
