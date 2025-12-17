@@ -3,33 +3,13 @@ name: Deploy Web
 on:
   push:
     branches: [ main ]
-    paths-ignore:
-      - '**/README.md'
-  pull_request:
-    branches: [ main ]
-    paths-ignore:
-      - '**/README.md'
-  workflow_dispatch:
-    inputs:
-      ecosystem:
-        description: 'Deploy to ecosystem'
-        required: true
-        type: choice
-        options:
-          - 'prod'
-          - 'nonprod'
 
 permissions:
   contents: read
   id-token: write
 
-concurrency:
-  group:  'web'
-  cancel-in-progress: true
-
 env:
   publish_path: './published'
-  base_path: 'src'
   applicationName: 'webapplication'
   
 jobs:
@@ -83,7 +63,6 @@ jobs:
           applicationDatabaseAdminsObjectId=${{ vars.APPLICATION_DATABASE_ADMINS_OBJECT_ID }}
           applicationName=${{ env.applicationName }}
           ecosystem=${{ inputs.ecosystem }}
-          imageTag=${{ inputs.imageTag }}
     # Deploy the database changes. Note that this comes _before_ the web app change so consider the tradeoffs.
     - name: Execute database setup + migrations
       run: |

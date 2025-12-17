@@ -1,7 +1,7 @@
 ---
-title: 'How to automatically deploy a passwordless Azure PostgresSql Server'
+title: 'How to automatically deploy a passwordless Azure PostgreSql Server'
 subtitle: 'A step by step guide'
-summary: 'How to create an Azure PostgresSql Server automatically that uses Microsoft Entra authentication, migrates the database using Entity Framework Core, and deploys out the infrastructure automatically with Bicep.'
+summary: 'How to create an Azure PostgreSql Server automatically that uses Microsoft Entra authentication, migrates the database using Entity Framework Core, and deploys out the infrastructure automatically with Bicep.'
 authors:
 - ben-sampica
 tags:
@@ -11,7 +11,7 @@ tags:
 date: '2025-12-17T00:00:00Z'
 lastmod: '2025-12-17T00:00:00Z'
 featured: false
-draft: true
+draft: false
 toc: true
 ---
 
@@ -53,7 +53,7 @@ Yours might differ but this is what is being built and hopefully you can pull mo
 
 ## Assumptions
 
-I've made a few assumptions in order to keep this post focused specifically on Azure SQL Server. They are:
+I've made a few assumptions in order to keep this post focused specifically on PostgreSQL. They are:
 
 1. You already have a resource group in Azure.
 2. There is an existing service connection in Azure that ties back to Azure DevOps so you can deploy your infrastructure-as-code to the resource group.
@@ -76,9 +76,9 @@ From a brand new `dotnet new webapi` application, add the following NuGet packag
 Create a DbContext and add any associated database models.
 
 ```csharp
-// PostgresSqlDbContext.cs
+// PostgreSqlDbContext.cs
 
-public class PostgresSqlDbContext(DbContextOptions<PostgresSqlDbContext> options) : DbContext(options)
+public class PostgreSqlDbContext(DbContextOptions<PostgreSqlDbContext> options) : DbContext(options)
 {
     public DbSet<Todo> Todos { get; set; }
 }
@@ -94,10 +94,11 @@ public class Todo
 Inside of `Program.cs`, register your DbContext to your services.
 
 ```csharp
-  builder.Services.AddDbContext<PostgresSqlDbContext>((serviceProvider, options) =>
+  builder.Services.AddDbContext<PostgreSqlDbContext>((serviceProvider, options) =>
   {
       options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresDatabase"), sql =>
       {
+          // When its not the development environment grab a token from Azure.
           if (!builder.Environment.IsDevelopment())
           {
               // Configure this data source to get a token from azure and store it for 24 hours.
@@ -237,7 +238,7 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public
 GRANT USAGE, SELECT ON SEQUENCES TO "${APPLICATION_IDENTITY_NAME}";
 ```
 
-Finally, this is the part where we really deviate from the automagic of Azure SQL. We have to do some variable substitution and connect to two different databases to apply the two scripts. I found this to be too janky and too difficult to understand using the postgres task so I wrote my own script.
+Finally, this is the part where we really deviate from the automagic of Azure SQL. We have to do some variable substitution and connect to two different databases to apply the two scripts. I found this to be too janky and too difficult to understand using [the GitHub postgres task](https://github.com/marketplace/actions/azure-postgresql-action) so I wrote my own script.
 
 ```bash
 # database-setup.sh
