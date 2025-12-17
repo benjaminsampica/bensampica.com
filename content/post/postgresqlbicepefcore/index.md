@@ -27,10 +27,6 @@ Since this was the _only_ issue I had with ARM64 after using it for a couple wee
 
 I had already done a [similar post for Azure SQL Server](../azsqlbicepefcore/index.md) and since that was a bit of a pain, too, I figured why not share how to do it with postgres too? If you've already read that one, the first few sections are very similar.
 
-<!-- {{< notice note >}}
-I also wrote about some gotchas there are at the database level and application level from switching from Azure SQL Server to Azure Postgres [here!](https://github.com/benjaminsampica/bensampica.com/tree/main/content/post/sqlservertopostgres)
-{{< /notice >}} -->
-
 ## Overview 
 
 {{< notice note >}}
