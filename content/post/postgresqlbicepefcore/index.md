@@ -8,8 +8,8 @@ tags:
 - Azure
 - IAC
 - CSharp
-date: '2025-12-05T00:00:00Z'
-lastmod: '2025-12-05T00:00:00Z'
+date: '2025-12-17T00:00:00Z'
+lastmod: '2025-12-17T00:00:00Z'
 featured: false
 draft: true
 toc: true
@@ -45,7 +45,7 @@ Here's the end-to-end toolchain we are using and which the post will use:
 - GitHub Actions
 - Azure
 
-Overall, the end-state architecture is created to satisfy a process that requires two developers to approve a pull request, and a manager to approve changes. Upon merge into main, the infrastructure-as-code is deployed out via a pipeline where the database is created and permissions are set. This is reflected in the following diagram:
+Overall, the end-state architecture is created to satisfy a process that requires two developers to approve a pull request, and a manager to approve changes. Upon merge into main, the infrastructure-as-code is deployed out via a pipeline where the database is created and permissions are set. This is reflected in the following diagram (_note this says Azure DevOps but GitHub Workflows are identical_):
 
 {{< figure src="sqldatabase.png" title="Azure SQL Database Diagram" lightbox="true" >}}
 
@@ -57,11 +57,12 @@ I've made a few assumptions in order to keep this post focused specifically on A
 
 1. You already have a resource group in Azure.
 2. There is an existing service connection in Azure that ties back to Azure DevOps so you can deploy your infrastructure-as-code to the resource group.
-3. You have an existing user-managed identity with `Directory.Read.All` permissions that you are able to use as the primary user managed identity for the database. This is necessary (and shown in use later) to be able to create users in the database from Entra. Unsure what this is? [Click here](https://learn.microsoft.com/en-us/azure/azure-sql/database/authentication-azure-ad-user-assigned-managed-identity?view=azuresql).
+
+_Note:_ If you're used to assigning `Directory.Read.All` permissions or `Directory Readers` to your managed identity from Azure SQL, this isn't needed for Postgres - hooray!
 
 ## The C# Code
 
-If you already have Entity Framework Core setup, skip to [Making a Migration](#making-a-migration).
+If you're familiar with EF Core with SQL Server, this is slightly different because our development environment (which I'm saying is local to my machine) is different than how we will authenticate up in the cloud. 
 
 ### Entity Framework Core Setup
 
@@ -93,7 +94,25 @@ public class Todo
 Inside of `Program.cs`, register your DbContext to your services.
 
 ```csharp
-builder.Services.AddDbContext<PostgresSqlDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AzureSql")));
+  builder.Services.AddDbContext<PostgresSqlDbContext>((serviceProvider, options) =>
+  {
+      options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresDatabase"), sql =>
+      {
+          if (!builder.Environment.IsDevelopment())
+          {
+              // Configure this data source to get a token from azure and store it for 24 hours.
+              sql.ConfigureDataSource(dataSourceBuilderAction =>
+              {
+                  dataSourceBuilderAction.UsePeriodicPasswordProvider(async (_, ct) =>
+                  {
+                      var credentials = new DefaultAzureCredential();
+                      var token = await credentials.GetTokenAsync(new TokenRequestContext(["https://ossrdbms-aad.database.windows.net/.default"]), ct); // This is a static endpoint for everyone - not just this demo. Use this endpoint!
+                      return token.Token;
+                  }, TimeSpan.FromHours(24), TimeSpan.FromSeconds(10));
+              });
+          }
+      });
+  });
 ```
 
 ### Making a Migration
@@ -107,160 +126,211 @@ dotnet ef migrations add InitialCreate -o ./Migrations
 
 ## The Infrastructure (as code)
 
-The bicep isn't too bad once you know which properties of `Microsoft.Sql/servers` need to be included or not (which is an arcane mess). Below is the bicep file with comments added explaining each resource.
+The bicep is pretty straightforward for `Microsoft.DBforPostgreSQL/flexibleServers` (unlike Azure SQL).
 
 ```bicep
-// main.bicep
-
-param applicationDatabaseAdminsGroupName string
-param applicationDatabaseAdminsObjectId string
-param deployEnvironment string
-
-var appName = 'azuresql'
-#disable-next-line no-hardcoded-location
-var location = 'North Central US'
-
-// Already created & must have ability to read Entra. `Directory.Read.All` permissions.
-resource dbIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-preview' existing = {
-  name: '${deployEnvironment}-${appName}-dbumi-01'
-}
-
-// Create the sql server.
-resource sqlServer 'Microsoft.Sql/servers@2023-05-01-preview' = {
-  name: '${deployEnvironment}-${appName}-dbs-01'
-  location: location
-  identity: {
-    type: 'UserAssigned'
-    userAssignedIdentities: {
-      '${dbIdentity.id}': {}
-    }
-  }
-  properties: {
-    administrators: {
-      // Only allow Azure AD connections (passwordless)
-      azureADOnlyAuthentication: true
-      // The server administrator - we are passing the Entra Object Id which correlates to an Entra Group called `APP_SQLDbAdmins
-      sid: applicationDatabaseAdminsObjectId
-      // The login name of the server administrator group.
-      login: '${deployEnvironment}-${applicationDatabaseAdminsGroupName}'
-    }
-    // This identity will be used when determining what in Azure the identity can see - which is why we need Directory.Read.All in order to CREATE EXTERNAL USER's from Entra.
-    primaryUserAssignedIdentityId: dbIdentity.id
-  }
-
-  // Create the sql server database.
-  resource sqlServerDatabase 'databases' = {
-    name: '${deployEnvironment}-${appName}-db-01'
-    location: location
-    sku: {
-      name: 'Basic'
-      tier: 'Basic'
-    }
-  }
-}
-var sqlServerName = '${sqlServer.name}${environment().suffixes.sqlServerHostname}'
-output sqlServerName string = sqlServerName
-output sqlServerDatabaseName string = sqlServer::sqlServerDatabase.name
-
-// Create the application service plan and the web application.
-resource appServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
-  name: '${deployEnvironment}-${appName}'
+// posgres-server.bicep
+resource postgres 'Microsoft.DBforPostgreSQL/flexibleServers@2025-06-01-preview' = {
+  name: resourceName
   location: location
   sku: {
-    name: 'B1'
+    name: 'Standard_B1ms'
+    tier: 'Burstable'
   }
-}
-
-// This application identity is permissioned into the database. You could use a system-assigned identity from the web app as long as you don't have additional things this identity needs.
-resource applicationIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-preview' = {
-  name: '${deployEnvironment}-${appName}-appumi-01'
-  location: location
-}
-output applicationIdentityName string = applicationIdentity.name
-
-resource webApp 'Microsoft.Web/sites@2022-03-01' = {
-  name: '${deployEnvironment}-ncus-${appName}-app-01'
-  location: location
   properties: {
-    httpsOnly: true
-    serverFarmId: appServicePlan.id
-    siteConfig: {
-      appSettings: [
-        {
-          name: 'ConnectionStrings__AzureSqlDatabase'
-          value: 'Server=tcp:${sqlServerName},1433;Initial Catalog=${sqlServer::sqlServerDatabase.name};Authentication=Active Directory Default;Encrypt=True;MultipleActiveResultSets=True;'
-        }
-        {
-          name: 'AZURE_CLIENT_ID'
-          value: applicationIdentity.properties.clientId // See https://github.com/MicrosoftDocs/azure-docs/issues/105359
-        }
-      ]
+    version: '18'
+    authConfig: {
+      // Only allow active directory auth
+      activeDirectoryAuth: 'Enabled'
+      passwordAuth: 'Disabled'
+    }
+    storage: {
+      storageSizeGB: 32
+      autoGrow: 'Enabled'
+    }
+    network: {
+      publicNetworkAccess: 'Enabled'
+    }
+    backup: {
+      backupRetentionDays: 30
+      geoRedundantBackup: 'Disabled'
     }
   }
-  identity: {
-    type: 'UserAssigned'
-    userAssignedIdentities: {
-      '${applicationIdentity.id}': {}
-    }
+
+  // Add a database
+  resource database 'databases' = {
+    name: '${applicationName}-${ecosystem}-db-01'
+    properties: {}
   }
 }
+
+// This must be done separately due to conflicts with the Entra setup
+resource ipFirewallRule 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@2025-06-01-preview' = [for (ip, i) in ipAddressAllowList: {
+  name: '${applicationName}-${ecosystem}-dbfw-0${i}'
+  properties: {
+    startIpAddress: ip
+    endIpAddress: ip
+  }
+  parent: postgres
+}]
+
+// This must be after all other setup to avoid conflicts
+resource admin 'Microsoft.DBforPostgreSQL/flexibleServers/administrators@2025-06-01-preview' = {
+  name: applicationDatabaseAdminsObjectId
+  properties: {
+    principalType: 'Group'
+    principalName: applicationDatabaseAdminsName
+  }
+  parent: postgres
+  dependsOn: [
+    ipFirewallRule
+  ]
+}
+
+output connectionString string = 'Server=${postgres.properties.fullyQualifiedDomainName};Database=${postgres::database.name};User Id=${applicationIdentityName};Port=5432;Ssl Mode=Require;' // No password in connection string
+output hostName string = postgres.properties.fullyQualifiedDomainName
+output databaseName string = postgres::database.name
 ```
 
-## The Initial Creation SQL Script
+## The Initial Creation SQL Scripts
 
-After the database exists, we need to run an initial script that will permission both the application that needs to perform CRUD operations on the database, as well as the product team itself that owns it so they can support it. In the following script, the development (`dev`) environment will grant the product team `dbo`, whereas any other environment will be `db_datareader`.
+After the database exists, we need to run two initial scripts that will add the application identity to the postgres server and then allow it to perform CRUD operations on current and future tables. This differs a bit from SQL server as there is less automagic happening.
 
 ```sql
--- initialcreate.sql
+-- initial-create-postgres-db.sql
 
--- $(productTeamIdentity), $(env) and $(applicationIdentity) are replaced in the pipeline.
--- Example: $(productTeamIdentity) is replaced with an Entra Group called `Products Team`, which contains a group of users responsible for the application.
--- Example: $(applicationIdentity) would be replaced with the name of the user-managed identity resource created in the infrastructure as code (dev-azuresql-umi-01) which the application is running as.
+-- ${APPLICATION_IDENTITY_NAME} is replaced in the workflow script `database-setup.sh`.
+-- Example: $(applicationIdentity) would be replaced with the name of the user-managed identity resource created in the infrastructure as code (webapplication-dev-umi-01) which the application is running as.
 
-IF NOT EXISTS(SELECT * FROM sys.database_principals WHERE [name] = $(productTeamIdentityName))
+DO $$
 BEGIN
-    EXECUTE('CREATE USER [' + $(productTeamIdentityName) + '] FROM EXTERNAL PROVIDER');
-END;
-
-IF NOT EXISTS(SELECT * FROM sys.database_principals WHERE [name] = $(applicationIdentity))
-BEGIN
-    EXECUTE('CREATE USER [' + $(applicationIdentityName) + '] FROM EXTERNAL PROVIDER');
-END;
-GO
-
-IF ($(env) = 'dev')  
-    BEGIN
-        ALTER AUTHORIZATION ON SCHEMA::[dbo] TO $(productTeamIdentityName)
-    END
-ELSE    
-    BEGIN 
-        ALTER AUTHORIZATION ON SCHEMA::[db_datareader] TO $(productTeamIdentityName)
-    END
-
-ALTER AUTHORIZATION ON SCHEMA::[db_datareader] TO $(applicationIdentityName)
-ALTER AUTHORIZATION ON SCHEMA::[db_datawriter] TO $(applicationIdentityName)
-
-GO
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_roles WHERE rolname = '${APPLICATION_IDENTITY_NAME}'
+    ) THEN
+        PERFORM pgaadauth_create_principal('${APPLICATION_IDENTITY_NAME}', false, false);
+    END IF;
+END$$;
 ```
 
-## The Azure Pipeline
+We've granted permission for the application identity to connect to the database server but it still cannot access any databases or interoperate on them. Let's fix that.
+
+```sql
+-- initial-create-application-db.sql
+-- Database access
+GRANT CONNECT ON DATABASE "${APPLICATION_DATABASE_NAME}" TO "${APPLICATION_IDENTITY_NAME}";
+
+-- Schema access
+GRANT USAGE ON SCHEMA public TO "${APPLICATION_IDENTITY_NAME}";
+
+-- Existing tables
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO "${APPLICATION_IDENTITY_NAME}";
+
+-- Existing sequences (identity columns)
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO "${APPLICATION_IDENTITY_NAME}";
+
+-- Future tables
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO "${APPLICATION_IDENTITY_NAME}";
+
+-- Future sequences
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
+GRANT USAGE, SELECT ON SEQUENCES TO "${APPLICATION_IDENTITY_NAME}";
+```
+
+Finally, this is the part where we really deviate from the automagic of Azure SQL. We have to do some variable substitution and connect to two different databases to apply the two scripts. I found this to be too janky and too difficult to understand using the postgres task so I wrote my own script.
+
+```bash
+# database-setup.sh
+#!/usr/bin/env bash
+set -euo pipefail
+
+HOST="$1"
+APPLICATION_DATABASE_NAME="$2"
+APPLICATION_DATABASE_ADMINS_NAME="$3"
+APPLICATION_IDENTITY_NAME="$4"
+INITIAL_CREATE_POSTGRES_DB_FILE="$5"
+INITIAL_CREATE_APPLICATION_DB_FILE="$6"
+MIGRATION_SQL="$7"
+
+echo "----------------------------------------------------"
+echo "PostgreSQL AAD Auth Migration Script"
+echo "----------------------------------------------------"
+echo "HOST:                 $HOST"
+echo "DATABASE:             $APPLICATION_DATABASE_NAME"
+echo "APP DB ADMINS NAME:   $APPLICATION_DATABASE_ADMINS_NAME"
+echo "APP ID NAME:          $APPLICATION_IDENTITY_NAME"
+echo "POSTGRES DB FILE:     $INITIAL_CREATE_POSTGRES_DB_FILE"
+echo "APP DB FILE:          $INITIAL_CREATE_APPLICATION_DB_FILE"
+echo "MIGRATION SQL:        $MIGRATION_SQL"
+echo "----------------------------------------------------"
+
+if [[ -z "$HOST" ]]; then
+  echo "ERROR: HOST argument is empty" >&2
+  exit 1
+fi
+
+if [[ -z "$APPLICATION_DATABASE_NAME" ]]; then
+  echo "ERROR: APPLICATION_DATABASE_NAME argument is empty" >&2
+  exit 1
+fi
+
+if [[ -z "$APPLICATION_DATABASE_ADMINS_NAME" ]]; then
+  echo "ERROR: APPLICATION_DATABASE_ADMINS_NAME argument is empty" >&2
+  exit 1
+fi
+
+if [[ -z "$APPLICATION_IDENTITY_NAME" ]]; then
+  echo "ERROR: APPLICATION_IDENTITY_NAME argument is empty" >&2
+  exit 1
+fi
+
+echo "Installing PostgreSQL client..."
+sudo apt-get update -y
+sudo apt-get install -y postgresql-client
+
+echo "Acquiring AAD token..."
+AAD_TOKEN=$(az account get-access-token --resource-type oss-rdbms --query accessToken -o tsv)
+export PGPASSWORD="$AAD_TOKEN"
+
+if [[ -z "$AAD_TOKEN" ]]; then
+  echo "ERROR: Failed to acquire AAD token for PostgreSQL" >&2
+  exit 1
+fi
+
+# Base connection string (dbname added later)
+BASE_CONN="host=$HOST port=5432 user=$APPLICATION_DATABASE_ADMINS_NAME sslmode=require"
+# Export variables for envsubst
+export APPLICATION_IDENTITY_NAME
+export APPLICATION_DATABASE_NAME
+
+echo "Running initial environment setup against the postgres database"
+envsubst < "$INITIAL_CREATE_POSTGRES_DB_FILE" > replaced-postgres.sql
+psql --set=ON_ERROR_STOP=1 "$BASE_CONN dbname=postgres" -f replaced-postgres.sql
+
+echo "Running initial environment setup against the application database"
+envsubst < "$INITIAL_CREATE_APPLICATION_DB_FILE" > replaced-application.sql
+psql --set=ON_ERROR_STOP=1 "$BASE_CONN dbname=$APPLICATION_DATABASE_NAME" -f replaced-application.sql
+
+echo "Running migration SQL against the targeted database..."
+psql --set=ON_ERROR_STOP=1 "$BASE_CONN dbname=$APPLICATION_DATABASE_NAME" -f "$MIGRATION_SQL"
+
+echo "----------------------------------------------------"
+echo "Database setup and migrations completed successfully."
+echo "----------------------------------------------------"
+```
+
+## The Github Workflow
 
 ### Generating Scripts & Publishing
-In your Azure Pipeline, you'll want to have a task to generate the EF Core Migration script that will be applied to the database. The following is an example
+In your GitHub workflow, you'll want to have a task to generate the EF Core Migration script that will be applied to the database. The following is an example
 
 ```yaml
-# azure-pipelines.yaml
-
-# install the dotnet-ef tool which is used to generate migrations.
-- script: dotnet tool install --global dotnet-ef 
-  displayName: Install .NET EF Core tools
-# Run a custom dotnet command, which we're choosing to run migrations.
-- task: DotNetCoreCLI@2
-  displayName: 'Create migration'
-  inputs:
-    command: custom
-    custom: ef
-    arguments: 'migrations script --idempotent --project src/WebApplication --output $(Build.ArtifactStagingDirectory)/Migrations/migration.sql'
+# deploy-web.yaml
+# Install the dotnet-ef tool which is used to generate migrations and then run a custom dotnet command, which we're choosing to run migrations.
+- name: Generate Migrations
+  run: |
+      dotnet tool install --global dotnet-ef
+      dotnet ef migrations script --idempotent --project WebApplication1/WebApplication1.csproj --output ${{ env.publish_path }}/Migrations/migration.sql
 ```
 
 Lets break down the arguments of the migration script.
@@ -274,33 +344,22 @@ For more information on these parameters or all available parameters, [click her
 A simple example of the "complete" build stage might look like the following
 
 ```yaml
-# azure-pipelines.yaml
-
-- stage: Build
-  jobs:
-  - job:
-    pool:
-      vmImage: ubuntu-latest
-    displayName: Publish
-    steps:
-    - task: DotNetCoreCLI@2
-      displayName: dotnet publish
-      inputs:
-        command: 'publish'
-        publishWebProjects: true
-        arguments: '-o $(Build.ArtifactStagingDirectory)'
-        modifyOutputPath: false
-    - script: dotnet tool install --global dotnet-ef 
-      displayName: dotnet tool install dotnet-ef
-    - task: DotNetCoreCLI@2
-      displayName: Create migration
-      inputs:
-        command: custom
-        custom: ef
-        arguments: 'migrations script --idempotent --project src/WebApplication --output $(Build.ArtifactStagingDirectory)/Migrations/migration.sql'
-    - publish: $(Build.ArtifactStagingDirectory)
-      displayName: Publish to Azure DevOps
-      artifact: drop
+# deploy-web.yaml
+build:
+  runs-on: ubuntu-latest
+  steps:
+  - uses: actions/checkout@v4
+  - name: Publish
+    run: |
+      dotnet publish WebApplication.sln -o ${{ env.publish_path }}
+  - name: Generate Migrations
+    run: |
+        dotnet tool install --global dotnet-ef
+        dotnet ef migrations script --idempotent --project WebApplication1/WebApplication1.csproj -o ${{ env.publish_path }}/Migrations/migration.sql
+  - uses: actions/upload-artifact@v4
+    with:
+      name: drop-web
+      path: ${{ env.publish_path }}
 ```
 
 ### Deploying All The Things
@@ -315,142 +374,63 @@ For the next stage, we need to actually do the deploy. We need to:
 This stage might look like the following which is embedded with comments explaining portions of it
 
 ```yaml
-# azure-pipelines.yaml
-
-- stage: Deploy_NonProd
-  dependsOn: Build
-  jobs:
-  - job: deploy
-    pool:
-      vmImage: windows-latest
-    steps:
-      # First, deploy the infrastructure setup in the bicep file. Our bicep file outputs some variables, which we capture in $jsonResult and set them as pipeline variables.
-      - task: AzureCLI@2
-        displayName: 'Deploy Infrastructure'
-        inputs:
-          # Replace `applicationDatabaseAdminsGroupName`, `applicationDatabaseAdminsObjectId`, and `azuresql` subscription name.
-          # applicationDatabaseAdminsGroupName is the Entra group that contains the service principal doing the deploy as well as any additional users who would administrate the database. Example: APP_SqlDbAdmins
-          # applicationDatabaseAdminsObjectId is the ObjectId of the group 
-          azureSubscription: azuresql-dev
-          # I chose powershell because bash jsonifying is not as easy.
-          scriptType: ps
-          scriptLocation: inlineScript
-          # Run the bicep file and write the output variables to Azure DevOps
-          inlineScript: |
-            $jsonResult = az deployment group create `
-              --resource-group dev-ncus-azuresql-rg-01 `
-              --template-file $(Build.SourcesDirectory)/iac/main.bicep `
-              --parameters `
-                  applicationDatabaseAdminsGroupName=App_SqlDbAdmins `
-                  applicationDatabaseAdminsObjectId=37f7f235-527c-4136-accd-4a02d197296e ` 
-                  deployEnvironment=dev `
-              --mode Complete `
-              | ConvertFrom-Json
-      
-            $sqlServerName = $jsonResult.properties.outputs.sqlServerName.value
-            $sqlServerDatabaseName = $jsonResult.properties.outputs.sqlServerDatabaseName.value
-            $applicationIdentityName = $jsonResult.properties.outputs.applicationIdentityName.value
-            Write-Host "##vso[task.setvariable variable=sqlServerName;]$sqlServerName"
-            Write-Host "##vso[task.setvariable variable=sqlServerDatabaseName;]$sqlServerDatabaseName"
-            Write-Host "##vso[task.setvariable variable=applicationIdentityName;]$applicationIdentityName"
-      - download: current # download the current repository so we can get the initialcreate.sql file.
-        artifact: drop
-      - task: SqlAzureDacpacDeployment@1
-        displayName: 'Setup initial permissions'
-        condition: 
-        inputs:
-          azureSubscription: azuresql-dev
-          authenticationType: 'servicePrincipal'
-          deployType: 'sqlTask'
-          serverName: $(sqlServerName)
-          databaseName: $(sqlServerDatabaseName)
-          # target the sql folder and find any sql files in there (will find initialcreate.sql)
-          sqlFile: '$(Pipeline.Workspace)\**\sql\*.sql'
-          # Pass arguments to the sql file. The -Variable argument will replace $() variables inside the sql file.
-          # replace productTeamIdentityName with your Entra group containing your team.
-          SqlAdditionalArguments: -Variable "productTeamIdentityName='Product Team'", "applicationIdentityName='$(applicationIdentityName)'", "env=dev"
-      - task: SqlAzureDacpacDeployment@1
-        displayName: 'Deploy EF Migration'
-        inputs:
-          azureSubscription: azuresql-dev
-          authenticationType: 'servicePrincipal'
-          deployType: 'sqlTask'
-          serverName: $(sqlServerName)
-          databaseName: $(sqlServerDatabaseName)
-          sqlFile: '$(Pipeline.Workspace)\**\Migrations\migration.sql'
-      - task: AzureWebApp@1
-        displayName: Deploy Web Application
-        inputs:
-          appType: webApp
-          azureSubscription: azuresql-dev
-          appName: dev-ncus-azuresql-app-01
-          package: $(Agent.BuildDirectory)/drop/WebApplication1/*.zip
-```
-
-## Auditing (Optional)
-
-I don't really think auditing is optional but I left this part out of the rest of the Bicep because everyone has vastly different needs and use cases for auditing.  However, the following should be able to get you started
-
-```bicep
-
-// Rest of bicep
-resource sqlServer 'Microsoft.Sql/servers@2023-05-01-preview' = {
-  name: '${deployEnvironment}-${appName}-dbs-01'
-  location: location
-  identity: {
-    type: 'UserAssigned'
-    userAssignedIdentities: {
-      '${dbIdentity.id}': {}
-    }
-  }
-  properties: {
-    administrators: {
-      azureADOnlyAuthentication: true
-      sid: applicationDatabaseAdminsObjectId
-      login: '${deployEnvironment}-${applicationDatabaseAdminsGroupName}'
-    }
-    primaryUserAssignedIdentityId: dbIdentity.id
-  }
-
-  resource masterDb 'databases' = {
-    name: ‘master’
-    location: location
-    properties: {}
-  }
-
-  resource sqlServerDatabase 'databases' = {
-    name: '${deployEnvironment}-${appName}-db-01'
-    location: location
-    sku: {
-      name: 'Basic'
-      tier: 'Basic'
-    }
-  }
-}
-
-// Set up a log analytics workspace to ingest logs
-resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
-  name: '${deployEnvironment}-ncus-azuresql-law-01'
-  location: location
-  properties: {
-    retentionInDays: 90
-  }
-}
-
-resource sqlDiagnosticSettings ‘Microsoft.Insights/diagnosticSettings@2021-05-01-preview’ = {
-  scope: sqlServer::masterDb
-  name: 'sqlServerDiagnosticSettings'
-  properties: {
-    workspaceId: logAnalyticsWorkspace.id
-    logs: [
-      {
-        // See more at https://learn.microsoft.com/en-us/azure/azure-sql/database/auditing-setup?view=azuresql#configure-auditing-for-your-server
-        category: ‘SQLSecurityAuditEvents’
-        enabled: true
-      }
-    ]
-  }
-}
+# deploy-web.yml
+deploy:
+  runs-on: ubuntu-latest
+  needs: build 
+  steps:
+  # Sparse checkout only the exact files/folders we need.
+  - uses: actions/checkout@v4
+    with:
+      sparse-checkout: |
+        iac
+        .github/workflows/sql
+        .github/workflows/scripts
+  # Login to Azure so we can deploy our resources
+  - name: Login to Azure
+    uses: azure/login@v2
+    with:
+      client-id: ${{ vars.AZURE_WORKFLOW_CLIENT_ID }}
+      tenant-id: ${{ vars.AZURE_TENANT_ID }}
+      subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+  # First, deploy the infrastructure setup in the bicep file. Our bicep file outputs some variables which are automatically captured and available in ${{ steps.STEP_ID.outputs.VARIABLE_NAME }}
+  # APPLICATION_DATABASE_ADMINS_NAME is the name of the group that will be admins.
+  # APPLICATION_DATABASE_ADMINS_OBJECT_ID is the object id of that same group.
+  - name: Deploy Infra to Azure
+    id: deploy-infra
+    uses: azure/arm-deploy@v2
+    with:
+      scope: 'resourcegroup'
+      deploymentName: ${{ github.run_number }}
+      resourceGroupName: ${{ env.applicationName }}-dev-rg-01
+      template: ./iac/main.bicep
+      parameters:
+        applicationDatabaseAdminsName=${{ vars.APPLICATION_DATABASE_ADMINS_NAME }}
+        applicationDatabaseAdminsObjectId=${{ vars.APPLICATION_DATABASE_ADMINS_OBJECT_ID }}
+        applicationName=${{ env.applicationName }}
+        ecosystem=dev
+  # Deploy the database changes. Note that this comes _before_ the web app change so consider the tradeoffs.
+  - name: Execute database setup + migrations
+    run: |
+      bash ./.github/workflows/scripts/database-setup.sh \
+        "${{ steps.deploy-infra.outputs.applicationDatabaseServerHostName }}" \
+        "${{ steps.deploy-infra.outputs.applicationDatabaseServerDatabaseName }}" \
+        "${{ vars.APPLICATION_DATABASE_ADMINS_NAME }}" \
+        "${{ steps.deploy-infra.outputs.applicationIdentityName }}" \
+        "./.github/workflows/sql/initial-create-postgres-db.sql" \
+        "./.github/workflows/sql/initial-create-application-db.sql" \
+        "${{ steps.download.outputs.download-path }}/Migrations/migration.sql"
+  # Download the artifact produced in the build step.
+  - uses: actions/download-artifact@v4
+    id: download
+    with:
+      name: drop-web
+  - name: 'Run Azure webapp deploy action using publish profile credentials'
+    uses: azure/webapps-deploy@v3
+    with: 
+      app-name: webapplication
+      slot-name: 'production'
+      package: .
 ```
 
 That's all for now. As a reminder, the entire code base can be found [here](https://github.com/benjaminsampica/bensampica.com/tree/main/content/post/postgresqlbicepefcore). Happy coding!
