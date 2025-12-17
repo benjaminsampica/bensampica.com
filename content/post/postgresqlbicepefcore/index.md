@@ -19,11 +19,11 @@ toc: true
 
 ## The Story
 
-I recently migrated off of using a MacBook for reasons that are irrelevant to this post but I moved back to Windows. I wanted the premium quality and battery life of the MacBook hardware so I decided on a Surface Laptop 7. Everything was going well. I wasn't having to change OS's between personal and professional anymore. The problem? SQL Server containers are not supported on ARM64. Wait - how does MacBook do it? Well, they have [Rosetta 2](https://arstechnica.com/gadgets/2025/06/apple-details-the-end-of-intel-mac-support-and-a-phaseout-for-rosetta-2/) (but that's going away very soon) which "polyfills" Intel architecture. 
+I recently migrated off of using a MacBook for reasons that are irrelevant to this post but I moved back to Windows. I wanted the premium quality and battery life of the MacBook hardware so I decided on a Surface Laptop 7. Everything was going well and I wasn't having to change OS's between personal and professional anymore. The problem? SQL Server containers are not supported on ARM64! Wait - how does MacBook do it? Well, they have [Rosetta 2](https://arstechnica.com/gadgets/2025/06/apple-details-the-end-of-intel-mac-support-and-a-phaseout-for-rosetta-2/) (but that's going away very soon) which "polyfills" Intel architecture. 
 
-So it's a problem. One which Microsoft seems to be [slow-rolling](https://github.com/microsoft/vscode-mssql/issues/20337).
+So it's a problem - one which Microsoft seems to be [slow-rolling](https://github.com/microsoft/vscode-mssql/issues/20337).
 
-Since this was the _only_ issue I had with ARM64 after using it for a couple weeks, I decided to just bite the bullet and most over to Postgresql, something I've been wanting to do anyway for it's lower cost, wider adoption, and some querying features that I find myself really needing.
+Since this was the _only_ issue I had with ARM64 after using it for a couple weeks, I decided to just bite the bullet and move over to PostgreSQL, something I've been wanting to do anyway for its lower cost, wider adoption, and some querying features that I find myself really needing.
 
 I had already done a [similar post for Azure SQL Server](../azsqlbicepefcore/index.md) and since that was a bit of a pain, too, I figured why not share how to do it with postgres too? If you've already read that one, the first few sections are very similar.
 
