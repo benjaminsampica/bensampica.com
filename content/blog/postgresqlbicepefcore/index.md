@@ -27,7 +27,7 @@ I had already done a [similar post for Azure SQL Server](../azsqlbicepefcore/ind
 
 ## Overview 
 
-> **Note:** Want to just see the code? [Click here!](https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/postgresqlbicepefcore)
+> **Note:** Want to just see the code? [Click here!](https://github.com/benjaminsampica/bensampica.com/tree/main/content/blog/postgresqlbicepefcore)
 
 Here's the end-to-end toolchain we are using and which the post will use:
 
