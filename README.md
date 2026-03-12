@@ -1,52 +1,124 @@
-# [Hugo Academic CV Theme](https://github.com/HugoBlox/theme-academic-cv)
+# [Developer Portfolio](https://hugoblox.com/templates/dev-portfolio/start?utm_source=github&utm_medium=readme)
 
-[![Screenshot](.github/preview.webp)](https://hugoblox.com/templates/)
+[![Screenshot](.github/preview.png)](https://hugoblox.com/templates/dev-portfolio/start?utm_source=github&utm_medium=readme)
 
-The Hugo **Academic CV Template** empowers you to easily create your job-winning online resumé, showcase your academic publications, and create online courses or knowledge bases to grow your audience.
+<h1 align="center">The Dev Portfolio That Gets You Hired</h1>
 
-[![Get Started](https://img.shields.io/badge/-Get%20started-ff4655?style=for-the-badge)](https://hugoblox.com/templates/)
-[![Discord](https://img.shields.io/discord/722225264733716590?style=for-the-badge)](https://discord.com/channels/722225264733716590/742892432458252370/742895548159492138)  
-[![Twitter Follow](https://img.shields.io/twitter/follow/GetResearchDev?label=Follow%20on%20Twitter)](https://twitter.com/GetResearchDev)
+<p align="center">
+  <strong>Built for uni students, STEM grads, and software engineers.</strong><br/>
+  Showcase real projects, ship a clean blog, and stand out with a modern dark-first design — without a fragile “black box” React app.
+</p>
 
-️**Trusted by 250,000+ researchers, educators, and students.** Highly customizable via the integrated **no-code, Hugo Blox Builder**, making every site truly personalized ⭐⭐⭐⭐⭐
+<p align="center">
+  <a href="https://hugoblox.com/templates/dev-portfolio/start?utm_source=github&utm_medium=readme"><b>🚀 Deploy in 60s (Free)</b></a>
+  &nbsp;•&nbsp;
+  <a href="https://hugoblox.com/templates/?open=dev-portfolio&loading=true&utm_source=github&utm_medium=readme">Live Demo</a>
+  &nbsp;•&nbsp;
+  <a href="https://docs.hugoblox.com/guides/studio/">HugoBlox Studio (Visual Editor)</a>
+</p>
 
-Easily write technical content with plain text Markdown, LaTeX math, diagrams, RMarkdown, or Jupyter, and import publications from BibTeX.
 
-[Check out the latest demo](https://academic-demo.netlify.app/) of what you'll get in less than 10 minutes, or [get inspired by our academics and research groups](https://hugoblox.com/creators/).
+<p align="center">
+  <b>▶︎ Watch 12s Preview</b>
+</p>
 
-The integrated [**Hugo Blox Builder**](https://hugoblox.com) and CMS makes it easy to create a beautiful website for free. Edit your site in the CMS (or your favorite editor), generate it with [Hugo](https://github.com/gohugoio/hugo), and deploy with GitHub or Netlify. Customize anything on your site with widgets, light/dark themes, and language packs.
+https://github.com/user-attachments/assets/a6b676c0-1c10-4734-a55f-68c6f72d1612
 
-- 👉 [**Get Started**](https://hugoblox.com/templates/)
-- 📚 [View the **documentation**](https://docs.hugoblox.com/)
-- 💬 [Chat with the **Hugo Blox Builder community**](https://discord.gg/z8wNYzb) or [**Hugo community**](https://discourse.gohugo.io)
-- 🐦 Twitter: [@GetResearchDev](https://twitter.com/GetResearchDev) [@GeorgeCushen](https://twitter.com/GeorgeCushen) [#MadeWithHugoBlox](https://twitter.com/search?q=%23MadeWithHugoBlox&src=typed_query)
-- ⬇️ **Automatically import your publications from BibTeX** with the [Hugo Academic CLI](https://github.com/GetRD/academic-file-converter)
-- 💡 [Suggest an improvement](https://github.com/HugoBlox/hugo-blox-builder/issues)
-- ⬆️ **Updating?** View the [Update Guide](https://docs.hugoblox.com/reference/update/) and [Release Notes](https://github.com/HugoBlox/hugo-blox-builder/releases)
+<p align="center">
+  <a href="https://discord.gg/z8wNYzb"><img src="https://img.shields.io/discord/722225264733716590?label=Join%20Discord&style=social" alt="Discord"></a>
+  <a href="https://github.com/HugoBlox/kit"><img src="https://img.shields.io/github/stars/HugoBlox/kit?label=Star%20HugoBlox&style=social" alt="GitHub Stars"></a>
+  <a href="https://x.com/MakeOwnable"><img src="https://img.shields.io/twitter/follow/MakeOwnable?label=Follow&style=social" alt="Follow on X"></a>
+</p>
 
-## We ask you, humbly, to support this open source movement
+---
 
-Today we ask you to defend the open source independence of the Hugo Blox Builder and themes 🐧
+## Why this template?
 
-We're an open source movement that depends on your support to stay online and thriving, but 99.9% of our creators don't give; they simply look the other way.
+Most portfolios look the same — and most “quick” site builders produce slow sites you can’t maintain.
 
-### [❤️ Click here to become a Sponsor, unlocking awesome perks such as _exclusive academic templates and blocks_](https://hugoblox.com/sponsor/)
+- **⚡ Fast by default**: Hugo + Tailwind 4 + Hugo Modules → great Lighthouse scores without JS bloat.
+- **🧠 AI-ready content**: Your projects and posts live in clean Markdown/YAML — readable by humans and LLMs.
+- **🎯 Job-hunting optimized**: Projects, tech stack, experience timeline, and a blog layout that looks credible.
+- **🌙 Dark-first (but light-mode supported)**: Looks premium in dark mode, still works perfectly in light mode.
+- **🧩 Block-based**: Reorder/replace sections without rewriting templates.
 
-<!--
-<p align="center"><a href="https://hugoblox.com/templates/" target="_blank" rel="noopener"><img src="https://hugoblox.com/uploads/readmes/academic_logo_200px.png" alt="Hugo Academic Theme for Hugo Blox Builder"></a></p>
--->
+---
 
-## Demo image credits
+## Who it’s for
 
-- [Unsplash](https://unsplash.com)
+- **Students & grads** applying to internships / MSc / PhD / junior roles
+- **STEM professionals** (research, data, ML, bio, engineering) showcasing projects and writing
+- **Software engineers** building a portfolio that feels modern in 2026
 
-## Latest news
+---
 
-<!--START_SECTION:news-->
+## What you get (Free)
 
-- [Easily make an academic CV website to get more cites and grow your audience 🚀](https://hugoblox.com/blog/easily-make-academic-website/)
-- [What&#39;s new in v5.2?](https://hugoblox.com/blog/whats-new-in-v5.2/)
-- [What&#39;s new in v5.1?](https://hugoblox.com/blog/whats-new-in-v5.1/)
-- [Version 5.0 (February 2021)](https://hugoblox.com/blog/version-5.0-february-2021/)
-- [Version 5.0 Beta 3 (February 2021)](https://hugoblox.com/blog/version-5.0-beta-3-february-2021/)
-<!--END_SECTION:news-->
+- **Developer hero** with modern gradients + optional typewriter
+- **Filterable portfolio** (tags + smooth transitions)
+- **Tech stack** grid with icons
+- **Experience + education timeline**
+- **Blog section** (cards + featured images)
+- **Contact section** with social links + copy email
+
+---
+
+## Get started (recommended)
+
+### Option 1 — Online deployer (fastest)
+
+Deploy this template in ~60 seconds:
+
+- [Deploy in browser →](https://hugoblox.com/templates/dev-portfolio/start?utm_source=github&utm_medium=readme)
+
+### Option 2 — HugoBlox Studio (visual editor in VS Code)
+
+- [Studio guide →](https://docs.hugoblox.com/guides/studio/?utm_source=github&utm_medium=readme)
+- [Studio AI automation plans (Free/Plus/Pro) →](https://hugoblox.com/pricing/?utm_source=github&utm_medium=readme)
+
+### Option 3 — HugoBlox CLI (developer workflow)
+
+Install:
+
+```bash
+npm install -g hugoblox@latest
+```
+
+Create a site:
+
+```bash
+hugoblox create site --template dev-portfolio
+```
+
+[CLI docs →](https://docs.hugoblox.com/start/cli/?utm_source=github&utm_medium=readme)
+
+---
+
+## Customize in 10 minutes
+
+- **Your profile**: `data/authors/me.yaml`
+- **Homepage sections**: `content/_index.md`
+- **Projects**: `content/projects/<project>/index.md`
+- **Blog posts**: `content/blog/<post>/index.md`
+- **Theme + identity**: `config/_default/params.yaml`
+
+---
+
+## Want the Pro version? 💎
+
+If you want a version that feels meaningfully more premium (and helps fund open source + research):
+
+- [Premium template →](https://hugoblox.com/templates/dev-portfolio-pro/start?utm_source=github&utm_medium=readme)
+- [HugoBlox Pro / Studio →](https://hugoblox.com/pricing?utm_source=github&utm_medium=readme)
+
+---
+
+## Community & support
+
+- **Docs**: [docs.hugoblox.com →](https://docs.hugoblox.com/?utm_source=github&utm_medium=readme)
+- **Discord**: [Join Discord →](https://discord.gg/z8wNYzb)
+- **Issues**: [Open an issue →](https://github.com/HugoBlox/kit/issues)
+
+---
+
+MIT © 2016–Present [George Cushen](https://neuralgeo.com/?utm_source=github&utm_medium=readme)

@@ -1,17 +1,10 @@
-module github.com/HugoBlox/hugo-blox-builder/starters/academic-cv
+module github.com/HugoBlox/kit/templates/dev-portfolio-free
 
 go 1.19
 
 require (
-	github.com/HugoBlox/hugo-blox-builder/modules/blox-plugin-netlify v1.1.2-0.20231209203044-d31adfedd40b
-	github.com/HugoBlox/hugo-blox-builder/modules/blox-tailwind v0.3.1
+	github.com/HugoBlox/kit/modules/blox v0.0.0-20260219145709-764756ab501c
+	github.com/HugoBlox/kit/modules/integrations/netlify v0.0.0-20260102210655-66cba27dc652
 )
 
-require (
-	github.com/hugomods/images v0.11.2 // indirect
-	github.com/martignoni/hugo-notice v0.0.0-20240707105359-40327ac00cc4 // indirect
-	github.com/wowchemy/wowchemy-hugo-themes/modules/wowchemy-plugin-netlify v1.1.0 // indirect
-	github.com/wowchemy/wowchemy-hugo-themes/modules/wowchemy-plugin-netlify-cms v1.0.0 // indirect
-	github.com/wowchemy/wowchemy-hugo-themes/modules/wowchemy-plugin-reveal v1.1.0 // indirect
-	github.com/wowchemy/wowchemy-hugo-themes/modules/wowchemy/v5 v5.9.0 // indirect
-)
+require github.com/HugoBlox/kit/modules/slides v1.2.5 // indirect

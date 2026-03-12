@@ -1,132 +1,161 @@
 ---
 # Leave the homepage title empty to use the site title
-title: ""
-date: 2024-11-18
+title: ''
+summary: ''
+date: 2026-03-12
 type: landing
 
 design:
   # Default section spacing
-  spacing: "3rem"
+  spacing: '0'
 
 sections:
+  - block: dev-hero
+    id: hero
+    content:
+      username: me
+      greeting: "Hello, I'm"
+      show_status: true
+      show_scroll_indicator: true
+      scroll_target: "#blog"
+      typewriter:
+        enable: true
+        prefix: "I build"
+        strings:
+          - ".NET web applications"
+          - "pragmatic cloud systems"
+          - "software teams that deliver"
+          - "the right thing - just in time"
+        type_speed: 70
+        delete_speed: 40
+        pause_time: 2500
+      cta_buttons:
+        - text: Read My Blog
+          url: "/blog/"
+          icon: arrow-down
+        - text: Get In Touch
+          url: "#contact"
+          icon: envelope
+    design:
+      style: centered
+      avatar_shape: circle
+      animations: true
+      background:
+        color:
+          light: "#fafafa"
+          dark: "#0a0a0f"
+      spacing:
+        padding: ["5rem", "0", "3rem", "0"]
+
   - block: collection
-    id: news
+    id: blog
     content:
       title: Recent Posts
-      subtitle: ''
+      subtitle: 'Writing on .NET, architecture, testing, DevOps, and software craftsmanship'
       text: ''
-      # Page type to display. E.g. post, talk, publication...
-      page_type: post
-      # Choose how many pages you would like to display (0 = all pages)
-      count: 5
-      # Filter on criteria
       filters:
-        author: ""
-        category: ""
-        tag: ""
+        folders:
+          - blog
         exclude_featured: false
-        exclude_future: false
-        exclude_past: false
-        publication_type: ""
-      # Choose how many pages you would like to offset by
-      offset: 0
-      # Page order: descending (desc) or ascending (asc) date.
+      count: 5
       order: desc
-  - block: resume-biography-3
-    id: about
-    content:
-      # Choose a user profile to display (a folder name within `content/authors/`)
-      username: admin
-      text: ""
-      # Show a call-to-action button under your biography? (optional)
-      button:
-        text: Download CV
-        url: uploads/resume.pdf
     design:
-      css_class: dark
+      view: card
+      columns: 3
       background:
-        color: dark
-        image:
-        #   Add your image background to `assets/media/`.
-          filename: parabolic-rectangle.svg
-          filters:
-            brightness: 1.0
-          size: cover
-          position: center
-          parallax: true
-  - block: experience
+        color:
+          light: "#f5f5f5"
+          dark: "#08080c"
+      spacing:
+        padding: ["4rem", "0", "4rem", "0"]
+
+  - block: resume-experience
+    id: experience
     content:
       title: Experience
-      # Date format for experience
-      #   Refer to https://wowchemy.com/docs/customization/#date-format
       date_format: Jan 2006
-      # Experiences.
-      #   Add/remove as many `experience` items below as you like.
-      #   Required fields are `title`, `company`, and `date_start`.
-      #   Leave `date_end` empty if it's your current employer.
-      #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
       items:
+        - title: Owner
+          company: Blueprint Software
+          company_url: 'https://www.blueprint.software'
+          company_logo: ''
+          location: Remote
+          date_start: '2025-01-01'
+          date_end: ''
         - title: Lead Software Engineer
           company: Casey's General Stores
           company_url: 'https://www.caseys.com'
+          company_logo: ''
           location: Ankeny, IA
           date_start: '2024-06-01'
-          date_end: ''
+          date_end: '2025-05-01'
         - title: Senior Software Engineer
           company: Casey's General Stores
           company_url: 'https://www.caseys.com'
+          company_logo: ''
           location: Ankeny, IA
           date_start: '2021-12-20'
           date_end: '2024-06-01'
         - title: Software Engineer III
           company: Comoto Holdings, Inc.
           company_url: 'https://ridecomoto.com/'
+          company_logo: ''
           location: Philadelphia, PA
           date_start: '2021-06-28'
           date_end: '2021-11-28'
         - title: Senior Application Developer
           company: Homesteaders Life Company
           company_url: 'https://www.homesteaderslife.com/'
+          company_logo: ''
           location: Des Moines, IA
           date_start: '2020-08-17'
           date_end: '2021-06-28'
         - title: Web Application Developer
           company: Polk County
           company_url: 'https://www.polkcountyiowa.gov'
+          company_logo: ''
           location: Des Moines, IA
           date_start: '2019-08-21'
           date_end: '2020-08-14'
         - title: Software Engineer
           company: Casey's General Stores
           company_url: 'https://www.caseys.com'
+          company_logo: ''
           location: Ankeny, IA
           date_start: '2019-03-16'
           date_end: '2019-08-21'
         - title: Associate Web Developer
           company: Polk County
           company_url: 'https://www.polkcountyiowa.gov'
+          company_logo: ''
           location: Des Moines, IA
           date_start: '2016-06-26'
           date_end: '2019-03-16'
     design:
-      columns: '2'
-  - block: markdown
+      columns: '1'
+      background:
+        color:
+          light: "#ffffff"
+          dark: "#0d0d12"
+      spacing:
+        padding: ["4rem", "0", "4rem", "0"]
+
+  - block: contact-info
+    id: contact
     content:
-      title: Computers
+      title: Get In Touch
+      subtitle: "Consulting, collaboration, and software conversations"
       text: |-
-        I love hardware. Here are some of the computers I have built over the years.
-        ![](/albums/computers/8.jpg)
-        ![](/albums/computers/9.jpg)
-        ![](/albums/computers/10.jpg)
-        ![](/albums/computers/11.jpg)
-        ![](/albums/computers/12.jpg)
-        ![](/albums/computers/13.jpg)
-        ![](/albums/computers/14.jpg)
-        ![](/albums/computers/15.jpg)
-        ![](/albums/computers/16.jpg)
-        ![](/albums/computers/17.jpg)
-        ![](/albums/computers/20.jpg)
-        ![](/albums/computers/21.jpg)
+        I'm always interested in talking about new projects, consulting opportunities,
+        and the work of building better software with other people.
+      email: benjamin.sampica@gmail.com
+      autolink: true
     design:
-      columns: 2
+      columns: '1'
+      background:
+        color:
+          light: "#ffffff"
+          dark: "#0d0d12"
+      spacing:
+        padding: ["4rem", "0", "4rem", "0"]
 ---

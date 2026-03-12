@@ -1,0 +1,116 @@
+schema: hugoblox/author/v1
+slug: me
+is_owner: true
+name:
+  display: Ben Sampica
+  given: Ben
+  family: Sampica
+postnominals: []
+status:
+  icon: "🎲"
+role: Owner - Blueprint Software
+email: benjamin.sampica@gmail.com
+bio: |
+  Software engineer, consultant, and writer focused on pragmatic systems, durable delivery,
+  and the craft of building software with other people.
+
+  I spend most of my time working in .NET, cloud architecture, testing, and DevOps. Outside of
+  work I read, build PCs, and run Dungeons & Dragons campaigns.
+
+affiliations:
+  - name: Blueprint Software
+    url: https://www.blueprint.software
+
+links:
+  - icon: at-symbol
+    url: mailto:benjamin.sampica@gmail.com
+    label: E-mail Me
+  - icon: document-text
+    url: /uploads/resume.pdf
+    label: Resume
+  - icon: brands/github
+    url: https://github.com/benjaminsampica
+  - icon: brands/linkedin
+    url: https://www.linkedin.com/in/benthon
+  - icon: brands/bluesky
+    url: https://bsky.app/profile/bensampica.com
+
+interests:
+  - Web Development
+  - DevOps
+  - Reading
+  - Computer Hardware
+  - Dungeons & Dragons
+  - Warhammer 40k
+
+education:
+  - degree: BA in MIS
+    institution: University of Northern Iowa
+    start: 2013-08-01
+    end: 2016-05-01
+  - degree: AAS in Computer Support
+    institution: Kirkwood Community College
+    start: 2011-08-01
+    end: 2013-05-01
+
+experience:
+  - role: Owner
+    org: Blueprint Software
+    start: 2025-01-01
+    summary: |
+      Independent consulting and product work focused on software delivery, architecture, and teams.
+  - role: Lead Software Engineer
+    org: Casey's General Stores
+    start: 2024-06-01
+    end: 2025-05-01
+  - role: Senior Software Engineer
+    org: Casey's General Stores
+    start: 2021-12-20
+    end: 2024-06-01
+  - role: Software Engineer III
+    org: Comoto Holdings, Inc.
+    start: 2021-06-28
+    end: 2021-11-28
+  - role: Senior Application Developer
+    org: Homesteaders Life Company
+    start: 2020-08-17
+    end: 2021-06-28
+  - role: Web Application Developer
+    org: Polk County
+    start: 2019-08-21
+    end: 2020-08-14
+  - role: Software Engineer
+    org: Casey's General Stores
+    start: 2019-03-16
+    end: 2019-08-21
+  - role: Associate Web Developer
+    org: Polk County
+    start: 2016-06-26
+    end: 2019-03-16
+
+skills:
+  - name: Engineering
+    items:
+      - label: C#
+        level: 5
+      - label: .NET
+        level: 5
+      - label: Azure
+        level: 5
+      - label: Architecture
+        level: 4
+  - name: Delivery
+    items:
+      - label: Testing
+        level: 4
+      - label: DevOps
+        level: 4
+      - label: Leadership
+        level: 5
+
+languages:
+  - name: English
+    level: 5
+    label: Native
+
+awards: []

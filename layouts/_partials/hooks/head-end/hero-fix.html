@@ -1,0 +1,72 @@
+<!-- hero-fix-hook -->
+<style>
+  .blox-dev-hero .hero-bio-fix {
+    max-width: 42rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2rem;
+    font-size: 1.125rem;
+    line-height: 1.75;
+    color: rgb(75 85 99);
+  }
+
+  .dark .blox-dev-hero .hero-bio-fix {
+    color: rgb(156 163 175);
+  }
+
+  .blox-dev-hero .hero-bio-fix p {
+    margin: 0;
+  }
+
+  .blox-dev-hero .hero-bio-fix p + p {
+    margin-top: 0.75rem;
+  }
+
+  .blox-dev-hero .hero-cta-fix {
+    margin-bottom: 4rem;
+  }
+  
+  .blox-dev-hero .hero-cta-fix a {
+    justify-content: center;
+  }
+
+  @media (min-width: 640px) {
+    .blox-dev-hero .hero-cta-fix a {
+      min-width: 18rem;
+    }
+  }
+</style>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var hero = document.querySelector(".blox-dev-hero");
+    if (!hero) return;
+
+    var scrollLink = hero.querySelector('a[aria-label="Scroll to content"]');
+    if (scrollLink) {
+      scrollLink.setAttribute("href", "#blog");
+    }
+
+    var typewriter = hero.querySelector(".typewriter-cursor");
+    if (typewriter) {
+      var bioWrapper = typewriter.parentElement && typewriter.parentElement.nextElementSibling;
+      if (bioWrapper && bioWrapper.tagName === "P") {
+        var bioHtml = bioWrapper.innerHTML;
+        var bioDiv = document.createElement("div");
+        bioDiv.className = "hero-bio-fix";
+        bioDiv.innerHTML = bioHtml;
+        bioWrapper.replaceWith(bioDiv);
+      }
+    }
+
+    var socialRow = hero.querySelector(".flex.items-center.justify-center.gap-4");
+    if (socialRow) {
+      socialRow.classList.remove("mb-10");
+      socialRow.classList.add("mb-8");
+    }
+
+    var ctaRow = hero.querySelector(".flex.flex-wrap.justify-center.gap-4");
+    if (ctaRow) {
+      ctaRow.classList.add("hero-cta-fix");
+    }
+  });
+</script>
