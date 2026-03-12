@@ -20,7 +20,8 @@ toc: true
 
 ## Introduction 
 
-> **Note:** This post has been updated for .NET 9.
+> [!NOTE]
+> This post has been updated for .NET 9.
 
 With the release of [.NET 8](https://devblogs.microsoft.com/dotnet/announcing-dotnet-8/), you can now return a `RazorComponentResult<T>` from minimal api's which 
 means that blazor components and pages can be returned easily from an endpoint. All dependencies will be injected in the blazor component/service, 
@@ -69,11 +70,13 @@ Blazor Web is great but there's quite a few things that I find myself reaching f
 - To get a little more subjective, submitting forms in Blazor SSR is [janky](https://learn.microsoft.com/en-us/aspnet/core/blazor/forms/?view=aspnetcore-8.0) 🤷‍♂️.
 - I also like vertically slicing features and combining Blazor WASM + Server interactivity forces you into a `.Client` project with just the interactive components and forces components to be separated.
 
-> **Tip:** HTMX has a lot of different ways to respond to events which you can read about [here](https://htmx.org/attributes/hx-trigger/).
+> [!TIP]
+> HTMX has a lot of different ways to respond to events which you can read about [here](https://htmx.org/attributes/hx-trigger/).
 
 ## Creating The Project
 
-> **Note:** Want to just see the code? [Click here!](https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/minimalapihtmx)
+> [!NOTE]
+> Want to just see the code? [Click here!](https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/minimalapihtmx)
 
 Let us start fresh with a brand new dotnet minimal api and the end goal is going to be to recreate the Blazor sample template with HTMX with a lot of extras to make this a complete guide. 
 
@@ -423,7 +426,8 @@ Here is the code:
 
 ### With Degradation Support
 
-> **Note:** A reminder that this type of degradation handling is _optional_ and use-case dependent.
+> [!NOTE]
+> A reminder that this type of degradation handling is _optional_ and use-case dependent.
 
 ```csharp
 // Program.cs
@@ -645,7 +649,8 @@ app.MapPost("/counter/increment",  RazorComponentResult<CounterInfo>([FromForm] 
 
 ### Tie It All Together
 
-> **Note:** Want to just see the code? [Click here!](https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/minimalapihtmx)
+> [!NOTE]
+> Want to just see the code? [Click here!](https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/minimalapihtmx)
 
 Bringing this all together, we need to utilize more of the Blazor framework in order to pass the validation result down to all our validation messages. Additionally, we need to add our `HtmxAntiforgeryToken` and `HtmxValidationMessage`.
 
@@ -760,7 +765,8 @@ the tiny piece of html that we need to change the state to what is needed.
 
 *Success!*
 
-> **Tip:** Another way to handle content swapping somewhere else is to use out-of-band swaps which you can learn more about [here](https://htmx.org/attributes/hx-swap-oob/).
+> [!TIP]
+> Another way to handle content swapping somewhere else is to use out-of-band swaps which you can learn more about [here](https://htmx.org/attributes/hx-swap-oob/).
 
 ## Table Data With Paging
 
@@ -921,7 +927,8 @@ app.MapGet("/weather", Results<RazorComponentResult<Weather>, RazorComponentResu
 Looks great! When five seconds are up, the empty table shows.
 
 ### Real Data + Paging
-> **Note:** Want to just see the code? [Click here!](https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/minimalapihtmx)
+> [!NOTE]
+> Want to just see the code? [Click here!](https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/minimalapihtmx)
 Finally, lets add some real data in with paging capabilities. There is a lot going on here so lets break it down piece by piece. 
 
 First, I have made some generic paging classes that we will implement. Our weather request will implement `PagedRequest` and our weather response will implement `PagedResponse<T>`.
@@ -1211,7 +1218,8 @@ Of course, this script needs added to the `HtmxLayout.razor` file. Easy as that,
 
 ### Using 'MapStaticAssets' in .NET 9
 
-> **Tip:** There is a workaround now which involves rigging up your own static asset mapper in lieu of an official solution. You can view it [here](https://github.com/dotnet/aspnetcore/issues/58937#issuecomment-2796190411). Thanks [maartenvansambeek](https://github.com/maartenvansambeek)!
+> [!TIP]
+> There is a workaround now which involves rigging up your own static asset mapper in lieu of an official solution. You can view it [here](https://github.com/dotnet/aspnetcore/issues/58937#issuecomment-2796190411). Thanks [maartenvansambeek](https://github.com/maartenvansambeek)!
 
 Being able to use `.MapStaticAssets` for its build-time compression, e-tagging, and cache busting features is a no-brainer over the traditional `.UseStaticFiles`. The only problem is that `.MapStaticAssets` has some internals that actually plays off of `MapRazorComponents<T>`, which you would think you wouldn't need in a minimal api + htmx context. That is not the case.
 
@@ -1249,7 +1257,8 @@ There isn't much to say in this section besides that Blazor Hybrid using MAUI's 
 
 There are some really cheap ways to even bring along an existing web app into a native app by simply pointing your `BlazorWebView` to your existing web app without even sharing the components. Admittedly, I have not submitted this shell app to the respective iOS and Android app stores.
 
-> **Warning:** Apple has language protecting their App Store against barebone apps like the one stated above.
+> [!WARNING]
+> Apple has language protecting their App Store against barebone apps like the one stated above.
 >
 > Your mileage may vary but you can increase your chances by clearly stating the value proposition of doing so and not going into the internals of the implementation.
 
@@ -1310,7 +1319,8 @@ I strongly prefer this approach as it pairs very nicely with vertical slicing an
 
 When we click a form submit we want to make sure the server has enough time to process the request. Often times, users will click buttons multiple times either by accident or through impatience. We can prevent this by using an HTMX extension called `loading-states`. You can read the documentation how to do this [here](https://github.com/bigskysoftware/htmx-extensions/blob/main/src/loading-states/README.md).
 
-> **Tip:** HTMX has many extensions which solve all sorts of different problems. Importantly, they are _opt-in_. You can view the entire list [here](https://htmx.org/extensions/).
+> [!TIP]
+> HTMX has many extensions which solve all sorts of different problems. Importantly, they are _opt-in_. You can view the entire list [here](https://htmx.org/extensions/).
 
 ### Client-side Interactivity (Hyperscript)
 

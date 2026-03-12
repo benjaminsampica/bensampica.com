@@ -186,7 +186,8 @@ Earlier this year, Microsoft released _Microsoft.Testing.Platform_, which is a t
 
 [TUnit](https://tunit.dev/) is a new NuGet package, just like _MSTest_, _NUnit_, and _XUnit_, that is built on top of _Microsoft.Testing.Platform_. It brings along a similar set of tools that you are already familiar with but also includes some nice features like a rich assertion library (if you have been rug-pulled by _FluentAssertions_ like a lot of folks). A big thing I appreciate about _TUnit_ is that it is built atop source generators and with asynchronous-first approach so that tests run as fast as possible. If you want to see some examples or benchmarks, check out their [GitHub](https://github.com/thomhurst/TUnit).
 
-_Note:_ If you have not configured your IDE to use _Microsoft.Testing.Platform_ previously, there are a [few buttons you have to click](https://github.com/thomhurst/TUnit#ide).
+> [!NOTE]
+> If you have not configured your IDE to use _Microsoft.Testing.Platform_ previously, there are a [few buttons you have to click](https://github.com/thomhurst/TUnit#ide).
 
 Okay, now let's create a new test project called `AspireSample.AppHost.Testing`. Because there are no pre-built templates using _TUnit_, we're going to choose _NUnit_ and then modify it. Here's the original `.csproj` from a brand new `dotnet new nunit` project.
 
@@ -247,7 +248,8 @@ And here's the _TUnit_ modified version.
 
 ### Creating the Test Base
 
-> **Note:** Want to just see the code? [Click here!](https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/aspiretunit)
+> [!NOTE]
+> Want to just see the code? [Click here!](https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/aspiretunit)
 
 Now, in order to run our tests, we need to create a base class that will handle the setup and teardown of our database. This is similar to how _XUnit_ works with `IClassFixture` but instead of using a fixture, we are going to use _TUnit_'s `ClassDataSource` class. This will allow us to run our integration and end-to-end tests in parallel and also provide us with a way to reset the database between tests.
 
@@ -467,7 +469,8 @@ public class UnitTest1 : DistributedApplicationBase
 
 Running tests with `TUnit` requires a slight tweak to how we are used to running tests because we are also going to collect code coverage. The reason for this is that `Microsoft.Testing.Platform` does not play well with `dotnet test` parameters and part of workflows is likely passing parameters - such as collecting code coverage. Instead, we have to do `dotnet run` and then run the test project. Note that this is optional and it is actually possible to run tests using `dotnet test` but I found the syntax to be weirder and harder to read than just using `dotnet run`.
 
-_Note:_ .NET Aspire requires a development certificate install on GitHub's `ubuntu-latest` so I've included it as well.
+> [!NOTE]
+> .NET Aspire requires a development certificate install on GitHub's `ubuntu-latest` so I've included it as well.
 
 ```yaml
 #.github/workflows/workflow.yml

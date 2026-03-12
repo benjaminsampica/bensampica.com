@@ -1,0 +1,46 @@
+{{/*
+  Extend Hugo Blox blockquote rendering to support legacy
+  `> **Note:** ...` style callouts in addition to native alert syntax.
+*/}}
+
+{{ if eq .Type "alert" }}
+  {{ $title := .AlertTitle }}
+  {{ partial "functions/render_callout" (dict
+    "type" .AlertType
+    "content" .Text
+    "title" $title
+    "source" "renderhook"
+  ) }}
+{{ else }}
+  {{ $text := .Text }}
+  {{ $legacyCalloutTypes := dict
+    "note" "Note"
+    "info" "Info"
+    "tip" "Tip"
+    "important" "Important"
+    "warning" "Warning"
+    "caution" "Caution"
+  }}
+  {{ $calloutType := "" }}
+  {{ $calloutContent := $text }}
+
+  {{ range $type, $label := $legacyCalloutTypes }}
+    {{ $pattern := printf `(?s)^<p><strong>%s:</strong>\s*` $label }}
+    {{ if and (eq $calloutType "") (gt (len (findRE $pattern $text 1)) 0) }}
+      {{ $calloutType = $type }}
+      {{ $calloutContent = replaceRE $pattern "<p>" $text }}
+    {{ end }}
+  {{ end }}
+
+  {{ if ne $calloutType "" }}
+    {{ partial "functions/render_callout" (dict
+      "type" $calloutType
+      "content" $calloutContent
+      "source" "renderhook"
+    ) }}
+  {{ else }}
+    <blockquote class="border-l-4 border-neutral-300 dark:border-neutral-600 pl-4 italic text-neutral-600 dark:text-neutral-400 my-6">
+      {{ $text }}
+    </blockquote>
+  {{ end }}
+{{ end }}

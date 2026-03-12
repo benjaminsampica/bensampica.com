@@ -55,7 +55,8 @@ While Dockerfiles are a powerful tool for building container images, they can in
 
 ## Building Your Application as an Image Locally
 
-> **Note:** Want to just see the code? [Click here!](https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/testcontainers)
+> [!NOTE]
+> Want to just see the code? [Click here!](https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/testcontainers)
 
 With .NET, you can build container images for your applications without needing a Dockerfile. This approach is supported natively in .NET 8+ and through additional tooling in .NET 7.
 
@@ -174,7 +175,8 @@ Local development faces similar challenges to testing, with additional emphasis 
 
 ## Solving The Local Development & Testing Problems
 
-> **Note:** Want to just see the code? [Click here!](https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/testcontainers)
+> [!NOTE]
+> Want to just see the code? [Click here!](https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/testcontainers)
 
 As I mentioned earlier, we can use `TestContainers.NET`'s existing pre-packaged containers to quickly spin up containers. I'm going to use the mssql package `TestContainers.MsSql` to spin up a SQL Server.
 

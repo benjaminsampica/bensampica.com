@@ -27,7 +27,8 @@ I had already done a [similar post for Azure SQL Server](../azsqlbicepefcore/ind
 
 ## Overview 
 
-> **Note:** Want to just see the code? [Click here!](https://github.com/benjaminsampica/bensampica.com/tree/main/content/blog/postgresqlbicepefcore)
+> [!NOTE]
+> Want to just see the code? [Click here!](https://github.com/benjaminsampica/bensampica.com/tree/main/content/blog/postgresqlbicepefcore)
 
 Here's the end-to-end toolchain we are using and which the post will use:
 
@@ -52,7 +53,8 @@ I've made a few assumptions in order to keep this post focused specifically on P
 1. You already have a resource group in Azure.
 2. There is an existing service connection in Azure that ties back to Azure DevOps so you can deploy your infrastructure-as-code to the resource group.
 
-_Note:_ If you're used to assigning `Directory.Read.All` permissions or `Directory Readers` to your managed identity from Azure SQL, this isn't needed for Postgres - hooray!
+> [!NOTE]
+> If you're used to assigning `Directory.Read.All` permissions or `Directory Readers` to your managed identity from Azure SQL, this isn't needed for Postgres - hooray!
 
 ## The C# Code
 

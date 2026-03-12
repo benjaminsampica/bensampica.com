@@ -30,6 +30,10 @@
     justify-content: center;
   }
 
+  .prose img[data-zoomable] {
+    cursor: zoom-in;
+  }
+
   @media (min-width: 640px) {
     .blox-dev-hero .hero-cta-fix a {
       min-width: 18rem;
@@ -70,3 +74,9 @@
     }
   });
 </script>
+{{ with resources.Get "js/medium-zoom.js" }}
+  {{ $options := dict "targetPath" "js/medium-zoom.js" "minify" true }}
+  {{ with . | js.Build $options | fingerprint }}
+    <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" defer></script>
+  {{ end }}
+{{ end }}
