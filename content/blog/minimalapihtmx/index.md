@@ -12,7 +12,7 @@ date: '2024-11-13T00:00:00Z'
 lastmod: '2025-08-14T00:00:00Z'
 links:
   - type: code
-    url: https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/minimalapihtmx
+    url: https://github.com/benjaminsampica/bensampica.com/tree/main/content/blog/minimalapihtmx
 featured: true
 draft: false
 toc: true
@@ -76,7 +76,7 @@ Blazor Web is great but there's quite a few things that I find myself reaching f
 ## Creating The Project
 
 > [!NOTE]
-> Want to just see the code? [Click here!](https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/minimalapihtmx)
+> Want to just see the code? [Click here!](https://github.com/benjaminsampica/bensampica.com/tree/main/content/blog/minimalapihtmx)
 
 Let us start fresh with a brand new dotnet minimal api and the end goal is going to be to recreate the Blazor sample template with HTMX with a lot of extras to make this a complete guide. 
 
@@ -650,7 +650,7 @@ app.MapPost("/counter/increment",  RazorComponentResult<CounterInfo>([FromForm] 
 ### Tie It All Together
 
 > [!NOTE]
-> Want to just see the code? [Click here!](https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/minimalapihtmx)
+> Want to just see the code? [Click here!](https://github.com/benjaminsampica/bensampica.com/tree/main/content/blog/minimalapihtmx)
 
 Bringing this all together, we need to utilize more of the Blazor framework in order to pass the validation result down to all our validation messages. Additionally, we need to add our `HtmxAntiforgeryToken` and `HtmxValidationMessage`.
 
@@ -928,7 +928,7 @@ Looks great! When five seconds are up, the empty table shows.
 
 ### Real Data + Paging
 > [!NOTE]
-> Want to just see the code? [Click here!](https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/minimalapihtmx)
+> Want to just see the code? [Click here!](https://github.com/benjaminsampica/bensampica.com/tree/main/content/blog/minimalapihtmx)
 Finally, lets add some real data in with paging capabilities. There is a lot going on here so lets break it down piece by piece. 
 
 First, I have made some generic paging classes that we will implement. Our weather request will implement `PagedRequest` and our weather response will implement `PagedResponse<T>`.

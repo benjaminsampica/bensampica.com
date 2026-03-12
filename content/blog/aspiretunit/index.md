@@ -12,7 +12,7 @@ date: "2025-04-10T00:00:00Z"
 lastmod: "2025-04-10T00:00:00Z"
 links:
   - type: code
-    url: https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/aspiretunit
+    url: https://github.com/benjaminsampica/bensampica.com/tree/main/content/blog/aspiretunit
 featured: false
 draft: false
 toc: true
@@ -249,7 +249,7 @@ And here's the _TUnit_ modified version.
 ### Creating the Test Base
 
 > [!NOTE]
-> Want to just see the code? [Click here!](https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/aspiretunit)
+> Want to just see the code? [Click here!](https://github.com/benjaminsampica/bensampica.com/tree/main/content/blog/aspiretunit)
 
 Now, in order to run our tests, we need to create a base class that will handle the setup and teardown of our database. This is similar to how _XUnit_ works with `IClassFixture` but instead of using a fixture, we are going to use _TUnit_'s `ClassDataSource` class. This will allow us to run our integration and end-to-end tests in parallel and also provide us with a way to reset the database between tests.
 
@@ -498,4 +498,4 @@ jobs:
           dotnet run -c Release --project src/AspireSample.AppHost.Tests/AspireSample.AppHost.Tests.csproj --coverage --coverage-output-format cobertura --results-directory ./coverage
 ```
 
-As a final reminder you can view the code [here](https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/aspiretunit). That's it - happy coding!
+As a final reminder you can view the code [here](https://github.com/benjaminsampica/bensampica.com/tree/main/content/blog/aspiretunit). That's it - happy coding!

@@ -12,7 +12,7 @@ date: "2025-04-02T00:00:00Z"
 lastmod: "2025-04-02T00:00:00Z"
 links:
   - type: code
-    url: https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/testcontainers
+    url: https://github.com/benjaminsampica/bensampica.com/tree/main/content/blog/testcontainers
 featured: false
 draft: false
 toc: true
@@ -56,7 +56,7 @@ While Dockerfiles are a powerful tool for building container images, they can in
 ## Building Your Application as an Image Locally
 
 > [!NOTE]
-> Want to just see the code? [Click here!](https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/testcontainers)
+> Want to just see the code? [Click here!](https://github.com/benjaminsampica/bensampica.com/tree/main/content/blog/testcontainers)
 
 With .NET, you can build container images for your applications without needing a Dockerfile. This approach is supported natively in .NET 8+ and through additional tooling in .NET 7.
 
@@ -176,7 +176,7 @@ Local development faces similar challenges to testing, with additional emphasis 
 ## Solving The Local Development & Testing Problems
 
 > [!NOTE]
-> Want to just see the code? [Click here!](https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/testcontainers)
+> Want to just see the code? [Click here!](https://github.com/benjaminsampica/bensampica.com/tree/main/content/blog/testcontainers)
 
 As I mentioned earlier, we can use `TestContainers.NET`'s existing pre-packaged containers to quickly spin up containers. I'm going to use the mssql package `TestContainers.MsSql` to spin up a SQL Server.
 
@@ -306,7 +306,7 @@ public class IntegrationTesting : ICollectionFixture<IntegrationTesting>, IAsync
 }
 ```
 
-You can view a more thorough example [here](https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/testcontainers).
+You can view a more thorough example [here](https://github.com/benjaminsampica/bensampica.com/tree/main/content/blog/testcontainers).
 
 Thats it, happy coding!
 

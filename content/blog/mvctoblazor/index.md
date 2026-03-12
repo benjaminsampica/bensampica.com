@@ -10,6 +10,9 @@ tags:
 - Blazor
 date: '2021-05-16T00:00:00Z'
 lastmod: '2021-05-16T00:00:00Z'
+links:
+  - type: code
+    url: https://github.com/benjaminsampica/bensampica.com/tree/main/content/blog/mvctoblazor
 featured: false
 draft: false
 toc: true
@@ -84,7 +87,7 @@ Do step 1-4 but you can omit:
 - `services.AddRazorPages();`
 - `endpoints.MapToFallbackFile("/Host");`
 
-For a complete coded example [here's an example repository](https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/mvctoblazor) that has this done for you with some sample components already there to showcase use.
+For a complete coded example [here's an example repository](https://github.com/benjaminsampica/bensampica.com/tree/main/content/blog/mvctoblazor) that has this done for you with some sample components already there to showcase use.
 
 ## Some Notes
 

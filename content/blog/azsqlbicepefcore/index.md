@@ -10,6 +10,9 @@ tags:
 - CSharp
 date: '2024-05-03T00:00:00Z'
 lastmod: '2024-05-03T00:00:00Z'
+links:
+  - type: code
+    url: https://github.com/benjaminsampica/bensampica.com/tree/main/content/blog/azsqlbicepefcore
 featured: false
 draft: false
 toc: true
@@ -23,7 +26,7 @@ My task was to spin up an Azure SQL Server using the tools that my team uses - a
 
 ## Overview 
 
-The code for this post (and in all the examples below) is available [here](https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/azsqlbicepefcore).
+The code for this post (and in all the examples below) is available [here](https://github.com/benjaminsampica/bensampica.com/tree/main/content/blog/azsqlbicepefcore).
 
 Here's the end-to-end toolchain we are using and which the post will use:
 
@@ -443,4 +446,4 @@ resource sqlDiagnosticSettings ‘Microsoft.Insights/diagnosticSettings@2021-05-
 }
 ```
 
-That's all for now. As a reminder, the entire code base can be found [here](https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/azsqlbicepefcore). Happy coding!
+That's all for now. As a reminder, the entire code base can be found [here](https://github.com/benjaminsampica/bensampica.com/tree/main/content/blog/azsqlbicepefcore). Happy coding!

@@ -8,6 +8,9 @@ tags:
 - Software Craftsmanship
 date: '2021-10-25T00:00:00Z'
 lastmod: '2021-10-25T00:00:00Z'
+links:
+  - type: code
+    url: https://github.com/benjaminsampica/techtalks/tree/main/VerticalSliceArchitecture
 featured: false
 draft: false
 toc: true

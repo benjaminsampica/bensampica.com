@@ -275,7 +275,7 @@ As an aside, of those that were visible, there were more MacBooks than Surface's
 ### Templating Repositories
 Azure DevOps has no templating capabilities besides old-fashioned cloning.
 
-GitHub allows you to create [template repositories](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-template-repository) that can be used as a starting point for new projects. These templates can include files, directories, and even default issues or pull requests. This helps maintain consistency across projects and saves time on initial project setup; it is something I have used at every step of my career. As a bit of trivia - this website itself was [generated from a GitHub template](https://github.com/benjaminsampica/benjaminsampica.com).
+GitHub allows you to create [template repositories](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-template-repository) that can be used as a starting point for new projects. These templates can include files, directories, and even default issues or pull requests. This helps maintain consistency across projects and saves time on initial project setup; it is something I have used at every step of my career. As a bit of trivia - this website itself was [generated from a GitHub template](https://github.com/benjaminsampica/bensampica.com).
 
 ![bensampica.com's template.](images/template.png)
 

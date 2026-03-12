@@ -9,6 +9,11 @@ tags:
 - DND
 date: '2023-11-27T00:00:00Z'
 lastmod: '2023-11-27T00:00:00Z'
+links:
+  - type: code
+    url: https://github.com/benjaminsampica/talespire-symbiotes/tree/main/combat-tracker
+  - type: code
+    url: https://github.com/benjaminsampica/talespire-symbiotes/tree/main/broadcast-image
 featured: false
 draft: false
 toc: true

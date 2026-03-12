@@ -10,6 +10,9 @@ tags:
 - CSharp
 date: '2025-12-17T00:00:00Z'
 lastmod: '2025-12-17T00:00:00Z'
+links:
+  - type: code
+    url: https://github.com/benjaminsampica/bensampica.com/tree/main/content/blog/postgresqlbicepefcore
 featured: false
 draft: false
 toc: true
@@ -431,4 +434,4 @@ deploy:
       package: .
 ```
 
-That's all for now. As a reminder, the entire code base can be found [here](https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/postgresqlbicepefcore). Happy coding!
+That's all for now. As a reminder, the entire code base can be found [here](https://github.com/benjaminsampica/bensampica.com/tree/main/content/blog/postgresqlbicepefcore). Happy coding!

@@ -8,6 +8,9 @@ tags:
 - Testing
 date: '2020-08-10T00:00:00Z'
 lastmod: '2020-08-10T00:00:00Z'
+links:
+  - type: code
+    url: https://github.com/benjaminsampica/bensampica.com/tree/main/content/blog/tdd
 featured: false
 draft: false
 toc: true
@@ -57,7 +60,7 @@ Ideally, you have two players, one who plays the role of the _Forces of Order_ a
 
 ## The Practical
 
-View the repo [here](https://github.com/benjaminsampica/benjaminsampica.com/tree/main/content/blog/tdd). The problem domain is simply the `FizzBuzz` common problem. Can you test drive a similar solution?
+View the repo [here](https://github.com/benjaminsampica/bensampica.com/tree/main/content/blog/tdd). The problem domain is simply the `FizzBuzz` common problem. Can you test drive a similar solution?
 
 ### Lore
 

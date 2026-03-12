@@ -9,6 +9,9 @@ tags:
 - Testing
 date: '2021-08-31T00:00:00Z'
 lastmod: '2021-08-31T00:00:00Z'
+links:
+  - type: code
+    url: https://github.com/benjaminsampica/techtalks/tree/main/FakeData/FakeData
 featured: false
 draft: false
 toc: true
