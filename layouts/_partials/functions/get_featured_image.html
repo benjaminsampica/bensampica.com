@@ -1,0 +1,145 @@
+{{/* Local override for Hugo Blox featured-image discovery. */}}
+{{/* This keeps existing front matter behavior, falls back to common bundle image names, */}}
+{{/* then uses the first bundled image, and finally generates an SVG cover per post. */}}
+
+{{ $pageImages := .Resources.ByType "image" }}
+{{ $resource := $pageImages.GetMatch "*featured*" }}
+
+{{ if eq $resource nil }}
+  {{ $filename := "" }}
+  {{ if and .Params.image (reflect.IsMap .Params.image) }}
+    {{ $filename = .Params.image.filename | default "" }}
+  {{ end }}
+
+  {{ if $filename }}
+    {{ if or (strings.HasPrefix $filename "http://") (strings.HasPrefix $filename "https://") }}
+      {{ $resource = resources.GetRemote $filename }}
+    {{ else }}
+      {{ $resource = $pageImages.GetMatch $filename }}
+      {{ if eq $resource nil }}
+        {{ $resource = resources.GetMatch (path.Join "media" $filename) }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{ if eq $resource nil }}
+  {{ $coverFilename := "" }}
+  {{ if .Params.cover }}
+    {{ if reflect.IsMap .Params.cover }}
+      {{ $coverFilename = .Params.cover.image | default "" }}
+    {{ else }}
+      {{ $coverFilename = .Params.cover | default "" }}
+    {{ end }}
+  {{ end }}
+
+  {{ if $coverFilename }}
+    {{ if or (strings.HasPrefix $coverFilename "http://") (strings.HasPrefix $coverFilename "https://") }}
+      {{ $resource = resources.GetRemote $coverFilename }}
+    {{ else }}
+      {{ $resource = $pageImages.GetMatch $coverFilename }}
+      {{ if eq $resource nil }}
+        {{ $resource = resources.GetMatch (path.Join "media" $coverFilename) }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{ if eq $resource nil }}
+  {{ range slice "*cover*" "*hero*" "*summary*" "*banner*" "*thumbnail*" }}
+    {{ if eq $resource nil }}
+      {{ $candidate := $pageImages.GetMatch . }}
+      {{ with $candidate }}
+        {{ $resource = . }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{ if and (eq $resource nil) (gt (len $pageImages) 0) }}
+  {{ $resource = index $pageImages 0 }}
+{{ end }}
+
+{{ $supportedResource := false }}
+{{ if $resource }}
+  {{ $subtype := lower $resource.MediaType.SubType }}
+  {{ $supportedResource = or
+    (strings.Contains $subtype "svg")
+    (in (slice "png" "jpeg" "jpg" "gif" "webp" "avif") $subtype)
+  }}
+{{ end }}
+
+{{ if or (eq $resource nil) (not $supportedResource) }}
+  {{ $tag := "Engineering" }}
+  {{ with .Params.tags }}
+    {{ if gt (len .) 0 }}
+      {{ $tag = index . 0 }}
+    {{ end }}
+  {{ end }}
+
+  {{ $seed := printf "%s-%s" (.Title | plainify) ($tag | plainify) }}
+  {{ $palettes := slice
+    (dict "start" "#0f172a" "end" "#0f766e" "accent" "#f59e0b" "muted" "#cbd5e1")
+    (dict "start" "#172554" "end" "#0f766e" "accent" "#f97316" "muted" "#dbeafe")
+    (dict "start" "#111827" "end" "#0369a1" "accent" "#eab308" "muted" "#e2e8f0")
+    (dict "start" "#1f2937" "end" "#166534" "accent" "#fb7185" "muted" "#dcfce7")
+  }}
+  {{ $palette := index $palettes (mod (len $seed) (len $palettes)) }}
+
+  {{ $words := split (.Title | plainify) " " }}
+  {{ $initials := "" }}
+  {{ range first 2 $words }}
+    {{ if gt (len .) 0 }}
+      {{ $initials = printf "%s%s" $initials (upper (substr . 0 1)) }}
+    {{ end }}
+  {{ end }}
+  {{ if eq $initials "" }}
+    {{ $initials = "BS" }}
+  {{ end }}
+
+  {{ $title := .Title | plainify | truncate 42 }}
+  {{ $titleEsc := $title | htmlEscape }}
+  {{ $tagEsc := ($tag | plainify) | htmlEscape }}
+  {{ $yearEsc := (.Date | time.Format "2006") | htmlEscape }}
+  {{ $initialsEsc := $initials | htmlEscape }}
+  {{ $labelEsc := printf "%s cover art" (.Title | plainify) | htmlEscape }}
+
+  {{ $svg := printf `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="%s">
+  <defs>
+    <linearGradient id="bg" x1="0%%" y1="0%%" x2="100%%" y2="100%%">
+      <stop offset="0%%" stop-color="%s"/>
+      <stop offset="100%%" stop-color="%s"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="78%%" cy="18%%" r="70%%">
+      <stop offset="0%%" stop-color="%s" stop-opacity="0.32"/>
+      <stop offset="100%%" stop-color="%s" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect width="1600" height="900" fill="url(#glow)"/>
+  <g opacity="0.12" fill="none" stroke="%s" stroke-width="2">
+    <path d="M1120 130h290"/>
+    <path d="M1180 190h170"/>
+    <path d="M1080 250h250"/>
+    <path d="M1200 310h190"/>
+    <path d="M1040 370h300"/>
+    <path d="M1110 430h220"/>
+    <rect x="1020" y="520" width="340" height="160" rx="24"/>
+  </g>
+  <circle cx="1320" cy="170" r="180" fill="%s" fill-opacity="0.12"/>
+  <circle cx="1210" cy="720" r="220" fill="%s" fill-opacity="0.08"/>
+  <text x="1010" y="660" font-size="240" font-weight="700" fill="%s" fill-opacity="0.14" font-family="'Avenir Next', 'Segoe UI', sans-serif">%s</text>
+  <g font-family="'Avenir Next', 'Segoe UI', sans-serif">
+    <rect x="96" y="84" width="220" height="54" rx="27" fill="white" fill-opacity="0.12"/>
+    <text x="126" y="118" font-size="24" font-weight="600" fill="white">%s</text>
+    <text x="96" y="650" font-size="76" font-weight="700" fill="white">%s</text>
+    <text x="96" y="724" font-size="28" font-weight="500" fill="%s">bensampica.com</text>
+    <text x="96" y="780" font-size="24" font-weight="500" fill="%s">%s</text>
+  </g>
+</svg>` $labelEsc $palette.start $palette.end $palette.accent $palette.accent $palette.muted $palette.accent $palette.accent $palette.muted $initialsEsc $tagEsc $titleEsc $palette.muted $palette.muted $yearEsc }}
+
+  {{ $fallbackPath := printf "generated/blog-fallbacks/%s.svg" (.File.UniqueID | default (.Title | urlize)) }}
+  {{ $resource = resources.FromString $fallbackPath $svg }}
+{{ end }}
+
+{{ return $resource }}
