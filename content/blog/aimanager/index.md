@@ -1,5 +1,5 @@
 ---
-title: Still My Code, Even When AI Writes It
+title: It Is Still My Code, Even When AI Writes It
 subtitle: AI changes who types the code, not who owns the work.
 summary: How AI has shifted my development work toward planning, standards, review, and maintaining the mental model of the software I am still responsible for.
 authors:
