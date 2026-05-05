@@ -1,7 +1,7 @@
 ---
-title: AI Manager
-subtitle: Thinking is the work
-summary: How my development work is shifting from writing all the code myself to planning, reviewing, and curating the standards that let AI write more of it.
+title: Still My Code, Even When AI Writes It
+subtitle: AI changes who types the code, not who owns the work.
+summary: How AI has shifted my development work toward planning, standards, review, and maintaining the mental model of the software I am still responsible for.
 authors:
   - me
 tags:
