@@ -24,14 +24,31 @@ function routeFor(file) {
   return `/${relative}`;
 }
 
+function existsWithExactCase(target) {
+  const absolute = path.resolve(target);
+  const { root } = path.parse(absolute);
+  let current = root;
+
+  for (const segment of path.relative(root, absolute).split(path.sep)) {
+    if (!fs.existsSync(current) || !fs.readdirSync(current).includes(segment)) return false;
+    current = path.join(current, segment);
+  }
+
+  return true;
+}
+
+function isExactFile(target) {
+  return existsWithExactCase(target) && fs.statSync(target).isFile();
+}
+
 function resolveOutput(pathname) {
   const decoded = decodeURIComponent(pathname);
   const relative = decoded.replace(/^\//, "");
   const direct = path.join(outputRoot, relative);
-  if (fs.existsSync(direct) && fs.statSync(direct).isFile()) return direct;
+  if (isExactFile(direct)) return direct;
   const index = path.join(direct, "index.html");
-  if (fs.existsSync(index)) return index;
-  if (!path.extname(direct) && fs.existsSync(`${direct}.html`)) return `${direct}.html`;
+  if (isExactFile(index)) return index;
+  if (!path.extname(direct) && isExactFile(`${direct}.html`)) return `${direct}.html`;
   return null;
 }
 

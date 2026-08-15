@@ -28,7 +28,7 @@ If you're unfamiliar with Clean (also known as Hexagonal, Ports and Adapters, On
 
 ### Principles of Clean Architecture
 
-![Clean Architecture](images/1.PNG)
+![Clean Architecture](images/1.png)
 
 *Clean Architecture*
 
