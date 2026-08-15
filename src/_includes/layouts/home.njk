@@ -15,7 +15,9 @@ layout: layouts/base.njk
         <span>Find me online</span>
         <div class="social-links" aria-label="Ben Sampica links">
           {% for item in site.social %}
+            {% if item.url.startsWith("mailto:") %}<!--email_off-->{% endif %}
             <a href="{{ item.url }}" aria-label="{{ item.label }}"{% if item.url.startsWith("http") %} rel="me"{% endif %}>{{ icon(item.icon, "20") }}</a>
+            {% if item.url.startsWith("mailto:") %}<!--/email_off-->{% endif %}
           {% endfor %}
         </div>
       </div>
@@ -114,6 +116,6 @@ layout: layouts/base.njk
     <h2>Get in touch</h2>
     <p>Consulting, collaboration, and software conversations.</p>
     <p>I’m always interested in talking about new projects, consulting opportunities, and the work of building better software with other people.</p>
-    <a class="button button--primary" href="mailto:{{ site.email }}">{{ icon("email", "18") }} {{ site.email }}</a>
+    <!--email_off--><a class="button button--primary" href="mailto:{{ site.email }}">{{ icon("email", "18") }} {{ site.email }}</a><!--/email_off-->
   </div>
 </section>
