@@ -1,0 +1,23 @@
+---
+layout: layouts/base.njk
+title: Search
+description: Search articles on bensampica.com.
+permalink: /search/
+searchable: false
+noindex: true
+---
+<section class="page-hero page-hero--compact" data-pagefind-ignore>
+  <div class="shell shell--narrow">
+    <h1>Search</h1>
+    <p>Search across every published post.</p>
+  </div>
+</section>
+<section class="section section--muted" data-pagefind-ignore>
+  <div class="shell shell--narrow search-panel">
+    <div id="search"></div>
+    <noscript>Search requires JavaScript. Browse the <a href="/blog/">article archive</a> instead.</noscript>
+  </div>
+</section>
+<link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+<script src="/pagefind/pagefind-ui.js"></script>
+<script>window.addEventListener("DOMContentLoaded", () => new PagefindUI({ element: "#search", showSubResults: true }));</script>

@@ -1,0 +1,19 @@
+---
+permalink: /llms.txt
+eleventyExcludeFromCollections: true
+---
+# Ben Sampica
+
+Software engineer, consultant, and writer covering .NET, architecture, testing, DevOps, and software craftsmanship.
+
+## Main pages
+
+- [Home]({{ "/" | siteUrl }})
+- [Blog]({{ "/blog/" | siteUrl }})
+- [Topics]({{ "/tags/" | siteUrl }})
+- [Library]({{ "/library/" | siteUrl }})
+
+## Articles
+
+{% for post in collections.posts %}- [{{ post.data.title }}]({{ post.url | siteUrl }}): {{ post.data.summary }}
+{% endfor %}

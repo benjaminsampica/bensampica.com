@@ -1,0 +1,16 @@
+{
+  "name": "Ben Sampica",
+  "short_name": "Ben Sampica",
+  "description": "Software engineer, consultant, and writer.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0b10",
+  "theme_color": "#0a0b10",
+  "icons": [
+    {
+      "src": "/media/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

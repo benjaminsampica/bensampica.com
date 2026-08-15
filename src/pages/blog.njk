@@ -1,0 +1,33 @@
+---
+layout: layouts/base.njk
+title: Blog
+description: Writing on .NET, architecture, testing, DevOps, and software craftsmanship.
+searchable: false
+pagination:
+  data: collections.posts
+  size: 10
+  alias: posts
+permalink: "{% if pagination.pageNumber == 0 %}/blog/{% else %}/blog/page/{{ pagination.pageNumber + 1 }}/{% endif %}"
+---
+<section class="page-hero page-hero--compact">
+  <div class="shell shell--narrow">
+    <h1>Blog</h1>
+    <p>Writing on .NET, architecture, testing, DevOps, and software craftsmanship.</p>
+  </div>
+</section>
+<section class="section section--muted">
+  <div class="shell">
+    <div class="archive-heading">
+      <p>{{ collections.posts.length }} articles</p>
+      <a href="/tags/">Browse topics →</a>
+    </div>
+    <div class="post-grid">
+      {% for post in posts %}{% include "components/post-card.njk" %}{% endfor %}
+    </div>
+    {% set previousUrl = pagination.href.previous %}
+    {% set nextUrl = pagination.href.next %}
+    {% set pageNumber = pagination.pageNumber %}
+    {% set pageCount = pagination.pages.length %}
+    {% include "components/pagination.njk" %}
+  </div>
+</section>

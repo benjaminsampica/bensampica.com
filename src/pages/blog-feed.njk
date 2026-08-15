@@ -1,0 +1,10 @@
+---
+permalink: /blog/index.xml
+eleventyExcludeFromCollections: true
+---
+{% set feedTitle = "Ben Sampica - Blog" %}
+{% set feedHome = "/blog/" %}
+{% set feedUrl = "/blog/index.xml" %}
+{% set feedDescription = "Writing on .NET, architecture, testing, DevOps, and software craftsmanship." %}
+{% set feedPosts = collections.posts %}
+{% include "feeds/rss.njk" %}

@@ -1,0 +1,110 @@
+---
+layout: layouts/base.njk
+---
+{% from "components/icon.njk" import icon %}
+<section class="hero" id="hero">
+  <div class="shell hero__inner">
+    <div class="hero__copy">
+      <h1>I build pragmatic software<span>and teams that deliver.</span></h1>
+      <p class="hero__lede">.NET engineer, consultant, and writer focused on durable systems, cloud architecture, testing, and software craftsmanship.</p>
+      <div class="hero__actions">
+        <a class="button button--primary" href="#experience">Explore my work {{ icon("arrow", "18") }}</a>
+        <a class="button button--secondary" href="/blog/">Read my writing</a>
+      </div>
+      <div class="hero__connect">
+        <span>Find me online</span>
+        <div class="social-links" aria-label="Ben Sampica links">
+          {% for item in site.social %}
+            <a href="{{ item.url }}" aria-label="{{ item.label }}"{% if item.url.startsWith("http") %} rel="me"{% endif %}>{{ icon(item.icon, "20") }}</a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <figure class="hero__visual">
+      <div class="hero__portrait-panel">
+        <img class="hero__portrait" src="/media/authors/me-cutout.png" alt="Portrait of Ben Sampica" width="1254" height="1254">
+      </div>
+    </figure>
+    <a class="scroll-cue" href="#blog" aria-label="Scroll to recent posts"><span></span></a>
+  </div>
+</section>
+
+<section class="section section--muted" id="blog">
+  <div class="shell">
+    <div class="section-heading section-heading--split">
+      <div>
+        <h2>Recent posts</h2>
+        <p>Writing on .NET, architecture, testing, DevOps, and software craftsmanship.</p>
+      </div>
+      <a class="text-link text-link--large" href="/blog/">Browse every article <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="post-grid">
+      {% for post in collections.posts | take(5) %}
+        {% include "components/post-card.njk" %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section" id="experience">
+  <div class="shell">
+    <div class="section-heading">
+      <h2>Experience</h2>
+    </div>
+    <ol class="timeline">
+      {% for job in site.experience %}
+        <li class="timeline__item">
+          <div class="timeline__marker" aria-hidden="true"></div>
+          <div class="timeline__card{% if job.roles %} timeline__card--multi{% endif %}">
+            {% if job.roles %}
+              <div class="timeline__company">
+                <div>
+                  <a class="timeline__company-link" href="{{ job.url }}">{{ job.company }}</a>
+                  <p>{{ job.location }}</p>
+                </div>
+                <p class="timeline__date timeline__date--company">
+                  <time datetime="{{ job.start }}">{{ job.start | monthYear }}</time>
+                  <span>-</span>
+                  {% if job.end %}<time datetime="{{ job.end }}">{{ job.end | monthYear }}</time>{% else %}<span>Present</span>{% endif %}
+                </p>
+              </div>
+              <ol class="timeline__roles" aria-label="Roles at {{ job.company }}">
+                {% for position in job.roles %}
+                  <li class="timeline__role">
+                    <h3>{{ position.role }}</h3>
+                    <p class="timeline__date">
+                      <time datetime="{{ position.start }}">{{ position.start | monthYear }}</time>
+                      <span>-</span>
+                      {% if position.end %}<time datetime="{{ position.end }}">{{ position.end | monthYear }}</time>{% else %}<span>Present</span>{% endif %}
+                    </p>
+                  </li>
+                {% endfor %}
+              </ol>
+            {% else %}
+              <div>
+                <h3>{{ job.role }}</h3>
+                <a href="{{ job.url }}">{{ job.company }}</a>
+                <p>{{ job.location }}</p>
+              </div>
+              <p class="timeline__date">
+                <time datetime="{{ job.start }}">{{ job.start | monthYear }}</time>
+                <span>-</span>
+                {% if job.end %}<time datetime="{{ job.end }}">{{ job.end | monthYear }}</time>{% else %}<span>Present</span>{% endif %}
+              </p>
+            {% endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+<section class="section section--contact" id="contact">
+  <div class="shell contact-card">
+    <h2>Get in touch</h2>
+    <p>Consulting, collaboration, and software conversations.</p>
+    <p>I’m always interested in talking about new projects, consulting opportunities, and the work of building better software with other people.</p>
+    <a class="button button--primary" href="mailto:{{ site.email }}">{{ icon("email", "18") }} {{ site.email }}</a>
+  </div>
+</section>

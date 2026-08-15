@@ -1,0 +1,5 @@
+/post/* /blog/:splat 301!
+/blog/page/1/ /blog/ 301!
+/tags/:tag/page/1/ /tags/:tag/ 301!
+/publication_types/ /tags/ 301!
+/publication_types/* /tags/ 301!

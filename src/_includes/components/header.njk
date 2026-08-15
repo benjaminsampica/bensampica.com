@@ -1,0 +1,29 @@
+{% from "components/icon.njk" import icon %}
+<header class="site-header" data-site-header>
+  <div class="shell header__inner">
+    <a class="wordmark" href="/" aria-label="Ben Sampica home">
+      <span>Ben Sampica</span>
+    </a>
+
+    <button class="icon-button nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" data-nav-toggle>
+      <span class="sr-only">Toggle navigation</span>
+      {{ icon("menu", "22") }}
+    </button>
+
+    <nav class="primary-nav" id="primary-navigation" aria-label="Primary navigation" data-navigation>
+      {% for item in site.navigation %}
+        <a href="{{ item.url }}">{{ item.label }}</a>
+      {% endfor %}
+    </nav>
+
+    <div class="header__actions">
+      <a class="icon-button" href="/search/" aria-label="Search">
+        {{ icon("search", "20") }}
+      </a>
+      <button class="icon-button theme-toggle" type="button" aria-label="Change color theme" data-theme-toggle>
+        <span class="theme-toggle__sun">{{ icon("sun", "20") }}</span>
+        <span class="theme-toggle__moon">{{ icon("moon", "20") }}</span>
+      </button>
+    </div>
+  </div>
+</header>

@@ -1,25 +1,13 @@
 # ============================================================================
-# Hugo Site .gitignore
+# bensampica.com .gitignore
 # ============================================================================
 
 # ============================================================================
-# Hugo Build Artifacts
+# Build Artifacts
 # ============================================================================
 
-# Generated site output
-public/
-
-# Hugo resources (processed assets)
-resources/
-
-# Hugo build lock
-.hugo_build.lock
-
-# Hugo stats
-hugo_stats.json
-
-# Auto-generated JS config
-**/assets/jsconfig.json
+# Eleventy output
+_site/
 
 # ============================================================================
 # Node.js & Package Managers

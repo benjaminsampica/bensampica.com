@@ -1,0 +1,19 @@
+---
+layout: layouts/base.njk
+title: Computers
+description: Computers built by Ben Sampica over the years.
+permalink: /computers/
+---
+<section class="page-hero page-hero--compact">
+  <div class="shell shell--narrow">
+    <h1>Computers</h1>
+    <p>I love hardware. Here are some of the computers I have built over the years.</p>
+  </div>
+</section>
+<section class="section section--muted">
+  <div class="shell gallery" data-lightbox-root>
+    {% for image in site.computerImages %}
+      <img src="/albums/computers/{{ image }}.jpg" alt="A custom computer built by Ben Sampica" loading="lazy">
+    {% endfor %}
+  </div>
+</section>

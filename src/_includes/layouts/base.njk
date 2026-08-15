@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Eleventy">
+    <meta name="author" content="{{ site.name }}">
+    {% set metaTitle = site.name if isHome else (title + " | " + site.name if title else site.name) %}
+    {% set metaDescription = description or summary or site.description %}
+    {% set canonicalUrl = canonical or (page.url | siteUrl) %}
+    {% set metaImage = socialImage or "/media/sharing.png" %}
+    <title>{{ metaTitle }}</title>
+    <meta name="description" content="{{ metaDescription }}">
+    <link rel="canonical" href="{{ canonicalUrl }}">
+    <link rel="alternate" type="application/rss+xml" title="Ben Sampica" href="{{ "/index.xml" | siteUrl }}">
+    {% if noindex %}<meta name="robots" content="noindex,follow">{% endif %}
+    <meta property="og:type" content="{{ "article" if isArticle else "website" }}">
+    <meta property="og:site_name" content="{{ site.name }}">
+    <meta property="og:title" content="{{ metaTitle }}">
+    <meta property="og:description" content="{{ metaDescription }}">
+    <meta property="og:url" content="{{ canonicalUrl }}">
+    <meta property="og:image" content="{{ metaImage | siteUrl }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ metaTitle }}">
+    <meta name="twitter:description" content="{{ metaDescription }}">
+    <meta name="twitter:image" content="{{ metaImage | siteUrl }}">
+    <meta name="theme-color" content="#080c0e">
+    <link rel="icon" href="/media/icon.png" type="image/png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="/assets/css/site.css">
+    <script>
+      document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
+    </script>
+    <script type="application/ld+json">{{ seoJsonLd({ title: title or site.name, description: metaDescription, url: page.url, image: metaImage, isArticle: isArticle, isHome: isHome, date: date, lastmod: lastmod }) | jsonLd | safe }}</script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    {% include "components/header.njk" %}
+    <main id="main-content"{% if searchable != false %} data-pagefind-body{% endif %}>
+      {{ content | safe }}
+    </main>
+    {% include "components/footer.njk" %}
+    <script src="/assets/js/site.js" defer></script>
+  </body>
+</html>

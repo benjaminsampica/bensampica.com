@@ -1,0 +1,10 @@
+---
+permalink: /index.xml
+eleventyExcludeFromCollections: true
+---
+{% set feedTitle = "Ben Sampica" %}
+{% set feedHome = "/" %}
+{% set feedUrl = "/index.xml" %}
+{% set feedDescription = site.description %}
+{% set feedPosts = collections.posts %}
+{% include "feeds/rss.njk" %}

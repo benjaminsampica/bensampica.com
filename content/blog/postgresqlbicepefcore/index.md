@@ -26,7 +26,7 @@ So it's a problem - one which Microsoft seems to be [slow-rolling](https://githu
 
 Since this was the _only_ issue I had with ARM64 after using it for a couple weeks, I decided to just bite the bullet and move over to PostgreSQL, something I've been wanting to do anyway for its lower cost, wider adoption, and some querying features that I find myself really needing.
 
-I had already done a [similar post for Azure SQL Server](../azsqlbicepefcore/index.md) and since that was a bit of a pain, too, I figured why not share how to do it with postgres too? If you've already read that one, the first few sections are very similar.
+I had already done a [similar post for Azure SQL Server](/blog/azsqlbicepefcore/) and since that was a bit of a pain, too, I figured why not share how to do it with postgres too? If you've already read that one, the first few sections are very similar.
 
 ## Overview 
 

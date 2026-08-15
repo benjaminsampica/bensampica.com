@@ -1,0 +1,31 @@
+---
+layout: layouts/base.njk
+searchable: false
+pagination:
+  data: collections.tagPages
+  size: 1
+  alias: tagPage
+permalink: "{{ tagPage.url }}"
+eleventyComputed:
+  title: "{{ tagPage.name }}"
+  description: "Articles about {{ tagPage.name }} by Ben Sampica."
+---
+<section class="page-hero page-hero--compact">
+  <div class="shell shell--narrow">
+    <a class="back-link" href="/tags/">← All topics</a>
+    <h1>{{ tagPage.name }}</h1>
+    <p>{{ tagPage.posts.length }} article{% if tagPage.posts.length != 1 %}s{% endif %} on this page.</p>
+  </div>
+</section>
+<section class="section section--muted">
+  <div class="shell">
+    <div class="post-grid">
+      {% for post in tagPage.posts %}{% include "components/post-card.njk" %}{% endfor %}
+    </div>
+    {% set previousUrl = ("/tags/" + tagPage.slug + "/") if tagPage.pageIndex == 1 else (("/tags/" + tagPage.slug + "/page/" + tagPage.pageIndex + "/") if tagPage.pageIndex > 1 else null) %}
+    {% set nextUrl = ("/tags/" + tagPage.slug + "/page/" + (tagPage.pageIndex + 2) + "/") if tagPage.pageIndex + 1 < tagPage.pageCount else null %}
+    {% set pageNumber = tagPage.pageIndex %}
+    {% set pageCount = tagPage.pageCount %}
+    {% include "components/pagination.njk" %}
+  </div>
+</section>

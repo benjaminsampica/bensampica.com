@@ -74,7 +74,7 @@ Seeing a lot of these that live a long time can be a small part of a larger prob
 
 > Dead/Orphaned code
 
-Production code that has been commented out serves little purpose other than to confuse and waste the reader's time. Remember from my first [blog post](https://bensampica.com/cleancode1) that code will be read more often than it was written. 
+Production code that has been commented out serves little purpose other than to confuse and waste the reader's time. Remember from my first [blog post](/blog/cleancode1/) that code will be read more often than it was written.
 
 If the code gains value suddenly and you’ve deleted it, you can always pull it out of git. Don’t let it sit commented out though because then it’ll _never_ get deleted. Nobody remembers its original intent and everyone becomes too afraid to remove it. You believe that _someone_ else owns that commented out code but the reality is _everyone_ feels that way but nobody actually feels ownership over it. 
 

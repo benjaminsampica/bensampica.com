@@ -1,0 +1,22 @@
+---
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  {% for url in ["/", "/blog/", "/tags/", "/library/", "/computers/"] %}
+    <url><loc>{{ url | siteUrl }}</loc></url>
+  {% endfor %}
+  {% for pageNumber in range(2, ((collections.posts.length - 1) // 10) + 2) %}
+    <url><loc>{{ ("/blog/page/" + pageNumber + "/") | siteUrl }}</loc></url>
+  {% endfor %}
+  {% for post in collections.posts %}
+    <url>
+      <loc>{{ post.url | siteUrl }}</loc>
+      <lastmod>{{ (post.data.lastmod or post.data.date) | dateIso }}</lastmod>
+    </url>
+  {% endfor %}
+  {% for tagPage in collections.tagPages %}
+    <url><loc>{{ tagPage.url | siteUrl }}</loc></url>
+  {% endfor %}
+</urlset>

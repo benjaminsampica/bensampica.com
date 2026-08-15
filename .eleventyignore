@@ -1,0 +1,11 @@
+AGENTS.md
+LICENSE.md
+README.md
+content/blog/**/README.md
+content/blog/**/LICENSE.md
+content/blog/**/src/**
+content/blog/**/AspireSample/**
+content/blog/fluentvalidation/fluentValidation/**
+content/blog/mvctoblazor/mvcToBlazor/**
+content/blog/**/TestContainers.Web/**
+content/blog/tdd/tdd/**

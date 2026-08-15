@@ -1,0 +1,22 @@
+---
+layout: layouts/base.njk
+title: Topics
+description: Browse Ben Sampica's software engineering articles by topic.
+searchable: false
+permalink: /tags/
+---
+<section class="page-hero page-hero--compact">
+  <div class="shell shell--narrow">
+    <h1>Topics</h1>
+    <p>Browse articles by technology, practice, or idea.</p>
+  </div>
+</section>
+<section class="section section--muted">
+  <div class="shell shell--narrow">
+    <div class="topic-grid">
+      {% for tag in collections.tagList %}
+        <a class="topic-card" href="/tags/{{ tag.slug }}/"><span>{{ tag.name }}</span><strong>{{ tag.posts.length }}</strong></a>
+      {% endfor %}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,40 @@
+---
+layout: layouts/base.njk
+---
+{% from "components/icon.njk" import icon %}
+<article class="article">
+  <header class="article-header shell shell--article">
+    <a class="back-link" href="/blog/">← All articles</a>
+    <div class="tag-row">
+      {% for tag in tags %}<a class="tag" href="/tags/{{ tag | slugify }}/">{{ tag }}</a>{% endfor %}
+    </div>
+    <h1>{{ title }}</h1>
+    {% if subtitle %}<p class="article-header__subtitle">{{ subtitle }}</p>{% endif %}
+    <p class="article-header__summary">{{ summary }}</p>
+    <div class="article-byline">
+      <div class="article-byline__portrait" aria-hidden="true">
+        <img src="/media/authors/me.png" alt="" width="48" height="48">
+      </div>
+      <div>
+        <strong>{{ site.name }}</strong>
+        <p>
+          <time datetime="{{ date | dateIso }}">{{ date | dateReadable }}</time>
+          <span aria-hidden="true">/</span>
+          <span>{{ content | readingTime }} min read</span>
+          {% if lastmod and (lastmod | dateIso) != (date | dateIso) %}<span aria-hidden="true">/</span><span>Updated {{ lastmod | dateReadable }}</span>{% endif %}
+        </p>
+      </div>
+      {% set repositoryUrl = links | codeLink %}
+      {% if repositoryUrl %}<a class="button button--small button--secondary article-byline__code" href="{{ repositoryUrl }}">{{ icon("github", "18") }} Source code</a>{% endif %}
+    </div>
+  </header>
+
+  <div class="article-layout shell">
+    <aside class="article-layout__toc" data-pagefind-ignore>
+      {% if toc != false %}{{ content | toc | safe }}{% endif %}
+    </aside>
+    <div class="prose" data-lightbox-root>
+      {{ content | safe }}
+    </div>
+  </div>
+</article>

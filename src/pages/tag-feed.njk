@@ -1,0 +1,14 @@
+---
+pagination:
+  data: collections.tagList
+  size: 1
+  alias: tag
+permalink: "/tags/{{ tag.slug }}/index.xml"
+eleventyExcludeFromCollections: true
+---
+{% set feedTitle = "Ben Sampica - " + tag.name %}
+{% set feedHome = "/tags/" + tag.slug + "/" %}
+{% set feedUrl = "/tags/" + tag.slug + "/index.xml" %}
+{% set feedDescription = "Articles about " + tag.name + " by Ben Sampica." %}
+{% set feedPosts = tag.posts %}
+{% include "feeds/rss.njk" %}

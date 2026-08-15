@@ -1,0 +1,15 @@
+---
+layout: layouts/base.njk
+description: Books about programming, delivery, leadership, design, mathematics, and product work owned and recommended by Ben Sampica.
+---
+<section class="page-hero page-hero--compact">
+  <div class="shell shell--narrow">
+    <h1>My library</h1>
+    {% if lastmod %}<p>Last updated {{ lastmod | monthYear }}</p>{% endif %}
+  </div>
+</section>
+<section class="section section--muted">
+  <div class="shell shell--prose prose library-content">
+    {{ content | safe }}
+  </div>
+</section>

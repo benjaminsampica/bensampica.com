@@ -1,0 +1,7 @@
+{% if pageCount > 1 %}
+  <nav class="pagination" aria-label="Pagination">
+    {% if previousUrl %}<a href="{{ previousUrl }}">← Newer</a>{% else %}<span></span>{% endif %}
+    <span>Page {{ pageNumber + 1 }} of {{ pageCount }}</span>
+    {% if nextUrl %}<a href="{{ nextUrl }}">Older →</a>{% else %}<span></span>{% endif %}
+  </nav>
+{% endif %}

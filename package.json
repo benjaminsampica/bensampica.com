@@ -1,20 +1,23 @@
 {
-  "name": "hugo-blox-dev-portfolio-free",
+  "name": "bensampica-com",
   "version": "1.0.0",
   "private": true,
   "packageManager": "pnpm@10.14.0",
-  "description": "Modern developer portfolio template for Hugo Blox with Tailwind CSS v4 - Free version",
+  "type": "module",
+  "description": "Ben Sampica's portfolio and software engineering blog",
   "scripts": {
-    "dev": "hugo server --disableFastRender",
-    "build": "hugo --minify && pnpm run pagefind",
-    "pagefind": "pagefind --site public"
+    "dev": "eleventy --serve",
+    "build": "eleventy && pnpm run pagefind && pnpm run check",
+    "build:site": "eleventy",
+    "check": "node scripts/check-site.mjs",
+    "pagefind": "pagefind --site _site"
   },
   "dependencies": {
-    "@tailwindcss/cli": "^4.1.12",
-    "@tailwindcss/typography": "^0.5.10",
-    "medium-zoom": "^1.1.0",
-    "pagefind": "^1.4.0",
-    "preact": "^10.27.2",
-    "tailwindcss": "^4.1.12"
+    "@11ty/eleventy": "3.1.6",
+    "@11ty/eleventy-plugin-rss": "3.0.0",
+    "@11ty/eleventy-plugin-syntaxhighlight": "5.0.2",
+    "markdown-it": "14.1.0",
+    "markdown-it-anchor": "9.2.1",
+    "pagefind": "1.5.2"
   }
 }

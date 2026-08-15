@@ -1,124 +1,94 @@
-# [Developer Portfolio](https://hugoblox.com/templates/dev-portfolio/start?utm_source=github&utm_medium=readme)
+# bensampica.com
 
-[![Screenshot](.github/preview.png)](https://hugoblox.com/templates/dev-portfolio/start?utm_source=github&utm_medium=readme)
+Personal portfolio and software engineering blog built with [Eleventy](https://www.11ty.dev/).
 
-<h1 align="center">The Dev Portfolio That Gets You Hired</h1>
+## Requirements
 
-<p align="center">
-  <strong>Built for uni students, STEM grads, and software engineers.</strong><br/>
-  Showcase real projects, ship a clean blog, and stand out with a modern dark-first design — without a fragile “black box” React app.
-</p>
+- Node.js 22
+- pnpm 10.14.0
 
-<p align="center">
-  <a href="https://hugoblox.com/templates/dev-portfolio/start?utm_source=github&utm_medium=readme"><b>🚀 Deploy in 60s (Free)</b></a>
-  &nbsp;•&nbsp;
-  <a href="https://hugoblox.com/templates/?open=dev-portfolio&loading=true&utm_source=github&utm_medium=readme">Live Demo</a>
-  &nbsp;•&nbsp;
-  <a href="https://docs.hugoblox.com/guides/studio/">HugoBlox Studio (Visual Editor)</a>
-</p>
+## Local development
 
-
-<p align="center">
-  <b>▶︎ Watch 12s Preview</b>
-</p>
-
-https://github.com/user-attachments/assets/a6b676c0-1c10-4734-a55f-68c6f72d1612
-
-<p align="center">
-  <a href="https://discord.gg/z8wNYzb"><img src="https://img.shields.io/discord/722225264733716590?label=Join%20Discord&style=social" alt="Discord"></a>
-  <a href="https://github.com/HugoBlox/kit"><img src="https://img.shields.io/github/stars/HugoBlox/kit?label=Star%20HugoBlox&style=social" alt="GitHub Stars"></a>
-  <a href="https://x.com/MakeOwnable"><img src="https://img.shields.io/twitter/follow/MakeOwnable?label=Follow&style=social" alt="Follow on X"></a>
-</p>
-
----
-
-## Why this template?
-
-Most portfolios look the same — and most “quick” site builders produce slow sites you can’t maintain.
-
-- **⚡ Fast by default**: Hugo + Tailwind 4 + Hugo Modules → great Lighthouse scores without JS bloat.
-- **🧠 AI-ready content**: Your projects and posts live in clean Markdown/YAML — readable by humans and LLMs.
-- **🎯 Job-hunting optimized**: Projects, tech stack, experience timeline, and a blog layout that looks credible.
-- **🌙 Dark-first (but light-mode supported)**: Looks premium in dark mode, still works perfectly in light mode.
-- **🧩 Block-based**: Reorder/replace sections without rewriting templates.
-
----
-
-## Who it’s for
-
-- **Students & grads** applying to internships / MSc / PhD / junior roles
-- **STEM professionals** (research, data, ML, bio, engineering) showcasing projects and writing
-- **Software engineers** building a portfolio that feels modern in 2026
-
----
-
-## What you get (Free)
-
-- **Developer hero** with modern gradients + optional typewriter
-- **Filterable portfolio** (tags + smooth transitions)
-- **Tech stack** grid with icons
-- **Experience + education timeline**
-- **Blog section** (cards + featured images)
-- **Contact section** with social links + copy email
-
----
-
-## Get started (recommended)
-
-### Option 1 — Online deployer (fastest)
-
-Deploy this template in ~60 seconds:
-
-- [Deploy in browser →](https://hugoblox.com/templates/dev-portfolio/start?utm_source=github&utm_medium=readme)
-
-### Option 2 — HugoBlox Studio (visual editor in VS Code)
-
-- [Studio guide →](https://docs.hugoblox.com/guides/studio/?utm_source=github&utm_medium=readme)
-- [Studio AI automation plans (Free/Plus/Pro) →](https://hugoblox.com/pricing/?utm_source=github&utm_medium=readme)
-
-### Option 3 — HugoBlox CLI (developer workflow)
-
-Install:
+Install dependencies and start Eleventy's development server:
 
 ```bash
-npm install -g hugoblox@latest
+pnpm install --frozen-lockfile
+pnpm dev
 ```
 
-Create a site:
+The local site runs at `http://localhost:8080` by default.
+
+## Production build
 
 ```bash
-hugoblox create site --template dev-portfolio
+pnpm build
 ```
 
-[CLI docs →](https://docs.hugoblox.com/start/cli/?utm_source=github&utm_medium=readme)
+Eleventy writes the static site to `_site/`, Pagefind creates the search index in `_site/pagefind/`, and the site checker validates metadata, internal references, feeds, sitemap entries, posts, and callouts.
 
+## Repository structure
+
+```text
+content/
+  blog/                 Markdown articles and adjacent article assets
+  library/              Library page content
+src/
+  _data/                Site identity, navigation, and experience data
+  _includes/
+    components/         Reusable Nunjucks components
+    feeds/              RSS templates
+    layouts/            Page and article layouts
+  assets/               Repository-owned CSS and JavaScript
+  pages/                Generated page, archive, search, and feed templates
+  static/               Files copied to the site root
+assets/media/            Shared images and computer gallery
+static/uploads/          Downloadable files
+```
+
+## Writing a blog post
+
+Create `content/blog/<slug>/index.md` with the existing front matter shape:
+
+```yaml
 ---
-
-## Customize in 10 minutes
-
-- **Your profile**: `data/authors/me.yaml`
-- **Homepage sections**: `content/_index.md`
-- **Projects**: `content/projects/<project>/index.md`
-- **Blog posts**: `content/blog/<post>/index.md`
-- **Theme + identity**: `config/_default/params.yaml`
-
+title: Example title
+subtitle: Short supporting title
+summary: Search and social description.
+authors:
+  - me
+tags:
+  - DotNet
+date: "2026-01-01T00:00:00Z"
+lastmod: "2026-01-01T00:00:00Z"
+featured: false
+draft: false
+toc: true
 ---
+```
 
-## Want the Pro version? 💎
+Place article images beside the post or in an `images/` folder. Relative Markdown references continue to work:
 
-If you want a version that feels meaningfully more premium (and helps fund open source + research):
+```markdown
+![Description](images/example.png)
+```
 
-- [Premium template →](https://hugoblox.com/templates/dev-portfolio-pro/start?utm_source=github&utm_medium=readme)
-- [HugoBlox Pro / Studio →](https://hugoblox.com/pricing?utm_source=github&utm_medium=readme)
+Callouts support GitHub-style syntax:
 
----
+```markdown
+> [!TIP]
+> Useful advice goes here.
+```
 
-## Community & support
+Supported types: `NOTE`, `TIP`, `IMPORTANT`, `WARNING`, `CAUTION`, and `INFO`.
 
-- **Docs**: [docs.hugoblox.com →](https://docs.hugoblox.com/?utm_source=github&utm_medium=readme)
-- **Discord**: [Join Discord →](https://discord.gg/z8wNYzb)
-- **Issues**: [Open an issue →](https://github.com/HugoBlox/kit/issues)
+## Site configuration
 
----
+- Identity, biography, navigation, experience, and social links: `src/_data/site.js`
+- Global styling: `src/assets/css/site.css`
+- Client enhancements: `src/assets/js/site.js`
+- Markdown behavior, collections, routes, and filters: `.eleventy.js`
+- Netlify build and headers: `netlify.toml`
 
-MIT © 2016–Present [George Cushen](https://neuralgeo.com/?utm_source=github&utm_medium=readme)
+## Publishing
+
+Netlify installs the pinned dependencies, runs `pnpm build`, and publishes `_site/`. Pagefind, RSS feeds, sitemap, robots.txt, redirects, JSON-LD, canonical metadata, and social metadata are generated during the build.
