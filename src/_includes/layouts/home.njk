@@ -23,7 +23,15 @@ layout: layouts/base.njk
 
     <figure class="hero__visual">
       <div class="hero__portrait-panel">
-        <img class="hero__portrait" src="/media/authors/me-cutout.png" alt="Portrait of Ben Sampica" width="1254" height="1254">
+        <img
+          class="hero__portrait"
+          src="/media/authors/me-cutout-480.webp"
+          srcset="/media/authors/me-cutout-480.webp 480w, /media/authors/me-cutout-672.webp 672w, /media/authors/me-cutout-768.webp 768w"
+          sizes="(max-width: 760px) calc(100vw - 3rem), 448px"
+          alt="Portrait of Ben Sampica"
+          width="768"
+          height="768"
+          decoding="async">
       </div>
     </figure>
     <a class="scroll-cue" href="#blog" aria-label="Scroll to recent posts"><span></span></a>
@@ -40,6 +48,7 @@ layout: layouts/base.njk
       <a class="text-link text-link--large" href="/blog/">Browse every article <span aria-hidden="true">→</span></a>
     </div>
     <div class="post-grid">
+      {% set deferPostImages = true %}
       {% for post in collections.posts | take(5) %}
         {% include "components/post-card.njk" %}
       {% endfor %}

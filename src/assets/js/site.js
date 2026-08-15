@@ -25,6 +25,28 @@ const updateHeader = () => header?.classList.toggle("is-scrolled", window.scroll
 updateHeader();
 window.addEventListener("scroll", updateHeader, { passive: true });
 
+const deferredImages = document.querySelectorAll("[data-deferred-image]");
+if (deferredImages.length > 0) {
+  const loadImage = (image) => {
+    image.src = image.dataset.src;
+    image.removeAttribute("data-src");
+    image.removeAttribute("data-deferred-image");
+  };
+
+  if ("IntersectionObserver" in window) {
+    const imageObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        loadImage(entry.target);
+        imageObserver.unobserve(entry.target);
+      }
+    }, { rootMargin: "200px 0px" });
+    for (const image of deferredImages) imageObserver.observe(image);
+  } else {
+    for (const image of deferredImages) loadImage(image);
+  }
+}
+
 for (const pre of document.querySelectorAll(".prose pre")) {
   const code = pre.querySelector("code");
   if (!code) continue;

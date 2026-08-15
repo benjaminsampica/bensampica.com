@@ -96,7 +96,7 @@ The better the skills and instructions are, the less time I spend repeatedly ste
 
 Some useful skills I've curated in a repo I use for Blueprint are below:
 
-![A list of curated Blueprint AI skills.](skills.png)
+![A list of curated Blueprint AI skills.](skills.webp)
 
 ## The Mental Model Problem
 

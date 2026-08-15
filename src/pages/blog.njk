@@ -22,7 +22,11 @@ permalink: "{% if pagination.pageNumber == 0 %}/blog/{% else %}/blog/page/{{ pag
       <a href="/tags/">Browse topics →</a>
     </div>
     <div class="post-grid">
-      {% for post in posts %}{% include "components/post-card.njk" %}{% endfor %}
+      {% set postHeadingLevel = 2 %}
+      {% for post in posts %}
+        {% set deferPostImages = not loop.first %}
+        {% include "components/post-card.njk" %}
+      {% endfor %}
     </div>
     {% set previousUrl = pagination.href.previous %}
     {% set nextUrl = pagination.href.next %}

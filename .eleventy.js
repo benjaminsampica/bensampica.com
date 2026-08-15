@@ -157,9 +157,18 @@ export default function eleventyConfiguration(eleventyConfig) {
       placement: "after",
       symbol: "#",
       class: "heading-anchor",
+      renderAttrs: () => ({ tabindex: "-1" }),
     }),
     slugify,
   });
+  const defaultImageRenderer = markdown.renderer.rules.image;
+  markdown.renderer.rules.image = (tokens, index, options, environment, renderer) => {
+    tokens[index].attrSet("loading", "lazy");
+    tokens[index].attrSet("decoding", "async");
+    return defaultImageRenderer
+      ? defaultImageRenderer(tokens, index, options, environment, renderer)
+      : renderer.renderToken(tokens, index, options);
+  };
   installCallouts(markdown);
   eleventyConfig.setLibrary("md", markdown);
 
@@ -200,6 +209,7 @@ export default function eleventyConfiguration(eleventyConfig) {
   eleventyConfig.addFilter("take", (items = [], count = 0) => items.slice(0, count));
   eleventyConfig.addFilter("postSlug", postSlug);
   eleventyConfig.addFilter("siteUrl", (url) => new URL(url, SITE_URL).href);
+  eleventyConfig.addFilter("inlineFile", (file) => fs.readFileSync(path.resolve(file), "utf8"));
   eleventyConfig.addFilter("dateIso", (date) => new Date(date).toISOString());
   eleventyConfig.addFilter("dateRfc822", (date) => new Date(date).toUTCString());
   eleventyConfig.addFilter("dateReadable", (date) =>
@@ -241,6 +251,10 @@ export default function eleventyConfiguration(eleventyConfig) {
     const slug = postSlug(post);
     const directory = path.resolve("content/blog", post.inputPath.match(/content\/blog\/([^/]+)/)?.[1] ?? slug);
     const candidates = [
+      "featured-card.webp",
+      "cover-card.webp",
+      "skills-card.webp",
+      "sqldatabase-card.webp",
       "featured.png",
       "featured.jpg",
       "featured.jpeg",
@@ -251,7 +265,7 @@ export default function eleventyConfiguration(eleventyConfig) {
       "sqldatabase.png",
     ];
     const match = candidates.find((file) => fs.existsSync(path.join(directory, file)));
-    return match ? `/blog/${slug}/${match}` : "/media/sharing.png";
+    return match ? `/blog/${slug}/${match}` : "/media/sharing-card.webp";
   });
   eleventyConfig.addFilter("codeLink", (links = []) =>
     links.find((link) => link.type === "code")?.url ?? "",
