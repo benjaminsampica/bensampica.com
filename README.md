@@ -29,25 +29,26 @@ Eleventy writes the static site to `_site/`, Pagefind creates the search index i
 ## Repository structure
 
 ```text
-content/
-  blog/                 Markdown articles and adjacent article assets
-  library/              Library page content
 src/
+  content/
+    blog/               Markdown articles and adjacent article assets
+    library/            Library page content
   _data/                Site identity, navigation, and experience data
   _includes/
     components/         Reusable Nunjucks components
     feeds/              RSS templates
     layouts/            Page and article layouts
-  assets/               Repository-owned CSS and JavaScript
+  assets/               CSS and JavaScript source
   pages/                Generated page, archive, search, and feed templates
-  static/               Files copied to the site root
-assets/media/            Shared images and computer gallery
-static/uploads/          Downloadable files
+  static/
+    albums/              Computer gallery
+    media/               Shared images
+    uploads/             Downloadable files
 ```
 
 ## Writing a blog post
 
-Create `content/blog/<slug>/index.md` with the existing front matter shape:
+Create `src/content/blog/<slug>/index.md` with the existing front matter shape:
 
 ```yaml
 ---

@@ -1,8 +1,9 @@
 {
-  "name": "HugoBlox Codespace",
-  "image": "ghcr.io/HugoBlox/hugo-blox-dev:hugo0.156.0",
+  "name": "bensampica.com Eleventy",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
+  "onCreateCommand": "corepack enable",
   "updateContentCommand": "pnpm install --frozen-lockfile --prefer-offline",
-  "postCreateCommand": "pnpm --version && hugo version",
+  "postCreateCommand": "node --version && pnpm --version",
   "customizations": {
     "vscode": {
       "extensions": [
@@ -15,11 +16,11 @@
   ],
   "remoteUser": "vscode",
   "forwardPorts": [
-    1313
+    8080
   ],
   "portsAttributes": {
-    "1313": {
-      "label": "Hugo Server"
+    "8080": {
+      "label": "Eleventy Server"
     }
   }
 }

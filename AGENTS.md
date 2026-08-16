@@ -20,7 +20,7 @@ pnpm build
 
 ## Editing Rules
 
-- Edit articles and library content under `content/`, site identity and experience data under `src/_data/`, templates under `src/_includes/` and `src/pages/`, and repository-owned assets under `src/assets/`, `assets/media/`, or `static/`.
+- Edit articles and library content under `src/content/`, site identity and experience data under `src/_data/`, templates under `src/_includes/` and `src/pages/`, source assets under `src/assets/`, and public files under `src/static/`.
 - Prefer normal Markdown, Nunjucks, CSS, and small local JavaScript enhancements over adding a frontend framework or large theme dependency.
 - Do not hand-edit generated `_site/` or Pagefind output.
 - Preserve front matter, internal links, image references, and content taxonomy when moving pages.

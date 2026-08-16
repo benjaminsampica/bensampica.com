@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const outputRoot = path.resolve("_site");
-const sourceRoot = path.resolve("content/blog");
+const sourceRoot = path.resolve("src/content/blog");
 const siteOrigin = "https://www.bensampica.com";
 const errors = [];
 

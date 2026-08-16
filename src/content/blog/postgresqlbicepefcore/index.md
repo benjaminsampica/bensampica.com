@@ -12,7 +12,7 @@ date: '2025-12-17T00:00:00Z'
 lastmod: '2025-12-17T00:00:00Z'
 links:
   - type: code
-    url: https://github.com/benjaminsampica/bensampica.com/tree/main/content/blog/postgresqlbicepefcore
+    url: https://github.com/benjaminsampica/bensampica.com/tree/main/src/content/blog/postgresqlbicepefcore
 featured: false
 draft: false
 toc: true
@@ -31,7 +31,7 @@ I had already done a [similar post for Azure SQL Server](/blog/azsqlbicepefcore/
 ## Overview 
 
 > [!NOTE]
-> Want to just see the code? [Click here!](https://github.com/benjaminsampica/bensampica.com/tree/main/content/blog/postgresqlbicepefcore)
+> Want to just see the code? [Click here!](https://github.com/benjaminsampica/bensampica.com/tree/main/src/content/blog/postgresqlbicepefcore)
 
 Here's the end-to-end toolchain we are using and which the post will use:
 
@@ -434,4 +434,4 @@ deploy:
       package: .
 ```
 
-That's all for now. As a reminder, the entire code base can be found [here](https://github.com/benjaminsampica/bensampica.com/tree/main/content/blog/postgresqlbicepefcore). Happy coding!
+That's all for now. As a reminder, the entire code base can be found [here](https://github.com/benjaminsampica/bensampica.com/tree/main/src/content/blog/postgresqlbicepefcore). Happy coding!

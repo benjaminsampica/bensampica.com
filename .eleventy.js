@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { createHash } from "node:crypto";
 import markdownIt from "markdown-it";
 import markdownItAnchor from "markdown-it-anchor";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
@@ -31,7 +32,7 @@ function sortPosts(items) {
 function publishedPosts(collectionApi) {
   return sortPosts(
     collectionApi
-      .getFilteredByGlob("./content/blog/*/index.md")
+      .getFilteredByGlob("./src/content/blog/*/index.md")
       .filter((item) => !item.data.draft),
   );
 }
@@ -116,7 +117,7 @@ function installCallouts(markdown) {
 }
 
 function addPostAssets(eleventyConfig) {
-  const blogRoot = path.resolve("content/blog");
+  const blogRoot = path.resolve("src/content/blog");
   if (!fs.existsSync(blogRoot)) return;
 
   for (const entry of fs.readdirSync(blogRoot, { withFileTypes: true })) {
@@ -174,13 +175,10 @@ export default function eleventyConfiguration(eleventyConfig) {
 
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
   eleventyConfig.addPassthroughCopy({ "src/static": "." });
-  eleventyConfig.addPassthroughCopy({ "static/uploads": "uploads" });
-  eleventyConfig.addPassthroughCopy({ "assets/media": "media" });
-  eleventyConfig.addPassthroughCopy({ "assets/media/albums": "albums" });
   addPostAssets(eleventyConfig);
 
   eleventyConfig.addWatchTarget("src/assets");
-  eleventyConfig.addWatchTarget("assets/media");
+  eleventyConfig.addWatchTarget("src/static");
 
   eleventyConfig.addCollection("posts", publishedPosts);
   eleventyConfig.addCollection("tagList", (collectionApi) =>
@@ -209,6 +207,11 @@ export default function eleventyConfiguration(eleventyConfig) {
   eleventyConfig.addFilter("take", (items = [], count = 0) => items.slice(0, count));
   eleventyConfig.addFilter("postSlug", postSlug);
   eleventyConfig.addFilter("siteUrl", (url) => new URL(url, SITE_URL).href);
+  eleventyConfig.addFilter("assetUrl", (url) => {
+    const source = path.resolve("src", String(url).replace(/^\//, ""));
+    const hash = createHash("sha256").update(fs.readFileSync(source)).digest("hex").slice(0, 10);
+    return `${url}?v=${hash}`;
+  });
   eleventyConfig.addFilter("inlineFile", (file) => fs.readFileSync(path.resolve(file), "utf8"));
   eleventyConfig.addFilter("dateIso", (date) => new Date(date).toISOString());
   eleventyConfig.addFilter("dateRfc822", (date) => new Date(date).toUTCString());
@@ -249,7 +252,7 @@ export default function eleventyConfiguration(eleventyConfig) {
   });
   eleventyConfig.addFilter("postImage", (post) => {
     const slug = postSlug(post);
-    const directory = path.resolve("content/blog", post.inputPath.match(/content\/blog\/([^/]+)/)?.[1] ?? slug);
+    const directory = path.resolve("src/content/blog", post.inputPath.match(/content\/blog\/([^/]+)/)?.[1] ?? slug);
     const candidates = [
       "featured-card.webp",
       "cover-card.webp",
@@ -316,9 +319,9 @@ export default function eleventyConfiguration(eleventyConfig) {
 
   return {
     dir: {
-      input: ".",
-      includes: "src/_includes",
-      data: "src/_data",
+      input: "src",
+      includes: "_includes",
+      data: "_data",
       output: "_site",
     },
     markdownTemplateEngine: "njk",
