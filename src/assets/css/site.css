@@ -394,7 +394,7 @@
   .post-card__image::after { background: linear-gradient(to top, rgba(8,12,14,.4), transparent 45%); }
   .post-card__image img { filter: saturate(.82) contrast(1.03); }
   .post-card:first-child .post-card__body, .post-card__body { padding: 1.35rem 1.5rem; }
-  .post-card:first-child :is(h2, h3) { font-size: clamp(1.25rem, 2.5vw, 1.65rem); }
+  .post-card :is(h2, h3) { font-size: clamp(1.25rem, 2.5vw, 1.65rem); }
   .post-card__meta { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.05em; text-transform: uppercase; }
   .tag { border-radius: 0; background: transparent; font-family: var(--mono); font-weight: 650; letter-spacing: 0.03em; text-transform: uppercase; }
   .timeline::before { left: 0.45rem; background: var(--line-strong); }
