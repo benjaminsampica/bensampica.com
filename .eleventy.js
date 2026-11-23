@@ -139,7 +139,7 @@ function installCodeBlocks(markdown) {
     const language = tokens[index].info.trim().split(/\s+/)[0].toLowerCase();
     const label = CODE_LANGUAGE_LABELS[language] ?? "Code";
     const code = defaultFence(tokens, index, options, env, self);
-    return `<div class="code-block"><div class="code-block__bar" data-language="${label}"></div>${code}</div>\n`;
+    return `<!--email_off--><div class="code-block"><div class="code-block__bar" data-language="${label}"></div>${code}</div><!--/email_off-->\n`;
   };
 }
 
