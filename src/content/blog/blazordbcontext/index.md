@@ -64,7 +64,7 @@ Still, we're fine. Except when we have two of these components at the same time,
 ```
 which is then called on our page, _twice._
 
-```html
+```razor
 // Todos.razor
 @page "/Todos"
 
@@ -99,7 +99,7 @@ Onto the next one.
 
 This can be accomplished by doing the following to your service registration
 
-```
+```csharp
 services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(Configuration.GetConnectionString("Application")), ServiceLifeTime.Transient); // <-- Add this
 ```

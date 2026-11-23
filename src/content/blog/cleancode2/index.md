@@ -59,7 +59,7 @@ Upgrade your work life and productivity by upgrading your development tools – 
 
 > Reusing the same or similar elements through your design ​brings a clear sense of unity, consistency, and cohesiveness
 
-```
+```csharp
 using System;
 
 namespace PrincipleOfRepetition
@@ -137,7 +137,7 @@ namespace PrincipleOfRepetition
 
 > Poorly aligned elements look cluttered and unfinished
 
-```
+```csharp
 namespace PrincipleOfAlignment
 {
     public class ShoppingBot
@@ -210,7 +210,7 @@ namespace PrincipleOfAlignment
 
 Consider the readability between both AddAsync methods below. Which is easier to read?
 
-```
+```csharp
 namespace PrincipleOfProximity 
 {
     public class AddressRepository 

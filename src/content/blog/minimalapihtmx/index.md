@@ -112,7 +112,7 @@ that return both.
 Since the goal is to recreate the sample pages, I am just going to pull these straight from a `dotnet new blazor` project with a couple tweaks. 
 You can place these anywhere in the project directory. I am opting for a vertical slice type of folder layout.
 
-```html
+```razor
 <!-- Features/Shared/HtmxLayout.razor 
      The sample's App.razor and MainLayout.razor files combined together. Don't forget the MainLayout.razor.css file! -->
 @inherits LayoutComponentBase
@@ -185,7 +185,7 @@ You can place these anywhere in the project directory. I am opting for a vertica
 </div>
 ```
 
-```html
+```razor
 <!-- Features/_Imports.razor -->
 @using System.Net.Http
 @using System.Net.Http.Json
@@ -258,7 +258,7 @@ app.MapGet("/counter", ()
 app.Run();
 ```
 
-```html
+```razor
 <!-- Features/Counter.razor -->
 @layout HtmxLayout <!-- Remove routing and add the layout since every page is independent.-->
 
@@ -291,7 +291,7 @@ But wait - the counter button doesn't work!
 When the button is clicked, the counter needs to increment up by one. Since the only state is the hypermedia itself 😎, we will need to refresh the HTML on the page 
 in order for the counter to increment. HTMX is not even needed at this point just plain hyperlinks and query parameters, as showcased below.
 
-```html
+```razor
 <!-- Features/Counter.razor -->
 @layout HtmxLayout
 
@@ -375,7 +375,7 @@ app.MapGet("/counter/increment", ([FromQuery] int? currentCount = 0)
 
 <CounterInfo/>
 ```
-```html
+```razor
 <!--  Features/CounterInfo.razor -->
 <!-- There is no layout because this is a "partial" or component being returned - not a page.-->
 <div id="counter">
@@ -447,7 +447,7 @@ app.MapGet("/counter/increment", Results<RazorComponentResult<Counter>, RazorCom
     });
 ```
 
-```html
+```razor
 <!-- Features/Counter.razor-->
 @layout HtmxLayout
 
@@ -463,7 +463,7 @@ app.MapGet("/counter/increment", Results<RazorComponentResult<Counter>, RazorCom
 }
 ```
 
-```html
+```razor
 <!-- Features/CounterInfo.razor -->
 <form id="counter" action="/counter/increment" hx-swap="outerHTML" method="get" hx-boost="true" hx-target="#counter">
     <input type="hidden" name="@nameof(CurrentCount)" value="@CurrentCount"/>
@@ -484,7 +484,7 @@ app.MapGet("/counter/increment", Results<RazorComponentResult<Counter>, RazorCom
 
 If you do not want to handle degradation, the resulting code looks like this:
 
-```html
+```razor
 <!-- Features/CounterInfo.razor -->
 <form id="counter" hx-get="counter/increment?currentCount=@CurrentCount" hx-swap="outerHTML"  hx-target="#counter">
     <p role="status">
@@ -654,7 +654,7 @@ app.MapPost("/counter/increment",  RazorComponentResult<CounterInfo>([FromForm] 
 
 Bringing this all together, we need to utilize more of the Blazor framework in order to pass the validation result down to all our validation messages. Additionally, we need to add our `HtmxAntiforgeryToken` and `HtmxValidationMessage`.
 
-```html
+```razor
 <!-- Features/CounterInfo.razor -->
 <CascadingValue Value="ValidationResult">
     <!-- By default, HTMX will place the results from `hx-post` inside the element ("innerHTML"). We want to replace the entire body including the <form> tag so that they don't inadvertently nest. -->
@@ -677,7 +677,7 @@ Bringing this all together, we need to utilize more of the Blazor framework in o
 }
 ```
 
-```html
+```razor
 <!-- Features/Counter.razor -->
 @layout HtmxLayout
 
@@ -709,7 +709,7 @@ HTMX triggers operate by sending headers back through the response from the serv
 
 To provide a contrived example I am going to add a success message at the top of our `HtmxLayout` that we can tap into when something is successful.
 
-```html
+```razor
 <!-- Features/Shared/HtmxLayout.razor 
     Code omitted for brevity.
  -->
@@ -799,7 +799,7 @@ These deviate slightly from the sample pages but largely it is the same concept.
 </form>
 ```
 
-```html
+```razor
 <!-- Features/WeatherList.razor -->
 <table class="table">
     <thead>
@@ -978,7 +978,7 @@ public abstract class PagedResponse<T> where T : class
 
 Now, we are going to make a generic component that handles the paging using these abstract classes. We are going to use basic submit buttons that then trigger the form.
 
-```html
+```razor
 <!-- Features/Shared/Paging.razor -->
 @typeparam T where T : class
 
@@ -1021,7 +1021,7 @@ Finally, I have added the `<WeatherList>` component underneath the form.
 The reason I added the `WeatherList` component directly is because I moved the `Loading` spinner underneath it. The loading spinner will show whenever the page is loading (when going back and forward pages 
 for example), not just the first time like before.
 
-```html
+```razor
 <!-- Features/WeatherList.razor -->
 <Loading />
 
@@ -1161,7 +1161,7 @@ app.Map("/statuscode/{code:int}", (int code)
 
 Here is the `StatusCode.razor` page. Nothing special happening in here.
 
-```html
+```razor
 @layout HtmxLayout
 
 <Title>

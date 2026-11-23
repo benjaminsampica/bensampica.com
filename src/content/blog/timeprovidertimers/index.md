@@ -50,7 +50,7 @@ var timer = timeProvider.CreateTimer((state) => {
 
 Both produce the same output every 5 seconds.
 
-```c
+```text
 // When 5 seconds has passed...
 Five seconds has passed in the new timer.
 Five seconds has passed in the older timer.

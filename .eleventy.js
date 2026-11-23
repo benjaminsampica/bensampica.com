@@ -18,7 +18,9 @@ const CODE_LANGUAGE_LABELS = {
   js: "JavaScript",
   json: "JSON",
   powershell: "PowerShell",
+  razor: "Razor",
   sql: "SQL",
+  text: "Text",
   xml: "XML",
   yaml: "YAML",
 };
@@ -350,7 +352,7 @@ export default function eleventyConfiguration(eleventyConfig) {
       data: "_data",
       output: "_site",
     },
-    markdownTemplateEngine: "njk",
+    markdownTemplateEngine: false,
     htmlTemplateEngine: "njk",
     templateFormats: ["md", "njk"],
   };

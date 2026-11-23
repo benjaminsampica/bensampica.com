@@ -62,7 +62,9 @@ Git does versioning better so avoid change mausoleums inside of files. This is a
 
 > Conversation in code
 
-``` // Bob please fix this before 3/11. ```
+```csharp
+// Bob please fix this before 3/11.
+```
 
 Someone just should've went to spoke to Bob directly. These aren't useful and just serve as clutter. Email, private message, or better yet go to Bob's desk and speak to him directly about whatever you need them to do. Remember the first value of Agile, [Individuals and Interactions _over_ Processes and Tools](https://www.dummies.com/careers/project-management/applying-agile-management-value-1-individuals-and-interactions-over-processes-and-tools/).
 

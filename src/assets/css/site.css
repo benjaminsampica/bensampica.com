@@ -220,8 +220,8 @@
   .post-card__footer { display: flex; position: relative; z-index: 1; align-items: end; justify-content: space-between; gap: 0.8rem; margin-top: auto; padding-top: 1.25rem; }
   .post-card .text-link { flex: 0 0 auto; font-size: 0.8rem; }
   .tag-row { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-  .tag { display: inline-flex; padding: 0.28rem 0.55rem; border: 1px solid var(--line); border-radius: 999px; background: var(--accent-soft); color: var(--accent-bright); font-size: 0.68rem; font-weight: 720; line-height: 1.25; text-decoration: none; }
-  .tag:hover { border-color: var(--accent); color: var(--text); }
+  a.tag { display: inline-flex; padding: 0.28rem 0.55rem; border: 1px solid var(--line); border-radius: 999px; background: var(--accent-soft); color: var(--accent-bright); font-size: 0.68rem; font-weight: 720; line-height: 1.25; text-decoration: none; }
+  a.tag:hover { border-color: var(--accent); color: var(--text); }
 
   .timeline { position: relative; padding: 0; margin: 0; list-style: none; }
   .timeline::before { position: absolute; top: 0.8rem; bottom: 0.8rem; left: 0.42rem; width: 1px; background: linear-gradient(var(--accent), var(--line)); content: ""; }
@@ -425,7 +425,7 @@
   .post-card:first-child .post-card__body, .post-card__body { padding: 1.35rem 1.5rem; }
   .post-card :is(h2, h3) { font-size: clamp(1.25rem, 2.5vw, 1.65rem); }
   .post-card__meta { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.05em; text-transform: uppercase; }
-  .tag { border-radius: 0; background: transparent; font-family: var(--mono); font-weight: 650; letter-spacing: 0.03em; text-transform: uppercase; }
+  a.tag { border-radius: 0; background: transparent; font-family: var(--mono); font-weight: 650; letter-spacing: 0.03em; text-transform: uppercase; }
   .timeline::before { left: 0.45rem; background: var(--line-strong); }
   .timeline__marker { top: 1.25rem; width: 0.95rem; border: 1px solid var(--accent); border-radius: 0; background: var(--bg); box-shadow: none; }
   .timeline__marker::after { position: absolute; top: 50%; left: 1.45rem; width: 0.75rem; height: 1px; background: var(--line-strong); content: ""; }

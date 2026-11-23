@@ -70,7 +70,7 @@ Start to finish with a fresh `dotnet new mvc` application, this is how you can d
 6. Add an `App.razor` component (from a Blazor app)
 7. Add an `MainLayout` component (from a Blazor app)
     - This should be blank besides:
-       ```
+       ```razor
        @inherits LayoutComponentBase
        @Body
        ```

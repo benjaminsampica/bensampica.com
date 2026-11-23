@@ -65,7 +65,7 @@ I figured I'd share a few examples of these experiences from both ends.
 
 ### I Do Work
 
-```
+```csharp
 public void DoWork()
 ```
 
@@ -73,7 +73,7 @@ This one came into my lap recently and I honestly found it hilarious once I thou
 
 ### Getting And Finding
 
-```
+```csharp
 public IEnumerable<User> GetUsers()
 public IEnumerable<User> FindUsers()
 ```
@@ -84,7 +84,7 @@ This preference comes from [lots of googling around](https://www.google.com/sear
 
 ### I No A Num and Number
 
-```
+```text
 accountNo
 accountNum
 accountNumber

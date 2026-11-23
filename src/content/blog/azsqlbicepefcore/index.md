@@ -60,7 +60,7 @@ If you already have Entity Framework Core setup, skip to [Making a Migration](#m
 
 From a brand new `dotnet new webapi` application, add the following NuGet packages
 
-```
+```text
   Microsoft.EntityFrameworkCore.SqlServer
   Microsoft.EntityFrameworkCore.Tools
 ```

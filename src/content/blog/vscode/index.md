@@ -88,7 +88,7 @@ I'm going to just barf out a list of extensions and how they enhance my work. A 
   - Gives a nice Command Palette task for dotnet commands. I pretty much only use this for Entity Framework migrations and even then it's maybe once a day. Still a nice small time-saver.
 - [Dracula Official](https://marketplace.visualstudio.com/items?itemName=dracula-theme.theme-dracula)
   - A theme for VS Code that reminds me of Miami Vice. I'm a sucker for 80s vice. I did have to tweak some of the colors through VSCode's `settings.json` to my liking, which are below. `edit.tokenColorCustomizations` is at the root level.
-   ```
+   ```json
    "editor.tokenColorCustomizations": {
         "[Dracula]": {
             "keywords": "#c64bff",
@@ -150,7 +150,7 @@ I'm going to just barf out a list of extensions and how they enhance my work. A 
 
 Installing the :white_check_mark: extensions and reading their setups should get you ready to develop in VS Code in no time. I'd recommend all of the others, however. Besides the flow difference between VS and Code, my only other big hurdle was the `launch.json` and `tasks.json` files for debugging with Chrome and running my tasks. They are the following:
 
-```
+```json
 // launch.json
 {
    // Use IntelliSense to find out which attributes exist for C# debugging
@@ -186,7 +186,7 @@ Installing the :white_check_mark: extensions and reading their setups should get
 ```
 <hr>
 
-```
+```json
 // tasks.json
 {
     "version": "2.0.0",
