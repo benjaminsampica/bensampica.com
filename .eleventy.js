@@ -8,6 +8,20 @@ import rssPlugin from "@11ty/eleventy-plugin-rss";
 
 const SITE_URL = "https://www.bensampica.com";
 const POSTS_PER_PAGE = 10;
+const CODE_LANGUAGE_LABELS = {
+  bash: "Bash",
+  bicep: "Bicep",
+  c: "C",
+  csharp: "C#",
+  css: "CSS",
+  html: "HTML",
+  js: "JavaScript",
+  json: "JSON",
+  powershell: "PowerShell",
+  sql: "SQL",
+  xml: "XML",
+  yaml: "YAML",
+};
 
 function slugify(value = "") {
   return String(value)
@@ -116,6 +130,17 @@ function installCallouts(markdown) {
   };
 }
 
+function installCodeBlocks(markdown) {
+  const defaultFence = markdown.renderer.rules.fence;
+
+  markdown.renderer.rules.fence = (tokens, index, options, env, self) => {
+    const language = tokens[index].info.trim().split(/\s+/)[0].toLowerCase();
+    const label = CODE_LANGUAGE_LABELS[language] ?? "Code";
+    const code = defaultFence(tokens, index, options, env, self);
+    return `<div class="code-block"><div class="code-block__bar" data-language="${label}"></div>${code}</div>\n`;
+  };
+}
+
 function addPostAssets(eleventyConfig) {
   const blogRoot = path.resolve("src/content/blog");
   if (!fs.existsSync(blogRoot)) return;
@@ -171,6 +196,7 @@ export default function eleventyConfiguration(eleventyConfig) {
       : renderer.renderToken(tokens, index, options);
   };
   installCallouts(markdown);
+  installCodeBlocks(markdown);
   eleventyConfig.setLibrary("md", markdown);
 
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });

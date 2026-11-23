@@ -47,9 +47,8 @@ if (deferredImages.length > 0) {
   }
 }
 
-for (const pre of document.querySelectorAll(".prose pre")) {
-  const code = pre.querySelector("code");
-  if (!code) continue;
+for (const block of document.querySelectorAll(".code-block")) {
+  const code = block.querySelector("code");
   const button = document.createElement("button");
   button.type = "button";
   button.className = "code-copy";
@@ -59,7 +58,7 @@ for (const pre of document.querySelectorAll(".prose pre")) {
     button.textContent = "Copied";
     window.setTimeout(() => { button.textContent = "Copy"; }, 1400);
   });
-  pre.append(button);
+  block.querySelector(".code-block__bar").append(button);
 }
 
 const tocLinks = [...document.querySelectorAll(".toc a")];
